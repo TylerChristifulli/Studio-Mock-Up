@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IBSC Renewal — Catalog Versioning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#000;--surface:#2a2d31;--surface-2:#1f2226;--surface-3:#17191c;
+    --line:rgba(255,255,255,0.12);--line-soft:rgba(255,255,255,0.07);
+    --text:#fff;--text-2:rgba(255,255,255,0.70);--text-3:rgba(255,255,255,0.45);
+    --green:#66bb6a;--amber:#ffa726;--blue:#6694e9;--info:#29b6f6;--red:#cf6679;
+    --green-bg:rgba(102,187,106,0.15);--amber-bg:rgba(255,167,38,0.15);
+    --blue-bg:rgba(102,148,233,0.15);--info-bg:rgba(41,182,246,0.13);
+    --track:rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 24px 64px;}
+  h1{font-size:30px;font-weight:400;margin:0 0 4px;}
+  .sub{color:var(--text-2);font-size:15px;margin:0 0 28px;max-width:760px;}
+  .section-h{display:flex;align-items:center;gap:10px;margin:36px 0 14px;}
+  .section-h .material-icons{color:var(--text-3);font-size:22px;}
+  .section-h h2{font-size:20px;font-weight:500;margin:0;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;}
+  /* how it works */
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .how .card{padding:20px;}
+  .how .ic{width:42px;height:42px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:22px;margin-bottom:12px;}
+  .how h3{font-size:15px;font-weight:500;margin:0 0 6px;}
+  .how p{font-size:13.5px;color:var(--text-2);margin:0;}
+  /* version timeline */
+  .ver{padding:18px 22px;margin-bottom:14px;}
+  .ver-head{display:flex;align-items:center;gap:14px;cursor:pointer;}
+  .vtag{font-size:13px;font-weight:500;padding:4px 12px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);white-space:nowrap;}
+  .vtag.cur{background:var(--green-bg);border-color:transparent;color:var(--green);}
+  .vtag.draft{background:var(--amber-bg);border-color:transparent;color:var(--amber);}
+  .vmeta{flex:1;min-width:0;}
+  .vmeta .vname{font-size:15.5px;font-weight:500;}
+  .vmeta .vdesc{font-size:13px;color:var(--text-2);margin-top:2px;}
+  .vcohort{text-align:right;white-space:nowrap;}
+  .vcohort .n{font-size:20px;font-weight:500;}
+  .vcohort .l{font-size:11.5px;color:var(--text-3);letter-spacing:.3px;}
+  .chev{color:var(--text-3);font-size:22px;transition:transform .2s;}
+  .vbody{display:none;margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px;}
+  .diff{font-size:14px;display:flex;align-items:center;gap:10px;padding:7px 0;}
+  .diff .material-icons{font-size:18px;}
+  .diff.add .material-icons{color:var(--green);}
+  .diff.base .material-icons{color:var(--text-3);}
+  .diff .hrs{margin-left:auto;color:var(--text-3);font-size:12.5px;}
+  /* simulator */
+  .sim{padding:24px;}
+  .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px;}
+  .panel{background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:18px;}
+  .panel h4{font-size:13px;font-weight:500;color:var(--text-2);margin:0 0 14px;letter-spacing:.4px;text-transform:uppercase;}
+  .stage-item{display:flex;align-items:center;gap:10px;font-size:14px;padding:8px 0;border-bottom:1px solid var(--line-soft);}
+  .stage-item:last-child{border-bottom:none;}
+  .stage-item .material-icons{color:var(--amber);font-size:18px;}
+  .cohort-meter{margin-bottom:16px;}
+  .cohort-meter:last-child{margin-bottom:0;}
+  .cohort-meter .top{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px;}
+  .cohort-meter .top .v{color:var(--text-2);}
+  .bar{height:8px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .bar > div{height:100%;border-radius:999px;transition:width .6s ease;}
+  .note{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--text-2);margin-top:14px;padding:12px 14px;background:var(--surface-3);border-radius:8px;border-left:3px solid var(--green);}
+  .note .material-icons{font-size:18px;color:var(--green);flex-shrink:0;}
+  button.pub{margin-top:18px;background:var(--green);color:#06210a;border:none;border-radius:8px;padding:12px 22px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  button.pub:hover{filter:brightness(1.08);}
+  button.pub:disabled{background:var(--surface);color:var(--text-3);cursor:default;filter:none;}
+  /* student banner */
+  .student{padding:20px 22px;border-left:3px solid var(--info);background:linear-gradient(0deg,var(--surface),var(--surface));}
+  .student .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .student .material-icons.lead{color:var(--info);font-size:26px;}
+  .student .txt{flex:1;min-width:240px;}
+  .student .txt .t{font-size:15px;font-weight:500;}
+  .student .txt .d{font-size:13.5px;color:var(--text-2);margin-top:3px;}
+  .lnk{color:var(--info);font-size:14px;cursor:pointer;white-space:nowrap;font-weight:500;}
+  .lnk:hover{text-decoration:underline;}
+  .migrate{display:none;margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px;}
+  .migrate .opt{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:9px 18px;font-family:inherit;font-size:13.5px;cursor:pointer;}
+  .btn-ghost:hover{background:var(--surface-2);}
+  .btn-ghost.keep{border-color:var(--green);color:var(--green);}
+  @media(max-width:640px){.how{grid-template-columns:1fr;}.sim-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>IBSC Renewal — Catalog Versioning</h1>
+  <p class="sub">How FOAMfrat can keep adding new courses to the IBSC renewal without ever disturbing the progress of students who are mid-cycle. <span style="color:var(--text-3)">(Admin view)</span></p>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-h"><span class="material-icons">lightbulb</span><h2>How it works</h2></div>
+  <div class="how">
+    <div class="card">
+      <div class="ic material-icons">photo_camera</div>
+      <h3>Versions snapshot the catalog</h3>
+      <p>Each published version freezes the exact course list and hour requirements at that moment. Adding a course never edits a published version — it creates the next one.</p>
+    </div>
+    <div class="card">
+      <div class="ic material-icons">lock</div>
+      <h3>Students lock on enrollment</h3>
+      <p>When a provider starts a renewal, they're pinned to the version that's current that day — for their full 4-year cycle. Their requirements can't shift under them.</p>
+    </div>
+    <div class="card">
+      <div class="ic material-icons">verified</div>
+      <h3>New courses ship safely</h3>
+      <p>Publishing a new version only changes what new enrollees receive. Everyone already in progress stays exactly where they were.</p>
+    </div>
+  </div>
+
+  <!-- VERSION HISTORY -->
+  <div class="section-h"><span class="material-icons">history</span><h2>Version history</h2></div>
+  <div id="versions"></div>
+
+  <!-- SIMULATOR -->
+  <div class="section-h"><span class="material-icons">science</span><h2>Try it: publish a new version</h2></div>
+  <div class="card sim">
+    <p style="margin:0 0 4px;color:var(--text-2);font-size:14px;">Two new courses are staged for <strong style="color:var(--text)">v3 (draft)</strong>. Publish it and watch what happens to each cohort.</p>
+    <div class="sim-grid">
+      <div class="panel">
+        <h4>Staged for v3</h4>
+        <div class="stage-item"><span class="material-icons">add_circle_outline</span> Prehospital Blood Administration <span style="margin-left:auto;color:var(--text-3);font-size:12.5px">1 hr</span></div>
+        <div class="stage-item"><span class="material-icons">add_circle_outline</span> Ventilator Waveform Mastery <span style="margin-left:auto;color:var(--text-3);font-size:12.5px">1 hr</span></div>
+        <button class="pub" id="pubBtn"><span class="material-icons" style="font-size:18px">publish</span> Publish v3</button>
+      </div>
+      <div class="panel">
+        <h4>Active cohorts</h4>
+        <div class="cohort-meter">
+          <div class="top"><span>In progress on v2</span><span class="v" id="v2n">184 students</span></div>
+          <div class="bar"><div id="v2bar" style="width:100%;background:var(--blue)"></div></div>
+        </div>
+        <div class="cohort-meter">
+          <div class="top"><span>New enrollees route to</span><span class="v" id="curv">v2</span></div>
+          <div class="bar"><div id="newbar" style="width:100%;background:var(--green)"></div></div>
+        </div>
+        <div class="note"><span class="material-icons" id="noteIc">info</span><span id="noteTxt">Right now, new providers start on v2 — the current published version.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENT BANNER -->
+  <div class="section-h"><span class="material-icons">person</span><h2>What an in-progress student sees</h2></div>
+  <div class="card student">
+    <div class="row">
+      <span class="material-icons lead">bookmark</span>
+      <div class="txt">
+        <div class="t">You're renewing on the 2024 track (v1)</div>
+        <div class="d">Your 40-hour requirement and course list are locked for your full cycle. A newer version with added courses is available.</div>
+      </div>
+      <span class="lnk" id="reviewLnk">Review what's new</span>
+    </div>
+    <div class="migrate" id="migrate">
+      <div style="font-size:13.5px;color:var(--text-2)">Switching to <strong style="color:var(--text)">v2</strong> would add these optional courses to your track. Your completed hours carry over — nothing you've finished is lost.</div>
+      <div class="diff add"><span class="material-icons">add_circle_outline</span> Septic Shock <span class="hrs">+1 hr</span></div>
+      <div class="diff add"><span class="material-icons">add_circle_outline</span> Animated Guide to ARDS <span class="hrs">+1 hr</span></div>
+      <div class="diff add"><span class="material-icons">add_circle_outline</span> Lab Panel Cold Reads <span class="hrs">+1 hr</span></div>
+      <div class="opt">
+        <button class="btn-ghost keep">Keep my current track</button>
+        <button class="btn-ghost">Switch to v2</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const VERSIONS = [
+  {tag:"v1", cls:"", name:"Original renewal", date:"Jan 2024", students:"312 completed",
+   base:24, adds:[], note:"The launch catalog: 24 courses across the required IBSC topics, 40 hours."},
+  {tag:"v2", cls:"cur", name:"Current published version", date:"Mar 2025", students:"184 in progress",
+   base:24, adds:["Septic Shock","Advanced Acid-Base — Metabolic Acidosis & Ventilation","Animated Guide to ARDS","Lab Panel Cold Reads","Special Patient Populations (Born Different)"],
+   note:"Five courses added since launch. Providers who enrolled on or after Mar 2025 are on this version."},
+  {tag:"v3", cls:"draft", name:"Draft — not yet published", date:"Staged", students:"0 students",
+   base:29, adds:["Prehospital Blood Administration","Ventilator Waveform Mastery"],
+   note:"Two brand-new courses staged. Publishing affects only future enrollees."}
+];
+
+const cont = document.getElementById('versions');
+VERSIONS.forEach(v=>{
+  const total = v.base + v.adds.length;
+  const addRows = v.adds.length
+    ? v.adds.map(c=>`<div class="diff add"><span class="material-icons">add_circle_outline</span> ${c} <span class="hrs">added</span></div>`).join('')
+    : `<div class="diff base"><span class="material-icons">inventory_2</span> ${v.base} foundational courses <span class="hrs">baseline</span></div>`;
+  const el = document.createElement('div');
+  el.className = 'card ver';
+  el.innerHTML = `
+    <div class="ver-head">
+      <span class="vtag ${v.cls}">${v.tag}</span>
+      <div class="vmeta">
+        <div class="vname">${v.name}</div>
+        <div class="vdesc">${v.date} &middot; ${total} courses &middot; 40 hr requirement</div>
+      </div>
+      <div class="vcohort"><div class="n">${v.students.split(' ')[0]}</div><div class="l">${v.students.split(' ').slice(1).join(' ').toUpperCase()}</div></div>
+      <span class="chev material-icons">expand_more</span>
+    </div>
+    <div class="vbody">
+      <div style="font-size:13.5px;color:var(--text-2);margin-bottom:10px">${v.note}</div>
+      ${v.base && v.adds.length ? `<div class="diff base"><span class="material-icons">inventory_2</span> ${v.base} courses carried from v1 <span class="hrs">baseline</span></div>` : ''}
+      ${addRows}
+    </div>`;
+  const head = el.querySelector('.ver-head');
+  const body = el.querySelector('.vbody');
+  const chev = el.querySelector('.chev');
+  head.addEventListener('click',()=>{
+    const open = body.style.display==='block';
+    body.style.display = open?'none':'block';
+    chev.style.transform = open?'rotate(0deg)':'rotate(180deg)';
+  });
+  cont.appendChild(el);
+});
+
+// simulator
+let published = false;
+const btn = document.getElementById('pubBtn');
+btn.addEventListener('click',()=>{
+  if(published) return;
+  published = true;
+  document.getElementById('curv').textContent = 'v3';
+  document.getElementById('newbar').style.background = 'var(--amber)';
+  // in-progress v2 cohort UNCHANGED
+  document.getElementById('v2n').textContent = '184 students (unchanged)';
+  document.getElementById('noteIc').textContent = 'check_circle';
+  document.getElementById('noteTxt').innerHTML = '<strong style="color:var(--green)">v3 is live.</strong> New enrollees now get the 2 added courses. All 184 in-progress providers stayed on v2 — their hours and requirements were untouched.';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-icons" style="font-size:18px">check</span> Published v3';
+});
+
+// student migrate toggle
+const lnk = document.getElementById('reviewLnk');
+const mig = document.getElementById('migrate');
+lnk.addEventListener('click',()=>{
+  const open = mig.style.display==='block';
+  mig.style.display = open?'none':'block';
+  lnk.textContent = open?'Review what’s new':'Hide';
+});
+</script>
+</body>
+</html>

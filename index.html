@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IBSC Renewal — Learning Paths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#000;--surface:#212428;--surface-2:#1a1d20;--surface-3:#141619;
+    --line:rgba(255,255,255,0.09);--line-2:rgba(255,255,255,0.16);
+    --text:#fff;--text-2:rgba(255,255,255,0.66);--text-3:rgba(255,255,255,0.42);
+    --green:#66bb6a;--amber:#ffa726;--blue:#6694e9;--info:#29b6f6;
+    --track:rgba(255,255,255,0.09);
+  }
+  *{box-sizing:border-box;}
+  .material-icons{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;font-weight:400;}
+  .appbar{display:flex;align-items:center;justify-content:space-between;padding:13px 40px;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .appbar .left,.appbar .right{display:flex;align-items:center;gap:24px;}
+  .appbar .material-icons{font-size:24px;color:#fff;cursor:pointer;}
+  .logo{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center;}
+  .logo .material-icons{font-size:26px;}
+  .appbar .user{display:flex;align-items:center;gap:6px;font-size:15px;color:#fff;cursor:pointer;}
+  .appbar .user .material-icons{font-size:20px;color:var(--text-2);}
+  .wrap{margin:0;padding:26px 48px 72px;}
+  .userprofile{font-size:30px;font-weight:300;margin:0 0 20px;}
+  .tabs{display:flex;gap:32px;border-bottom:1px solid rgba(255,255,255,0.12);margin:0 0 30px;overflow-x:auto;white-space:nowrap;}
+  .tabs span{padding:0 2px 14px;font-size:15px;color:var(--text-2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .tabs span:hover{color:#fff;}
+  .tabs span.active{color:#4f8ef7;border-bottom-color:#4f8ef7;}
+  h1{font-size:28px;font-weight:300;letter-spacing:.2px;margin:0 0 6px;}
+  .sub{color:var(--text-2);font-size:15px;font-weight:300;margin:0 0 28px;max-width:680px;}
+  /* segmented toggle */
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:28px;}
+  .seg button{border:none;background:transparent;color:var(--text-2);font-family:inherit;font-size:14px;font-weight:400;padding:9px 22px;border-radius:999px;cursor:pointer;transition:all .2s;}
+  .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
+  .seg button:not(.active):hover{color:var(--text);}
+  /* hero */
+  .hero{display:flex;gap:40px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px 36px;flex-wrap:wrap;}
+  .ring{--pct:0;width:172px;height:172px;border-radius:50%;flex-shrink:0;
+    background:conic-gradient(var(--green) calc(var(--pct)*1%), var(--track) 0);
+    display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto;}
+  .ring::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--surface);}
+  .ring-c{position:relative;text-align:center;z-index:1;}
+  .ring-c .big{font-size:40px;font-weight:300;line-height:1;}
+  .ring-c .small{font-size:11px;color:var(--text-3);margin-top:6px;letter-spacing:1.5px;}
+  .hero-r{flex:1;min-width:280px;}
+  .hero-r h2{font-size:19px;font-weight:400;margin:0 0 4px;}
+  .hero-r .meta{font-size:13.5px;color:var(--text-2);font-weight:300;margin:0 0 18px;}
+  .reqs{display:flex;flex-direction:column;gap:14px;}
+  .req .top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;margin-bottom:5px;}
+  .req .top .lbl{color:var(--text-2);}
+  .req .top .lbl .material-icons{font-size:15px;vertical-align:-3px;margin-right:5px;}
+  .req .top .val{font-weight:400;font-size:13px;}
+  .rtrack{height:6px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .rtrack > div{height:100%;border-radius:999px;transition:width .7s cubic-bezier(.4,0,.2,1);}
+  .req .hint{font-size:11.5px;color:var(--text-3);margin-top:4px;font-weight:300;}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:18px;}
+  .metric{background:var(--surface);padding:16px;text-align:center;}
+  .metric .num{font-size:23px;font-weight:300;}
+  .metric .lbl{font-size:11px;color:var(--text-3);margin-top:4px;letter-spacing:.6px;}
+  /* section */
+  .sect{display:flex;align-items:baseline;justify-content:space-between;margin:38px 0 16px;}
+  .sect h3{font-size:13px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-2);margin:0;}
+  .sect .h{font-size:12.5px;color:var(--text-3);font-weight:300;}
+  /* path cards */
+  .path{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color .2s;}
+  .path:hover{border-color:var(--line-2);}
+  .phead{display:flex;align-items:center;gap:16px;padding:18px 22px;cursor:pointer;}
+  .picon{width:38px;height:38px;border-radius:10px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-2);font-size:20px;}
+  .pt{flex:1;min-width:0;}
+  .pt .nm{font-size:15px;font-weight:400;display:flex;align-items:center;gap:9px;}
+  .pt .mt{font-size:12.5px;color:var(--text-3);font-weight:300;margin-top:2px;}
+  .badge{font-size:10px;letter-spacing:.5px;padding:2px 8px;border-radius:999px;background:rgba(102,187,106,0.16);color:var(--green);font-weight:500;}
+  .pmini{width:128px;flex-shrink:0;}
+  .pmini .pt2{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-3);margin-bottom:5px;font-weight:300;}
+  .ptr{height:5px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .pfl{height:100%;background:var(--green);border-radius:999px;}
+  .chev{color:var(--text-3);font-size:22px;transition:transform .25s;flex-shrink:0;}
+  .pbody{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .pbody-in{padding:2px 22px 8px;}
+  .crow{display:flex;align-items:center;gap:14px;padding:11px 0;border-top:1px solid var(--line);transition:padding-left .15s;}
+  .crow:hover{padding-left:4px;}
+  .cst{font-size:20px;flex-shrink:0;width:20px;text-align:center;}
+  .cst.d{color:var(--green);} .cst.n{color:var(--text-3);}
+  .cnm{flex:1;font-size:14px;font-weight:300;}
+  .crow.done .cnm{color:var(--text-2);}
+  .ctag{font-size:10px;letter-spacing:.4px;color:var(--text-3);border:1px solid var(--line-2);border-radius:4px;padding:1px 6px;text-transform:uppercase;}
+  .chrs{font-size:12.5px;color:var(--text-3);white-space:nowrap;font-weight:300;}
+  .cact{font-size:12px;min-width:74px;text-align:right;white-space:nowrap;font-weight:400;}
+  .cact.d{color:var(--green);} .cact.s{color:var(--info);cursor:pointer;}
+  .cact.s:hover{text-decoration:underline;}
+  .legend{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--text-2);font-weight:300;margin-bottom:14px;}
+  .legend span{display:flex;align-items:center;gap:7px;}
+  .dot{width:9px;height:9px;border-radius:50%;}
+  @media(max-width:600px){.hero{padding:26px 22px;}.pmini{display:none;}.metrics{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="left">
+    <span class="material-icons" aria-label="menu">menu</span>
+    <div class="logo"><span class="material-icons">hexagon</span></div>
+  </div>
+  <div class="right">
+    <span class="material-icons" aria-label="search">search</span>
+    <span class="material-icons" aria-label="notifications">notifications</span>
+    <span class="material-icons" aria-label="explore">explore</span>
+    <span class="user">Tyler Christifulli <span class="material-icons">expand_more</span></span>
+  </div>
+</header>
+<div class="wrap">
+  <div class="userprofile">User Profile</div>
+  <nav class="tabs">
+    <span>Account Details</span><span>Preferences</span><span>Certificates</span>
+    <span>Licenses &amp; Certifications</span><span>Credentials</span>
+    <span class="active">IBSC</span><span>Recertification</span><span>Tours</span>
+  </nav>
+  <h1>IBSC Renewal</h1>
+  <p class="sub">Your continuing education, organized into the official IBSC FP-C content-outline domains so each learning path maps to an auditable requirement area.</p>
+
+  <div class="seg" id="seg">
+    <button data-k="t40" class="active">IBSC 40-hour</button>
+    <button data-k="t100">IBSC 100-hour</button>
+  </div>
+
+  <div id="hero"></div>
+
+  <div class="sect"><h3>Learning paths</h3><span class="h">Click a path to expand</span></div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--green)"></span> Completed</span>
+    <span><span class="dot" style="background:var(--text-3)"></span> Not started</span>
+    <span><span class="ctag">OP</span> Operational category</span>
+  </div>
+  <div id="paths"></div>
+</div>
+
+<script>
+const META = {
+  SAFE:{n:"Safety & Transport"},
+  PHYS:{n:"Flight Physiology"},
+  AIR:{n:"Airway, Anesthesia & Analgesics"},
+  MED:{n:"Medical Emergencies"},
+  NEU:{n:"Neurological"},
+  CARD:{n:"Cardiac"},
+  TRAU:{n:"Trauma & Burns"},
+  MFN:{n:"Maternal, Fetal & Neonatal"},
+  PED:{n:"Pediatric"},
+  PROF:{n:"Professional Considerations"}
+};
+// [title, hours, done, clusterToken, operational]
+const T40 = [
+  ["Acute Coronary Syndrome",1.5,1,"CARD",0],["Cardiac Infections",1,1,"CARD",0],
+  ["Congenital Heart Defects",1,0,"CARD",0],["Understanding Pressors",1,0,"CARD",0],
+  ["Septic Shock",1,1,"MED",0],["Pulmonary Artery Catheters",1,1,"CARD",0],
+  ["Arterial Lines",1,0,"CARD",0],["CVP",1,0,"CARD",0],["Intra-aortic Balloon Pump",1,1,"CARD",0],
+  ["Mechanical Ventilation",12,1,"AIR",0],["Pediatric Mechanical Ventilation",1,0,"PED",0],
+  ["Animated Guide to ARDS",1,0,"MED",0],["Applied Acid-Base",1,0,"MED",0],
+  ["Advanced Acid-Base — Metabolic Acidosis & Ventilation",1,1,"MED",0],
+  ["The Anatomy of Trauma",1,0,"TRAU",0],["Traumatic Head Injuries and CT",1,0,"TRAU",0],
+  ["ICP Management — CNS Injury",1,0,"NEU",0],["Surgical Cases From Start to Finish",1,0,"TRAU",0],
+  ["The RSI Summit",1,0,"AIR",0],["Sedation & Analgesia",1,0,"AIR",0],
+  ["OB Emergencies",1,0,"MFN",0],["Maternal Emergencies",1,0,"MFN",0],
+  ["Pediatric Transport",1,0,"PED",0],["Special Patient Populations (Born Different)",1,0,"PED",0],
+  ["Lab Values",2,0,"MED",0],["Lab Panel Cold Reads",1,0,"MED",0],
+  ["Ambulance Safety",0.5,1,"SAFE",1],["Flight Ops",1,0,"SAFE",1],["Flight Physiology",1,1,"PHYS",0],
+  ["Crew Resource Management",1,0,"PROF",1],["HIPAA Street Talk",1,0,"PROF",1],
+  ["Evidence Based Guidelines",1,0,"PROF",1],["Working With Risk",1,0,"PROF",1]
+];
+const T100 = [
+  ["LVAD",1,0,"CARD",0],["Medication Delivery",1,0,"MED",0],
+  ["Extra Orifice Roulette - Special Populations",1,0,"PED",0],["Pediatric Respiratory - Part 1",1,0,"PED",0],
+  ["Congenital Heart Defects",1,0,"CARD",0],["Lab Values",2,0,"MED",0],
+  ["Cardiac Arrest",2,0,"CARD",0],["Animation Guide To ARDS",1,0,"MED",0],
+  ["Strokes",2,0,"NEU",0],["Septic Shock",1,1,"MED",0],
+  ["Inhaled Pulmonary Vasodilators",1,0,"MED",0],["Maternal Emergencies",1,0,"MFN",0],
+  ["Pediatric Mechanical Ventilation",1,0,"PED",0],["The RSI Summit",1,0,"AIR",0],
+  ["Respiratory A&P",1,1,"MED",0],["Gas laws Part Two Vodcast",0.75,1,"PHYS",0],
+  ["Congestive Heart Failure",1,0,"CARD",0],["The Anatomy of Trauma",1,0,"TRAU",0],
+  ["Medication Math",1,0,"MED",0],["Pain Management",1,1,"AIR",0],
+  ["Sedative Agents",1,0,"AIR",0],["Intra-aortic Balloon Pump",1,1,"CARD",0],
+  ["Fluid Resuscitation",1,0,"MED",0],["ECG Interpretation",1.5,0,"CARD",0],
+  ["Neonatal Resuscitation Part 2",1,0,"MFN",0],["Renal Physiology",1,1,"MED",0],
+  ["ROSC",1,0,"CARD",0],["Respiratory Distress vs. Failure",1,0,"MED",0],
+  ["Acid-Base & Oxygenation",1.5,0,"MED",0],["Pediatric Respiratory - Part 2",1,0,"PED",0],
+  ["NICU Transport Logistics",1,0,"MFN",0],["Flight Physiology",1,1,"PHYS",0],
+  ["Trauma Anesthesia",1,0,"AIR",0],["Acute Coronary Syndrome",1.5,1,"CARD",0],
+  ["Risk Assessment",1,0,"PROF",1],["Adrenal Crisis Vodcast",0.5,0,"MED",0],
+  ["Airway Procedure Lab",1,0,"AIR",0],["Thyroid Emergencies Vodcast",1,1,"MED",0],
+  ["Pediatric ECG",1,0,"PED",0],["POCUS Exams",1,1,"MED",0],
+  ["Cardiovascular A&P (Blood Flow & Pressures)",1,0,"CARD",0],["HOTT Arrest",2,0,"CARD",0],
+  ["Cardiovascular A&P (Valves & Arteries)",1,0,"CARD",0],["OB Emergencies",1,0,"MFN",0],
+  ["Pediatric Transport",1,0,"PED",0],["Toxic inhalation",1,0,"MED",0],
+  ["Surgical Cases From Start to Finish",1,0,"TRAU",0],["Psychiatric and Behavioral Emergencies",2,0,"MED",0],
+  ["Gas laws Part One Vodcast",0.75,1,"PHYS",0],["Ambulance Safety",0.5,1,"SAFE",1],
+  ["Seizures",1,1,"NEU",0],["Approaching Algorithms",2,0,"CARD",0],
+  ["Neonatal Resuscitation Part 1",1,0,"MFN",0],["Immobilization Evidence",1,0,"TRAU",0],
+  ["Hemorrhage Control",1,0,"TRAU",0],["Capnography",1,0,"AIR",0],
+  ["Trauma Triage & Hand-off",1,0,"SAFE",0],["Subarachnoid & The EVD",1,1,"NEU",0],
+  ["Lab Panel Cold Reads",1,0,"MED",0],["Sedation & Analgesia",1,0,"AIR",0],
+  ["Mechanical Ventilation",12,1,"AIR",0],["ICP Management - CNS Injury",1,0,"NEU",0],
+  ["Neurological",1,0,"NEU",0],["Burns",1,0,"TRAU",0],
+  ["Oxygenation",1,1,"AIR",0],["Trauma Assessment (signs)",1,0,"TRAU",0],
+  ["Tox and Immune",2,0,"MED",0],["Arterial Lines",1,0,"CARD",0],
+  ["Engineering NPPV",2,0,"AIR",0],["Right Sided Logic V4R",1,0,"CARD",0],
+  ["Blood Components & Administration",1,1,"MED",0],["CVP",1,0,"CARD",0],
+  ["Understanding Pressors",1,0,"CARD",0],["Endocrine EM F3",1,0,"MED",0],
+  ["Traumatic Head Injuries and CT",1,0,"TRAU",0],["Infusion Logistics",2,1,"MED",0],
+  ["Pulmonary Artery Catheters",1,1,"CARD",0],["Trauma Assessment Part 1",1,0,"TRAU",0],
+  ["Bariatric & Geriatric Population",1,0,"MED",0],["Respiratory Pharmacopeia",1,0,"MED",0],
+  ["Out Of Body: Introduction To ECMO",1,0,"CARD",0],["Pressor Puzzle",1,0,"CARD",0],
+  ["Cardiac Arrest Ultrasound",1,0,"CARD",0],["Ultrasound in Hypotension",1,0,"MED",0],
+  ["Ventilator Language",1,0,"AIR",0]
+];
+const TRACKS = {
+  t40:{label:"IBSC 40-hour",goal:40,review:true,order:["SAFE","PHYS","AIR","MED","NEU","CARD","TRAU","MFN","PED","PROF"],courses:T40},
+  t100:{label:"IBSC 100-hour",goal:100,req:{clinical:75,operational:25,review:16},order:["SAFE","PHYS","AIR","MED","NEU","CARD","TRAU","MFN","PED","PROF"],courses:T100}
+};
+
+const r1 = n => Math.round(n*10)/10;
+const obj = c => ({t:c[0],h:c[1],d:c[2],c:c[3],op:c[4]});
+
+function renderTrack(key){
+  const tr = TRACKS[key];
+  const courses = tr.courses.map(obj);
+  let totH=0,doneH=0,clinDone=0,opDone=0,opTot=0;
+  courses.forEach(c=>{ totH+=c.h; if(c.d)doneH+=c.h; if(c.op){opTot+=c.h; if(c.d)opDone+=c.h;} else if(c.d){clinDone+=c.h;} });
+  const overall = Math.floor(doneH/tr.goal*100);
+
+  // hero
+  const present = tr.order.filter(tok=>courses.some(c=>c.c===tok));
+  const domainsTouched = present.filter(tok=>courses.some(c=>c.c===tok && c.d)).length;
+  let reqHtml="";
+  if(tr.review){
+    reqHtml = `
+      <div class="req">
+        <div class="top"><span class="lbl"><span class="material-icons">hub</span>Topic coverage</span><span class="val" style="color:var(--green)">${domainsTouched} / ${present.length} domains started</span></div>
+        <div class="rtrack"><div style="width:${Math.round(domainsTouched/present.length*100)}%;background:var(--green)"></div></div>
+        <div class="hint">An approved IBSC review must broadly cover the FP-C content outline (16-hour minimum). We built a ${tr.goal}-hour package so each of the ${present.length} IBSC domains below gets real depth rather than a minimum-length pass.</div>
+      </div>`;
+  } else {
+    const clinPct = Math.min(100,Math.round(clinDone/tr.req.clinical*100));
+    const opPct = Math.min(100,Math.round(opDone/tr.req.operational*100));
+    reqHtml = `
+      <div class="req">
+        <div class="top"><span class="lbl"><span class="material-icons">medical_services</span>Clinical hours</span><span class="val">${r1(clinDone)} / ${tr.req.clinical} required</span></div>
+        <div class="rtrack"><div style="width:${clinPct}%;background:var(--green)"></div></div>
+      </div>
+      <div class="req">
+        <div class="top"><span class="lbl"><span class="material-icons">engineering</span>Operational hours</span><span class="val">${r1(opDone)} / ${tr.req.operational} max</span></div>
+        <div class="rtrack"><div style="width:${opPct}%;background:var(--amber)"></div></div>
+        <div class="hint">Capped at 25 hrs — most FOAMfrat content counts as clinical, so this stays low by design.</div>
+      </div>
+      <div class="req">
+        <div class="top"><span class="lbl"><span class="material-icons">hub</span>Topic coverage</span><span class="val" style="color:var(--info)">${domainsTouched} / ${present.length} domains started</span></div>
+        <div class="rtrack"><div style="width:${Math.round(domainsTouched/present.length*100)}%;background:var(--info)"></div></div>
+        <div class="hint">These paths map to the official FP-C content-outline domains, so coverage mirrors what IBSC audits against (16-hour review minimum).</div>
+      </div>`;
+  }
+  const doneCount = courses.filter(c=>c.d).length;
+  document.getElementById('hero').innerHTML = `
+    <div class="hero">
+      <div class="ring" style="--pct:${overall}"><div class="ring-c"><div class="big">${overall}%</div><div class="small">COMPLETE</div></div></div>
+      <div class="hero-r">
+        <h2>${tr.label} renewal</h2>
+        <p class="meta">${present.length} IBSC content domains &middot; ${courses.length} courses &middot; ${r1(doneH)} of ${tr.goal} hours earned</p>
+        <div class="reqs">${reqHtml}</div>
+        <div class="metrics">
+          <div class="metric"><div class="num" style="color:var(--blue)">${r1(doneH)} / ${tr.goal}</div><div class="lbl">HOURS</div></div>
+          <div class="metric"><div class="num" style="color:var(--green)">${doneCount} / ${courses.length}</div><div class="lbl">COURSES</div></div>
+          <div class="metric"><div class="num" style="color:var(--amber)">${overall}%</div><div class="lbl">COMPLETE</div></div>
+        </div>
+      </div>
+    </div>`;
+
+  // paths
+  const groups = {};
+  courses.forEach(c=>{ (groups[c.c]=groups[c.c]||[]).push(c); });
+  const cont = document.getElementById('paths');
+  cont.innerHTML="";
+  present.forEach((tok,idx)=>{
+    const list = groups[tok]||[];
+    if(!list.length) return;
+    const th=list.reduce((a,c)=>a+c.h,0), dh=list.filter(c=>c.d).reduce((a,c)=>a+c.h,0), dc=list.filter(c=>c.d).length;
+    const complete = dc===list.length;
+    const pct = Math.round(dh/th*100);
+    const rows = list.map(c=>`
+      <div class="crow ${c.d?'done':''}">
+        <span class="cst ${c.d?'d':'n'} material-icons">${c.d?'check_circle':'radio_button_unchecked'}</span>
+        <span class="cnm">${c.t}</span>
+        ${c.op?'<span class="ctag">OP</span>':''}
+        <span class="chrs">${r1(c.h)} hr${c.h===1?'':'s'}</span>
+        ${c.d?'<span class="cact d">Complete</span>':'<span class="cact s"><span class="material-icons" style="font-size:13px;vertical-align:-2px">play_arrow</span> Start</span>'}
+      </div>`).join("");
+    const el=document.createElement('div');
+    el.className='path';
+    el.innerHTML=`
+      <div class="phead">
+        <div class="pt"><div class="nm">${idx+1}. ${META[tok].n} ${complete?'<span class="badge">DONE</span>':''}</div>
+          <div class="mt">${dc}/${list.length} courses &middot; ${r1(dh)} / ${r1(th)} hrs</div></div>
+        <div class="pmini"><div class="pt2"><span>progress</span><span>${pct}%</span></div><div class="ptr"><div class="pfl" style="width:${pct}%"></div></div></div>
+        <span class="chev material-icons">expand_more</span>
+      </div>
+      <div class="pbody"><div class="pbody-in">${rows}</div></div>`;
+    const head=el.querySelector('.phead'), body=el.querySelector('.pbody'), chev=el.querySelector('.chev');
+    head.addEventListener('click',()=>{
+      const open=body.style.maxHeight && body.style.maxHeight!=='0px';
+      body.style.maxHeight = open ? '0px' : body.firstElementChild.scrollHeight+'px';
+      chev.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+    });
+    cont.appendChild(el);
+  });
+}
+
+document.getElementById('seg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  [...document.querySelectorAll('.seg button')].forEach(x=>x.classList.toggle('active',x===b));
+  renderTrack(b.dataset.k);
+});
+renderTrack('t40');
+</script>
+</body>
+</html>
