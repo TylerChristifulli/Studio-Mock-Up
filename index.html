@@ -303,7 +303,9 @@ function renderTrack(key){
   let activeTok=null;
   for(const tok of present){ const l=groups[tok]; const dc=l.filter(c=>c.d).length; if(dc>0&&dc<l.length){activeTok=tok;break;} }
   if(!activeTok){ for(const tok of present){ if(groups[tok].some(c=>!c.d)){activeTok=tok;break;} } }
-  const ordered= activeTok? [activeTok,...present.filter(t=>t!==activeTok)] : present.slice();
+  const isDone=tok=>(groups[tok]||[]).every(c=>c.d);
+  const rest=present.filter(t=>t!==activeTok);
+  const ordered=(activeTok?[activeTok]:[]).concat(rest.filter(t=>!isDone(t)), rest.filter(t=>isDone(t)));
   const flat=[]; ordered.forEach(tok=>{(groups[tok]||[]).forEach(c=>{ if(!c.d) flat.push({c,tok}); });});
   const nextCourse= flat[0]?flat[0].c:null;
   const upI= flat[1]||null;
