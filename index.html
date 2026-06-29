@@ -19,14 +19,19 @@
   *{box-sizing:border-box;}
   .material-icons{font-family:'Material Symbols Outlined';font-weight:400;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.55;font-weight:400;}
-  .appbar{display:flex;align-items:center;justify-content:space-between;padding:13px 40px;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .appbar{background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.06);padding:13px 0;}
+  .bar-inner{max-width:1320px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;}
   .appbar .left,.appbar .right{display:flex;align-items:center;gap:24px;}
   .appbar .material-icons{font-size:24px;color:#fff;cursor:pointer;}
   .logo{width:48px;height:48px;border-radius:50%;border:2px solid rgba(255,255,255,0.55);display:flex;align-items:center;justify-content:center;}
   .logo .material-icons{font-size:26px;}
   .appbar .user{display:flex;align-items:center;gap:6px;font-size:15px;color:#fff;cursor:pointer;}
   .appbar .user .material-icons{font-size:20px;color:var(--text-2);}
-  .wrap{margin:0;padding:26px 48px 72px;}
+  .wrap{max-width:1320px;margin:0 auto;padding:26px 48px 72px;}
+  .layout{display:grid;grid-template-columns:360px 1fr;gap:30px;align-items:start;}
+  .left-col{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;}
+  .layout .sect{margin-top:0;}
+  @media(max-width:920px){.layout{grid-template-columns:1fr;}.left-col{position:static;}}
   .userprofile{font-size:30px;font-weight:300;margin:0 0 20px;}
   .tabs{display:flex;gap:32px;border-bottom:1px solid rgba(255,255,255,0.12);margin:0 0 30px;overflow-x:auto;white-space:nowrap;}
   .tabs span{padding:0 2px 14px;font-size:15px;color:var(--text-2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
@@ -40,11 +45,11 @@
   .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
   .seg button:not(.active):hover{color:var(--text);}
   /* hero */
-  .hero{display:flex;gap:40px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px 36px;flex-wrap:wrap;}
+  .hero{display:flex;gap:32px;align-items:center;padding:4px 0 0;flex-wrap:wrap;}
   .ring{--pct:0;width:172px;height:172px;border-radius:50%;flex-shrink:0;
     background:conic-gradient(var(--green) calc(var(--pct)*1%), var(--track) 0);
     display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto;}
-  .ring::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--surface);}
+  .ring::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--bg);}
   .ring-c{position:relative;text-align:center;z-index:1;}
   .ring-c .big{font-size:40px;font-weight:300;line-height:1;}
   .ring-c .small{font-size:11px;color:var(--text-3);margin-top:6px;letter-spacing:1.5px;}
@@ -98,14 +103,14 @@
   .legend span{display:flex;align-items:center;gap:7px;}
   .dot{width:9px;height:9px;border-radius:50%;}
   /* continue banner */
-  .continue{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px;}
+  .continue{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid rgba(102,187,106,0.45);border-radius:14px;padding:20px 24px;margin-bottom:26px;}
   .cposter{width:104px;height:64px;border-radius:8px;flex-shrink:0;position:relative;overflow:hidden;}
   .cposter .material-icons{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;color:#fff;}
   .cinfo{flex:1;min-width:0;}
   .clabel{font-size:11px;letter-spacing:1.2px;color:var(--text-3);text-transform:uppercase;}
   .ctitle{font-size:17px;font-weight:400;margin:3px 0 2px;}
   .cdom{font-size:13px;color:var(--text-2);font-weight:300;}
-  .cbtn{background:var(--green);color:#06210a;border:none;border-radius:8px;padding:10px 24px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
+  .cbtn{background:var(--green);color:#06210a;border:none;border-radius:10px;padding:15px 40px;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;}
   .cbtn:hover{filter:brightness(1.08);}
   /* poster shelf */
   .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:8px 0 14px;}
@@ -123,6 +128,7 @@
 </head>
 <body>
 <header class="appbar">
+  <div class="bar-inner">
   <div class="left">
     <span class="material-icons" aria-label="menu">menu</span>
     <div class="logo"><span class="material-icons">hexagon</span></div>
@@ -132,6 +138,7 @@
     <span class="material-icons" aria-label="notifications">notifications</span>
     <span class="material-icons" aria-label="explore">explore</span>
     <span class="user">Tyler Christifulli <span class="material-icons">expand_more</span></span>
+  </div>
   </div>
 </header>
 <div class="wrap">
@@ -149,16 +156,23 @@
     <button data-k="t100">IBSC 100-hour</button>
   </div>
 
-  <div id="hero"></div>
-
   <div id="continue"></div>
 
-  <div class="sect"><h3>Learning paths</h3><span class="h">Click a path to expand</span></div>
-  <div class="legend">
-    <span><span class="dot" style="background:var(--green)"></span> Completed</span>
-    <span><span class="dot" style="background:var(--text-3)"></span> Not started</span>
+  <div class="layout">
+    <aside class="left-col">
+      <div class="sect"><h3>Your progress</h3></div>
+      <div id="hero"></div>
+    </aside>
+    <main class="right-col">
+      <div class="sect"><h3>Learning paths</h3>
+        <span class="legend" style="margin:0">
+          <span><span class="dot" style="background:var(--green)"></span> Completed</span>
+          <span><span class="dot" style="background:var(--text-3)"></span> Not started</span>
+        </span>
+      </div>
+      <div id="paths"></div>
+    </main>
   </div>
-  <div id="paths"></div>
 </div>
 
 <script>
@@ -195,7 +209,7 @@ const T40 = [
   ["Lab Values",2,0,"MED",0],["Lab Panel Cold Reads",1,0,"MED",0],
   ["Ambulance Safety",0.5,1,"SAFE",1],["Flight Ops",1,0,"SAFE",1],["Flight Physiology",1,1,"PHYS",0],
   ["Crew Resource Management",1,0,"PROF",1],["HIPAA Street Talk",1,0,"PROF",1],
-  ["Evidence Based Guidelines",1,0,"PROF",1],["Working With Risk",1,0,"PROF",1]
+  ["Death Notification",1,0,"PROF",1],["Working With Risk",1,0,"PROF",1]
 ];
 const T100 = [
   ["LVAD",1,0,"CARD",0],["Medication Delivery",1,0,"MED",0],
@@ -215,7 +229,7 @@ const T100 = [
   ["Acid-Base & Oxygenation",1.5,0,"MED",0],["Advanced Acid-Base — Metabolic Acidosis & Ventilation",1,0,"MED",0],["Animated Guide to Disseminated Intravascular Coagulation",1,0,"MED",0],["Pediatric Respiratory - Part 2",1,0,"PED",0],
   ["NICU Transport Logistics",1,0,"MFN",0],["Flight Physiology",1,1,"PHYS",0],
   ["Trauma Anesthesia",1,0,"AIR",0],["Acute Coronary Syndrome",1.5,1,"CARD",0],
-  ["Risk Assessment",1,0,"PROF",1],["Adrenal Crisis Vodcast",0.5,0,"MED",0],
+  ["Risk Assessment",1,0,"PROF",1],["Death Notification",1,0,"PROF",1],["Adrenal Crisis Vodcast",0.5,0,"MED",0],
   ["Airway Procedure Lab",1,0,"AIR",0],["Thyroid Emergencies Vodcast",1,1,"MED",0],
   ["Pediatric ECG",1,0,"PED",0],["POCUS Exams",1,1,"MED",0],
   ["Cardiovascular A&P (Blood Flow & Pressures)",1,0,"CARD",0],["HOTT Arrest",2,0,"CARD",0],
@@ -263,11 +277,7 @@ function renderTrack(key){
   const domainsTouched = present.filter(tok=>courses.some(c=>c.c===tok && c.d)).length;
   let reqHtml="";
   if(tr.review){
-    reqHtml = `
-      <div class="req">
-        <div class="top"><span class="lbl"><span class="material-icons">hub</span>Topic coverage</span><span class="val" style="color:var(--green)">${domainsTouched} / ${present.length} domains started</span></div>
-        <div class="rtrack"><div style="width:${Math.round(domainsTouched/present.length*100)}%;background:var(--green)"></div></div>
-      </div>`;
+    reqHtml = "";
   } else {
     const clinPct = Math.min(100,Math.round(clinDone/tr.req.clinical*100));
     const opPct = Math.min(100,Math.round(opDone/tr.req.operational*100));
@@ -280,11 +290,6 @@ function renderTrack(key){
         <div class="top"><span class="lbl"><span class="material-icons">engineering</span>Operational hours</span><span class="val">${r1(opDone)} / ${tr.req.operational} max</span></div>
         <div class="rtrack"><div style="width:${opPct}%;background:var(--amber)"></div></div>
         <div class="hint">Capped at 25 hrs — most FOAMfrat content counts as clinical, so this stays low by design.</div>
-      </div>
-      <div class="req">
-        <div class="top"><span class="lbl"><span class="material-icons">hub</span>Topic coverage</span><span class="val" style="color:var(--info)">${domainsTouched} / ${present.length} domains started</span></div>
-        <div class="rtrack"><div style="width:${Math.round(domainsTouched/present.length*100)}%;background:var(--info)"></div></div>
-        <div class="hint">These paths map to the official FP-C content-outline domains, so coverage mirrors what IBSC audits against (16-hour review minimum).</div>
       </div>`;
   }
   const doneCount = courses.filter(c=>c.d).length;
@@ -323,7 +328,7 @@ function renderTrack(key){
           <div class="ctitle">${nextCourse.t}</div>
           <div class="cdom">${META[activeTok].n} &middot; ${r1(nextCourse.h)} hr${nextCourse.h===1?'':'s'}</div>
         </div>
-        <button class="cbtn" onclick="openPath('${activeTok}')">Resume</button>
+        <button class="cbtn" onclick="openPath('${activeTok}')"><span class="material-icons" style="font-size:20px">play_arrow</span>Resume</button>
       </div>`;
   } else {
     contBanner.innerHTML=`<div class="continue"><div class="cinfo"><div class="clabel">Status</div><div class="ctitle">Renewal complete — every domain finished.</div></div></div>`;
