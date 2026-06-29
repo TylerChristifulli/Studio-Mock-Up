@@ -97,7 +97,28 @@
   .legend{display:flex;gap:22px;flex-wrap:wrap;font-size:12.5px;color:var(--text-2);font-weight:300;margin-bottom:14px;}
   .legend span{display:flex;align-items:center;gap:7px;}
   .dot{width:9px;height:9px;border-radius:50%;}
-  @media(max-width:600px){.hero{padding:26px 22px;}.pmini{display:none;}.metrics{grid-template-columns:1fr;}}
+  /* continue banner */
+  .continue{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:24px;}
+  .cposter{width:104px;height:64px;border-radius:8px;flex-shrink:0;position:relative;overflow:hidden;}
+  .cposter .material-icons{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;color:#fff;}
+  .cinfo{flex:1;min-width:0;}
+  .clabel{font-size:11px;letter-spacing:1.2px;color:var(--text-3);text-transform:uppercase;}
+  .ctitle{font-size:17px;font-weight:400;margin:3px 0 2px;}
+  .cdom{font-size:13px;color:var(--text-2);font-weight:300;}
+  .cbtn{background:var(--green);color:#06210a;border:none;border-radius:8px;padding:10px 24px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
+  .cbtn:hover{filter:brightness(1.08);}
+  /* poster shelf */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:8px 0 14px;}
+  .pcard{cursor:pointer;}
+  .poster{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;display:flex;align-items:flex-end;padding:9px;}
+  .poster .ptitle{font-size:12px;font-weight:500;color:#fff;line-height:1.25;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.55);}
+  .poster .picon2{position:absolute;top:7px;right:8px;font-size:18px;color:#fff;opacity:.92;}
+  .pcard.done .poster{opacity:.5;}
+  .pcard.done .poster .picon2{color:#aef0b0;opacity:1;}
+  .pmeta2{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11.5px;color:var(--text-3);font-weight:300;}
+  .pmeta2 .pst.d{color:var(--green);}
+  .pmeta2 .pst.s{color:var(--info);}
+  @media(max-width:600px){.hero{padding:26px 22px;}.pmini{display:none;}.metrics{grid-template-columns:1fr;}.continue{flex-wrap:wrap;}}
 </style>
 </head>
 <body>
@@ -130,6 +151,8 @@
 
   <div id="hero"></div>
 
+  <div id="continue"></div>
+
   <div class="sect"><h3>Learning paths</h3><span class="h">Click a path to expand</span></div>
   <div class="legend">
     <span><span class="dot" style="background:var(--green)"></span> Completed</span>
@@ -151,6 +174,7 @@ const META = {
   PED:{n:"Pediatric"},
   PROF:{n:"Professional Considerations"}
 };
+const COLORS = {SAFE:["#3d5a80","#1f2d40"],PHYS:["#5e548e","#2e2747"],AIR:["#1d7874","#0d3a38"],MED:["#2a6f97","#143548"],NEU:["#6d597a","#352c3d"],CARD:["#9e2a2b","#4e1515"],TRAU:["#bb6b00","#5c3500"],MFN:["#a23670","#511a38"],PED:["#2b8a3e","#15431f"],PROF:["#52677d","#28323d"]};
 // [title, hours, done, clusterToken, operational]
 const T40 = [
   ["Acute Coronary Syndrome",1.5,1,"CARD",0],["Cardiac Infections",1,1,"CARD",0],
@@ -278,6 +302,29 @@ function renderTrack(key){
   // paths
   const groups = {};
   courses.forEach(c=>{ (groups[c.c]=groups[c.c]||[]).push(c); });
+
+  // continue-where-you-left-off target: first in-progress path, else first path with work left
+  let activeTok=null;
+  for(const tok of present){ const l=groups[tok]; const dc=l.filter(c=>c.d).length; if(dc>0 && dc<l.length){ activeTok=tok; break; } }
+  if(!activeTok){ for(const tok of present){ if(groups[tok].some(c=>!c.d)){ activeTok=tok; break; } } }
+  const nextCourse = activeTok ? groups[activeTok].find(c=>!c.d) : null;
+  const contBanner = document.getElementById('continue');
+  if(nextCourse){
+    const col=COLORS[activeTok]||["#444","#222"];
+    contBanner.innerHTML=`
+      <div class="continue">
+        <div class="cposter" style="background:linear-gradient(135deg,${col[0]},${col[1]})"><span class="material-icons">play_arrow</span></div>
+        <div class="cinfo">
+          <div class="clabel">Continue where you left off</div>
+          <div class="ctitle">${nextCourse.t}</div>
+          <div class="cdom">${META[activeTok].n} &middot; ${r1(nextCourse.h)} hr${nextCourse.h===1?'':'s'}</div>
+        </div>
+        <button class="cbtn" onclick="openPath('${activeTok}')">Resume</button>
+      </div>`;
+  } else {
+    contBanner.innerHTML=`<div class="continue"><div class="cinfo"><div class="clabel">Status</div><div class="ctitle">Renewal complete — every domain finished.</div></div></div>`;
+  }
+
   const cont = document.getElementById('paths');
   cont.innerHTML="";
   present.forEach((tok,idx)=>{
@@ -286,15 +333,18 @@ function renderTrack(key){
     const th=list.reduce((a,c)=>a+c.h,0), dh=list.filter(c=>c.d).reduce((a,c)=>a+c.h,0), dc=list.filter(c=>c.d).length;
     const complete = dc===list.length;
     const pct = Math.round(dh/th*100);
-    const rows = list.map(c=>`
-      <div class="crow ${c.d?'done':''}">
-        <span class="cst ${c.d?'d':'n'} material-icons">${c.d?'check_circle':'radio_button_unchecked'}</span>
-        <span class="cnm">${c.t}</span>
-        <span class="chrs">${r1(c.h)} hr${c.h===1?'':'s'}</span>
-        ${c.d?'<span class="cact d">Complete</span>':'<span class="cact s"><span class="material-icons" style="font-size:13px;vertical-align:-2px">play_arrow</span> Start</span>'}
+    const col=COLORS[tok]||["#444","#222"];
+    const tiles = list.map(c=>`
+      <div class="pcard ${c.d?'done':''}">
+        <div class="poster" style="background:linear-gradient(135deg,${col[0]},${col[1]})">
+          <span class="ptitle">${c.t}</span>
+          <span class="picon2 material-icons">${c.d?'check_circle':'play_circle'}</span>
+        </div>
+        <div class="pmeta2"><span>${r1(c.h)} hr${c.h===1?'':'s'}</span><span class="pst ${c.d?'d':'s'}">${c.d?'Complete':'Start'}</span></div>
       </div>`).join("");
     const el=document.createElement('div');
     el.className='path';
+    el.id='path-'+tok;
     el.innerHTML=`
       <div class="phead">
         <div class="pt"><div class="nm">${idx+1}. ${META[tok].n} ${complete?'<span class="badge">DONE</span>':''}</div>
@@ -302,7 +352,7 @@ function renderTrack(key){
         <div class="pmini"><div class="pt2"><span>progress</span><span>${pct}%</span></div><div class="ptr"><div class="pfl" style="width:${pct}%"></div></div></div>
         <span class="chev material-icons">expand_more</span>
       </div>
-      <div class="pbody"><div class="pbody-in">${rows}</div></div>`;
+      <div class="pbody"><div class="pbody-in"><div class="shelf">${tiles}</div></div></div>`;
     const head=el.querySelector('.phead'), body=el.querySelector('.pbody'), chev=el.querySelector('.chev');
     head.addEventListener('click',()=>{
       const open=body.style.maxHeight && body.style.maxHeight!=='0px';
@@ -310,8 +360,18 @@ function renderTrack(key){
       chev.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
     });
     cont.appendChild(el);
+    if(tok===activeTok){ body.style.maxHeight=body.firstElementChild.scrollHeight+'px'; chev.style.transform='rotate(180deg)'; }
   });
 }
+
+window.openPath=function(tok){
+  const el=document.getElementById('path-'+tok);
+  if(!el)return;
+  const body=el.querySelector('.pbody'), chev=el.querySelector('.chev');
+  body.style.maxHeight=body.firstElementChild.scrollHeight+'px';
+  chev.style.transform='rotate(180deg)';
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+};
 
 document.getElementById('seg').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b)return;
