@@ -329,7 +329,8 @@ function renderTrack(key){
 
   const cont = document.getElementById('paths');
   cont.innerHTML="";
-  present.forEach((tok,idx)=>{
+  const ordered = activeTok ? [activeTok, ...present.filter(t=>t!==activeTok)] : present.slice();
+  ordered.forEach((tok)=>{
     const list = groups[tok]||[];
     if(!list.length) return;
     const th=list.reduce((a,c)=>a+c.h,0), dh=list.filter(c=>c.d).reduce((a,c)=>a+c.h,0), dc=list.filter(c=>c.d).length;
@@ -349,7 +350,7 @@ function renderTrack(key){
     el.id='path-'+tok;
     el.innerHTML=`
       <div class="phead">
-        <div class="pt"><div class="nm">${idx+1}. ${META[tok].n} ${complete?'<span class="badge">DONE</span>':''}</div>
+        <div class="pt"><div class="nm">${present.indexOf(tok)+1}. ${META[tok].n} ${complete?'<span class="badge">DONE</span>':''}</div>
           <div class="mt">${dc}/${list.length} courses &middot; ${r1(dh)} / ${r1(th)} hrs</div></div>
         <div class="pmini"><div class="pt2"><span>progress</span><span>${pct}%</span></div><div class="ptr"><div class="pfl" style="width:${pct}%"></div></div></div>
         <span class="chev material-icons">expand_more</span>
