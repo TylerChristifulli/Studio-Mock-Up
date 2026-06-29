@@ -51,7 +51,7 @@
   .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:36px;}
   .feature{position:relative;border-radius:14px;overflow:hidden;min-height:238px;border:1px solid var(--line);background:#11151a;}
   .fart{position:absolute;right:0;top:0;bottom:0;width:48%;}
-  .fart::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#11151a 2%,rgba(17,21,26,0.35) 46%,transparent 100%);}
+  .fart::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#11151a 0%,rgba(17,21,26,0.9) 26%,rgba(17,21,26,0.3) 60%,transparent 100%);}
   .fov{position:absolute;left:0;top:0;bottom:0;width:66%;padding:0 34px;display:flex;flex-direction:column;justify-content:center;z-index:2;}
   .flabel{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.6);}
   .ftitle{font-size:30px;font-weight:500;margin:7px 0 7px;line-height:1.1;}
@@ -109,6 +109,21 @@
   .path.complete{border-color:rgba(102,187,106,0.30);box-shadow:inset 3px 0 0 0 var(--green);}
   @property --pct{syntax:"<number>";inherits:false;initial-value:0;}
   .ring{transition:--pct .9s cubic-bezier(.4,0,.2,1);}
+  .heroremain{font-size:12.5px;color:var(--text-2);margin-top:12px;}
+  .fprog{margin-top:16px;max-width:300px;}
+  .fprogbar{height:5px;border-radius:999px;background:rgba(255,255,255,.22);overflow:hidden;}
+  .fprogbar>div{height:100%;background:var(--yellow);border-radius:999px;}
+  .fproglabel{font-size:12px;color:rgba(255,255,255,.72);margin-top:7px;}
+  .upthumb{overflow:hidden;}
+  .upimg{position:absolute;inset:0;transition:transform .3s ease;}
+  .upnext{cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,background .16s ease;}
+  .upnext:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.4);border-color:var(--line-2);background:#23272e;}
+  .upnext:hover .upimg{transform:scale(1.08);}
+  .resumebtn:hover{filter:brightness(1.06);transform:scale(1.02);}
+  .resumebtn:active{transform:scale(.98);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .topgrid{animation:fadeUp .5s ease both;}
+  #paths{animation:fadeUp .5s ease .06s both;}
   .poster .picon2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;color:#fff;opacity:.92;text-shadow:0 1px 6px rgba(0,0,0,.7);}
   .pcard.done .poster{opacity:.4;}
   .pcard.done .poster .picon2{color:#bdf0bf;opacity:1;}
@@ -174,7 +189,7 @@ const META = {
   PROF:{n:"Professional Considerations"}
 };
 const COLORS = {SAFE:["#3d5a80"],PHYS:["#5e548e"],AIR:["#1d7874"],MED:["#2a6f97"],NEU:["#6d597a"],CARD:["#9e2a2b"],TRAU:["#bb6b00"],MFN:["#a23670"],PED:["#2b8a3e"],PROF:["#52677d"]};
-const ART = {"Flight Ops":"flight%20ops%20thumbnail.png"};
+const ART = {"Flight Ops":"flight%20ops%20thumbnail.png","The RSI Summit":"rsi-summit.png"};
 // [title, hours, done, clusterToken, operational]
 const T40 = [
   ["Acute Coronary Syndrome",1.5,1,"CARD",0],["Cardiac Infections",1,1,"CARD",0],
@@ -271,15 +286,17 @@ function renderTrack(key){
 
   document.getElementById('hero').innerHTML=`
     <div class="hero">
-      <div class="ring" style="--pct:${overall}"><div class="ring-c"><div class="big">${overall}%</div><div class="small">Completed</div></div></div>
+      <div class="ring" style="--pct:0"><div class="ring-c"><div class="big">${overall}%</div><div class="small">Completed</div></div></div>
       <div class="hero-r">
         <div class="statline">
           <div><div class="n">${r1(doneH)} / ${tr.goal}</div><div class="l">Hours</div></div>
           <div><div class="n">${doneCount} / ${courses.length}</div><div class="l">Courses</div></div>
           <div><div class="n">${present.length}</div><div class="l">Domains</div></div>
         </div>
+        <div class="heroremain">${r1(tr.goal-doneH)} hours remaining</div>
       </div>
     </div>`;
+  requestAnimationFrame(()=>{const rg=document.querySelector('#hero .ring');if(rg)rg.style.setProperty('--pct',overall);});
 
   const groups={};
   courses.forEach(c=>{ (groups[c.c]=groups[c.c]||[]).push(c); });
@@ -290,7 +307,7 @@ function renderTrack(key){
   const flat=[]; ordered.forEach(tok=>{(groups[tok]||[]).forEach(c=>{ if(!c.d) flat.push({c,tok}); });});
   const nextCourse= flat[0]?flat[0].c:null;
   const upI= flat[1]||null;
-  const artBg=(title,fallback)=>ART[title]?("#11151a url('"+ART[title]+"') center/cover"):fallback;
+  const artBg=(title,fallback)=>ART[title]?("#11151a url('"+ART[title]+"') right center/cover"):fallback;
 
   const feat=document.getElementById('feature');
   if(nextCourse){
@@ -303,6 +320,7 @@ function renderTrack(key){
           <div class="ftitle">${nextCourse.t}</div>
           <div class="fmeta">${META[activeTok].n} &middot; ${r1(nextCourse.h)} hr${nextCourse.h===1?'':'s'}</div>
           <button class="resumebtn"><span class="material-icons" style="font-size:20px">play_arrow</span>Resume</button>
+          <div class="fprog"><div class="fprogbar"><div style="width:60%"></div></div><div class="fproglabel">Lesson in progress · about 22 minutes remaining</div></div>
         </div>
       </div>`;
   } else {
@@ -312,7 +330,7 @@ function renderTrack(key){
   const up=document.getElementById('upnext');
   if(upI){
     const ucol=(COLORS[upI.tok]||["#333"])[0];
-    up.innerHTML=`<div class="upnext"><div class="upthumb" style="background:${artBg(upI.c.t,ucol)}"><span class="material-icons">play_arrow</span></div><div class="upinfo"><div class="uplabel">Up next</div><div class="uptitle">${upI.c.t}</div><div class="upsub">${META[upI.tok].n} &middot; ${r1(upI.c.h)} hr${upI.c.h===1?'':'s'}</div></div></div>`;
+    up.innerHTML=`<div class="upnext" onclick="var e=document.getElementById('path-${upI.tok}');if(e)e.scrollIntoView({behavior:'smooth',block:'center'})"><div class="upthumb"><div class="upimg" style="background:${artBg(upI.c.t,ucol)}"></div><span class="material-icons">play_arrow</span></div><div class="upinfo"><div class="uplabel">Up next</div><div class="uptitle">${upI.c.t}</div><div class="upsub">${META[upI.tok].n} &middot; ${r1(upI.c.h)} hr${upI.c.h===1?'':'s'}</div></div></div>`;
   } else { up.innerHTML=''; }
 
   const cont=document.getElementById('paths');
