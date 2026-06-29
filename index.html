@@ -37,6 +37,10 @@
   .tabs span:hover{color:#fff;}
   .tabs span.active{color:#4f8ef7;border-bottom-color:#4f8ef7;}
   h1{font-size:26px;font-weight:400;margin:0 0 6px;}
+  .titlerow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px;}
+  .titlerow h1{margin:0;}
+  .titlerow .seg{margin:0;}
+  .titlerow .seg button{padding:7px 16px;font-size:13px;}
   .sub{color:var(--text-2);font-size:14.5px;font-weight:300;margin:0 0 24px;max-width:640px;}
   .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:8px;}
   .seg button{border:none;background:transparent;color:var(--text-2);font-family:inherit;font-size:14px;font-weight:400;padding:9px 22px;border-radius:999px;cursor:pointer;transition:all .2s;}
@@ -122,13 +126,14 @@
     <span>Licenses &amp; Certifications</span><span>Credentials</span>
     <span class="active">IBSC</span><span>Recertification</span><span>Tours</span>
   </nav>
-  <h1>IBSC Renewal</h1>
-  <p class="sub">Every course here maps to an official IBSC FP-C exam domain — so your renewal lines up with exactly what the IBSC requires for recertification.</p>
-
-  <div class="seg" id="seg">
-    <button data-k="t40" class="active">IBSC 40-hour</button>
-    <button data-k="t100">IBSC 100-hour</button>
+  <div class="titlerow">
+    <h1>IBSC Renewal</h1>
+    <div class="seg" id="seg">
+      <button data-k="t40" class="active">IBSC 40-hour</button>
+      <button data-k="t100">IBSC 100-hour</button>
+    </div>
   </div>
+  <p class="sub">Every course here maps to an official IBSC FP-C exam domain — so your renewal lines up with exactly what the IBSC requires for recertification.</p>
 
   <div class="topgrid">
     <div id="hero"></div>
