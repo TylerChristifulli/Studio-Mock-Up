@@ -134,7 +134,6 @@
   <div class="legend">
     <span><span class="dot" style="background:var(--green)"></span> Completed</span>
     <span><span class="dot" style="background:var(--text-3)"></span> Not started</span>
-    <span><span class="ctag">OP</span> Operational category</span>
   </div>
   <div id="paths"></div>
 </div>
@@ -240,7 +239,6 @@ function renderTrack(key){
       <div class="req">
         <div class="top"><span class="lbl"><span class="material-icons">hub</span>Topic coverage</span><span class="val" style="color:var(--green)">${domainsTouched} / ${present.length} domains started</span></div>
         <div class="rtrack"><div style="width:${Math.round(domainsTouched/present.length*100)}%;background:var(--green)"></div></div>
-        <div class="hint">An approved IBSC review must broadly cover the FP-C content outline (16-hour minimum). We built a ${tr.goal}-hour package so each of the ${present.length} IBSC domains below gets real depth rather than a minimum-length pass.</div>
       </div>`;
   } else {
     const clinPct = Math.min(100,Math.round(clinDone/tr.req.clinical*100));
@@ -292,7 +290,6 @@ function renderTrack(key){
       <div class="crow ${c.d?'done':''}">
         <span class="cst ${c.d?'d':'n'} material-icons">${c.d?'check_circle':'radio_button_unchecked'}</span>
         <span class="cnm">${c.t}</span>
-        ${c.op?'<span class="ctag">OP</span>':''}
         <span class="chrs">${r1(c.h)} hr${c.h===1?'':'s'}</span>
         ${c.d?'<span class="cact d">Complete</span>':'<span class="cact s"><span class="material-icons" style="font-size:13px;vertical-align:-2px">play_arrow</span> Start</span>'}
       </div>`).join("");
