@@ -47,7 +47,7 @@
   .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
   .seg button:not(.active):hover{color:var(--text);}
   /* progress header (unboxed) */
-  .hero{display:flex;gap:22px;align-items:center;padding:0;flex-wrap:wrap;}
+  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:8px 0 0;}
   .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:28px;}
   .feature{position:relative;border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;min-height:212px;border:1px solid var(--line);}
   .fov{width:100%;padding:20px 24px;background:linear-gradient(to top,rgba(0,0,0,.82) 8%,rgba(0,0,0,.2) 62%,rgba(0,0,0,.05));}
@@ -62,9 +62,9 @@
   .ring-c{position:relative;text-align:center;z-index:1;}
   .ring-c .big{font-size:38px;font-weight:300;line-height:1;}
   .ring-c .small{font-size:10px;color:var(--text-3);margin-top:5px;letter-spacing:1.5px;}
-  .hero-r{flex:1;min-width:260px;}
+  .hero-r{width:100%;}
   .hero-r h2{font-size:22px;font-weight:500;margin:0 0 12px;}
-  .statline{display:flex;gap:30px;flex-wrap:wrap;}
+  .statline{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
   .statline .n{font-size:20px;font-weight:500;}
   .statline .l{font-size:11px;color:var(--text-3);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
   .reqs{display:flex;flex-direction:column;gap:11px;margin-top:16px;max-width:460px;}
@@ -259,7 +259,6 @@ function renderTrack(key){
           <div><div class="n">${doneCount} / ${courses.length}</div><div class="l">Courses</div></div>
           <div><div class="n">${present.length}</div><div class="l">Domains</div></div>
         </div>
-        ${reqHtml?`<div class="reqs">${reqHtml}</div>`:''}
       </div>
     </div>`;
 
