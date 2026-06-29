@@ -37,7 +37,7 @@
   .tabs span:hover{color:#fff;}
   .tabs span.active{color:#4f8ef7;border-bottom-color:#4f8ef7;}
   h1{font-size:26px;font-weight:400;margin:0 0 6px;}
-  .titlerow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px;}
+  .titlerow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
   .titlerow h1{margin:0;}
   .titlerow .seg{margin:0;}
   .titlerow .seg button{padding:7px 16px;font-size:13px;}
@@ -48,12 +48,14 @@
   .seg button:not(.active):hover{color:var(--text);}
   /* progress header (unboxed) */
   .hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:8px 0 0;}
-  .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:28px;}
-  .feature{position:relative;border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;min-height:212px;border:1px solid var(--line);}
-  .fov{width:100%;padding:20px 24px;background:linear-gradient(to top,rgba(0,0,0,.82) 8%,rgba(0,0,0,.2) 62%,rgba(0,0,0,.05));}
-  .flabel{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.72);}
-  .ftitle{font-size:26px;font-weight:500;margin:4px 0 5px;line-height:1.1;}
-  .fmeta{font-size:13px;color:rgba(255,255,255,.78);margin-bottom:16px;}
+  .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:36px;}
+  .feature{position:relative;border-radius:14px;overflow:hidden;min-height:238px;border:1px solid var(--line);background:#11151a;}
+  .fart{position:absolute;right:0;top:0;bottom:0;width:48%;}
+  .fart::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#11151a 2%,rgba(17,21,26,0.35) 46%,transparent 100%);}
+  .fov{position:absolute;left:0;top:0;bottom:0;width:66%;padding:0 34px;display:flex;flex-direction:column;justify-content:center;z-index:2;}
+  .flabel{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.6);}
+  .ftitle{font-size:30px;font-weight:500;margin:7px 0 7px;line-height:1.1;}
+  .fmeta{font-size:13.5px;color:rgba(255,255,255,.72);margin-bottom:20px;}
   @media(max-width:760px){.topgrid{grid-template-columns:1fr;}}
   .ring{--pct:0;width:152px;height:152px;border-radius:50%;flex-shrink:0;
     background:conic-gradient(var(--green) calc(var(--pct)*1%), var(--track) 0);
@@ -61,7 +63,7 @@
   .ring::after{content:"";position:absolute;inset:14px;border-radius:50%;background:var(--bg);}
   .ring-c{position:relative;text-align:center;z-index:1;}
   .ring-c .big{font-size:38px;font-weight:300;line-height:1;}
-  .ring-c .small{font-size:10px;color:var(--text-3);margin-top:5px;letter-spacing:1.5px;}
+  .ring-c .small{font-size:12px;color:var(--text-3);margin-top:6px;letter-spacing:.3px;}
   .hero-r{width:100%;}
   .hero-r h2{font-size:22px;font-weight:500;margin:0 0 12px;}
   .statline{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
@@ -73,10 +75,11 @@
   .rtrack{height:6px;border-radius:999px;background:var(--track);overflow:hidden;}
   .rtrack > div{height:100%;border-radius:999px;}
   /* path sections */
-  .path{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color .2s;}
+  .path{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:border-color .2s;}
   .path.active{border-color:var(--line-2);}
   .path:hover{border-color:var(--line-2);}
-  .phead{display:flex;align-items:center;gap:16px;padding:15px 18px;cursor:pointer;}
+  .phead{display:flex;align-items:flex-start;gap:16px;padding:16px 18px;cursor:pointer;}
+  .phead .chevbtn{margin-top:-1px;}
   .pt{flex:1;min-width:0;}
   .pt .nm{font-size:17px;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   .pt .mt{font-size:12.5px;color:var(--text-3);font-weight:300;margin-top:3px;}
@@ -88,12 +91,12 @@
   .controw{display:flex;align-items:center;gap:14px;background:var(--surface-2);border-radius:11px;padding:12px 14px;margin:2px 0 14px;}
   .controw .cl{font-size:10.5px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;}
   .controw .ct{font-size:16px;font-weight:500;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .resumebtn{background:var(--yellow);color:#1a1700;border:none;border-radius:9px;padding:11px 22px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:7px;}
+  .resumebtn{background:var(--yellow);color:#1a1700;border:none;border-radius:10px;padding:14px 30px;font-family:inherit;font-size:15.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;}
   .resumebtn:hover{filter:brightness(1.06);}
   .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;}
   .pcard{cursor:pointer;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s;}
   .pcard:hover{border-color:var(--line-2);}
-  .poster{position:relative;height:52px;}
+  .poster{position:relative;height:96px;}
   .poster .picon2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;color:#fff;opacity:.9;}
   .pcard.done .poster{opacity:.4;}
   .pcard.done .poster .picon2{color:#bdf0bf;opacity:1;}
@@ -252,7 +255,7 @@ function renderTrack(key){
 
   document.getElementById('hero').innerHTML=`
     <div class="hero">
-      <div class="ring" style="--pct:${overall}"><div class="ring-c"><div class="big">${overall}%</div><div class="small">COMPLETE</div></div></div>
+      <div class="ring" style="--pct:${overall}"><div class="ring-c"><div class="big">${overall}%</div><div class="small">Completed</div></div></div>
       <div class="hero-r">
         <div class="statline">
           <div><div class="n">${r1(doneH)} / ${tr.goal}</div><div class="l">Hours</div></div>
@@ -273,16 +276,17 @@ function renderTrack(key){
   if(nextCourse){
     const fcol=(COLORS[activeTok]||["#333"])[0];
     feat.innerHTML=`
-      <div class="feature" style="background:linear-gradient(140deg,${fcol},#0c0e10)">
+      <div class="feature">
+        <div class="fart" style="background:linear-gradient(135deg,${fcol},#0c0e10)"></div>
         <div class="fov">
           <div class="flabel">Continue where you left off</div>
           <div class="ftitle">${nextCourse.t}</div>
           <div class="fmeta">${META[activeTok].n} &middot; ${r1(nextCourse.h)} hr${nextCourse.h===1?'':'s'}</div>
-          <button class="resumebtn"><span class="material-icons" style="font-size:18px">play_arrow</span>Resume</button>
+          <button class="resumebtn"><span class="material-icons" style="font-size:20px">play_arrow</span>Resume</button>
         </div>
       </div>`;
   } else {
-    feat.innerHTML=`<div class="feature" style="background:linear-gradient(140deg,#1d9e75,#0c0e10)"><div class="fov"><div class="flabel">Status</div><div class="ftitle">Renewal complete</div><div class="fmeta">Every domain finished.</div></div></div>`;
+    feat.innerHTML=`<div class="feature"><div class="fart" style="background:linear-gradient(135deg,#1d9e75,#0c0e10)"></div><div class="fov"><div class="flabel">Status</div><div class="ftitle">Renewal complete</div><div class="fmeta">Every domain finished.</div></div></div>`;
   }
 
   const cont=document.getElementById('paths');
