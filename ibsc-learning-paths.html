@@ -31,7 +31,7 @@
   .layout{display:grid;grid-template-columns:360px 1fr;gap:30px;align-items:start;}
   .left-col{position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;}
   .layout .sect{margin-top:0;}
-  @media(max-width:920px){.layout{grid-template-columns:1fr;}.left-col{position:static;}}
+  @media(max-width:920px){.layout{grid-template-columns:1fr;}.left-col{position:static;}.continue{max-width:none;margin-left:0;}}
   .userprofile{font-size:30px;font-weight:300;margin:0 0 20px;}
   .tabs{display:flex;gap:32px;border-bottom:1px solid rgba(255,255,255,0.12);margin:0 0 30px;overflow-x:auto;white-space:nowrap;}
   .tabs span{padding:0 2px 14px;font-size:15px;color:var(--text-2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
@@ -103,14 +103,14 @@
   .legend span{display:flex;align-items:center;gap:7px;}
   .dot{width:9px;height:9px;border-radius:50%;}
   /* continue banner */
-  .continue{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid rgba(102,187,106,0.45);border-radius:14px;padding:20px 24px;margin-bottom:26px;}
+  .continue{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid rgba(236,235,94,0.45);border-radius:14px;padding:16px 20px;margin:0 0 16px auto;max-width:calc(100% - 390px);}
   .cposter{width:104px;height:64px;border-radius:8px;flex-shrink:0;position:relative;overflow:hidden;}
-  .cposter .material-icons{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;color:#fff;}
+  .cposter .material-icons{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:32px;color:#1a1700;}
   .cinfo{flex:1;min-width:0;}
   .clabel{font-size:11px;letter-spacing:1.2px;color:var(--text-3);text-transform:uppercase;}
   .ctitle{font-size:17px;font-weight:400;margin:3px 0 2px;}
   .cdom{font-size:13px;color:var(--text-2);font-weight:300;}
-  .cbtn{background:var(--green);color:#06210a;border:none;border-radius:10px;padding:15px 40px;font-family:inherit;font-size:16px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+  .cbtn{background:#eceb5e;color:#1a1700;border:none;border-radius:10px;padding:13px 30px;font-family:inherit;font-size:15px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;}
   .cbtn:hover{filter:brightness(1.08);}
   /* poster shelf */
   .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding:8px 0 14px;}
@@ -315,7 +315,7 @@ function renderTrack(key){
     const col=COLORS[activeTok]||["#444","#222"];
     contBanner.innerHTML=`
       <div class="continue">
-        <div class="cposter" style="background:linear-gradient(135deg,${col[0]},${col[1]})"><span class="material-icons">play_arrow</span></div>
+        <div class="cposter" style="background:#eceb5e"><span class="material-icons">play_arrow</span></div>
         <div class="cinfo">
           <div class="clabel">Continue where you left off</div>
           <div class="ctitle">${nextCourse.t}</div>
