@@ -57,7 +57,25 @@
   .flabel{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.6);}
   .ftitle{font-size:30px;font-weight:500;margin:7px 0 7px;line-height:1.1;}
   .fmeta{font-size:13.5px;color:rgba(255,255,255,.72);margin-bottom:20px;}
-  @media(max-width:760px){.topgrid{grid-template-columns:1fr;}}
+  @media(max-width:760px){
+    .topgrid{grid-template-columns:1fr;gap:18px;margin-bottom:34px;}
+    .wrap{padding:22px 18px 64px;}
+    .bar-inner{padding:0 18px;}
+    #hero{align-self:auto;}
+    .feature{min-height:300px;}
+    .fart{width:100%;}
+    .fart::before{background:linear-gradient(to top,#11151a 14%,rgba(17,21,26,0.62) 50%,rgba(17,21,26,0.12) 90%);}
+    .fov{position:relative;width:100%;padding:140px 22px 22px;}
+    .ftitle{font-size:25px;}
+    .userprofile{font-size:24px;}
+    .phead{padding:14px 14px;}
+    .pbody-in{padding:0 14px 10px;}
+    .ring{display:none;}
+    .herobar{display:block;}
+    .hero{align-items:stretch;text-align:left;}
+    .hero-r{margin-top:16px;}
+    .statline{justify-content:flex-start;}
+  }
   .ring{--pct:0;width:152px;height:152px;border-radius:50%;flex-shrink:0;
     background:conic-gradient(var(--green) calc(var(--pct)*1%), var(--track) 0);
     display:flex;align-items:center;justify-content:center;position:relative;}
@@ -111,6 +129,12 @@
   @property --pct{syntax:"<number>";inherits:false;initial-value:0;}
   .ring{transition:--pct .9s cubic-bezier(.4,0,.2,1);}
   .heroremain{font-size:12.5px;color:var(--text-2);margin-top:5px;}
+  .herobar{display:none;width:100%;}
+  .hbrow{display:flex;align-items:baseline;gap:10px;margin-bottom:9px;}
+  .hbpct{font-size:30px;font-weight:300;line-height:1;}
+  .hblabel{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;}
+  .hbtrack{height:10px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .hbfill{height:100%;background:var(--green);border-radius:999px;transition:width .9s cubic-bezier(.4,0,.2,1);}
   .fprog{margin-top:16px;max-width:300px;}
   .fprogbar{height:5px;border-radius:999px;background:rgba(255,255,255,.22);overflow:hidden;}
   .fprogbar>div{height:100%;background:var(--yellow);border-radius:999px;}
@@ -288,6 +312,7 @@ function renderTrack(key){
   document.getElementById('hero').innerHTML=`
     <div class="hero">
       <div class="ring" style="--pct:0"><div class="ring-c"><div class="big">${overall}%</div><div class="small">Completed</div></div></div>
+      <div class="herobar"><div class="hbrow"><span class="hbpct">${overall}%</span><span class="hblabel">Completed</span></div><div class="hbtrack"><div class="hbfill" style="width:0"></div></div></div>
       <div class="hero-r">
         <div class="statline">
           <div><div class="n">${r1(doneH)} / ${tr.goal}</div><div class="l">Hours</div></div>
@@ -297,7 +322,7 @@ function renderTrack(key){
         <div class="heroremain">${r1(tr.goal-doneH)} hours remaining</div>
       </div>
     </div>`;
-  requestAnimationFrame(()=>{const rg=document.querySelector('#hero .ring');if(rg)rg.style.setProperty('--pct',overall);});
+  requestAnimationFrame(()=>{const rg=document.querySelector('#hero .ring');if(rg)rg.style.setProperty('--pct',overall);const bf=document.querySelector('#hero .hbfill');if(bf)bf.style.width=overall+'%';});
 
   const groups={};
   courses.forEach(c=>{ (groups[c.c]=groups[c.c]||[]).push(c); });
