@@ -47,7 +47,7 @@
   .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
   .seg button:not(.active):hover{color:var(--text);}
   /* progress header (unboxed) */
-  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:8px 0 0;}
+  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:8px 0 0;}
   .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:36px;}
   .feature{position:relative;border-radius:14px;overflow:hidden;min-height:238px;border:1px solid var(--line);background:#11151a;}
   .fart{position:absolute;right:0;top:0;bottom:0;width:48%;}
@@ -87,17 +87,29 @@
   .chevbtn{width:30px;height:30px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .chevbtn .material-icons{font-size:20px;color:var(--text-2);transition:transform .25s;}
   .pbody{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-  .pbody-in{padding:0 18px 14px;}
+  .pbody-in{padding:0 18px 10px;}
   .controw{display:flex;align-items:center;gap:14px;background:var(--surface-2);border-radius:11px;padding:12px 14px;margin:2px 0 14px;}
   .controw .cl{font-size:10.5px;letter-spacing:1px;color:var(--text-3);text-transform:uppercase;}
   .controw .ct{font-size:16px;font-weight:500;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .resumebtn{background:var(--yellow);color:#1a1700;border:none;border-radius:10px;padding:14px 30px;font-family:inherit;font-size:15.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+  .resumebtn{background:var(--yellow);color:#1a1700;border:none;border-radius:10px;padding:14px 22px;font-family:inherit;font-size:15.5px;font-weight:500;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;}
   .resumebtn:hover{filter:brightness(1.06);}
   .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;}
-  .pcard{cursor:pointer;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .15s;}
-  .pcard:hover{border-color:var(--line-2);}
-  .poster{position:relative;height:96px;}
-  .poster .picon2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;color:#fff;opacity:.9;}
+  .pcard{cursor:pointer;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;}
+  .pcard:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.45);}
+  .poster{position:relative;height:96px;transition:transform .3s ease;}
+  .pcard:hover .poster{transform:scale(1.05);}
+  .rightcol{display:flex;flex-direction:column;gap:12px;}
+  .upnext{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;}
+  .upthumb{width:66px;height:42px;border-radius:7px;flex-shrink:0;position:relative;}
+  .upthumb .material-icons{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;color:#fff;opacity:.9;}
+  .upinfo{flex:1;min-width:0;}
+  .uplabel{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);}
+  .uptitle{font-size:15px;font-weight:500;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .upsub{font-size:12px;color:var(--text-3);margin-top:1px;}
+  .path.complete{border-color:rgba(102,187,106,0.30);box-shadow:inset 3px 0 0 0 var(--green);}
+  @property --pct{syntax:"<number>";inherits:false;initial-value:0;}
+  .ring{transition:--pct .9s cubic-bezier(.4,0,.2,1);}
+  .poster .picon2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;color:#fff;opacity:.92;text-shadow:0 1px 6px rgba(0,0,0,.7);}
   .pcard.done .poster{opacity:.4;}
   .pcard.done .poster .picon2{color:#bdf0bf;opacity:1;}
   .pinfo{padding:8px 10px 9px;}
@@ -140,7 +152,10 @@
 
   <div class="topgrid">
     <div id="hero"></div>
-    <div id="feature"></div>
+    <div class="rightcol">
+      <div id="feature"></div>
+      <div id="upnext"></div>
+    </div>
   </div>
   <div id="paths"></div>
 </div>
@@ -159,6 +174,7 @@ const META = {
   PROF:{n:"Professional Considerations"}
 };
 const COLORS = {SAFE:["#3d5a80"],PHYS:["#5e548e"],AIR:["#1d7874"],MED:["#2a6f97"],NEU:["#6d597a"],CARD:["#9e2a2b"],TRAU:["#bb6b00"],MFN:["#a23670"],PED:["#2b8a3e"],PROF:["#52677d"]};
+const ART = {"Flight Ops":"flight%20ops%20thumbnail.png"};
 // [title, hours, done, clusterToken, operational]
 const T40 = [
   ["Acute Coronary Syndrome",1.5,1,"CARD",0],["Cardiac Infections",1,1,"CARD",0],
@@ -270,14 +286,18 @@ function renderTrack(key){
   let activeTok=null;
   for(const tok of present){ const l=groups[tok]; const dc=l.filter(c=>c.d).length; if(dc>0&&dc<l.length){activeTok=tok;break;} }
   if(!activeTok){ for(const tok of present){ if(groups[tok].some(c=>!c.d)){activeTok=tok;break;} } }
-  const nextCourse= activeTok? groups[activeTok].find(c=>!c.d):null;
+  const ordered= activeTok? [activeTok,...present.filter(t=>t!==activeTok)] : present.slice();
+  const flat=[]; ordered.forEach(tok=>{(groups[tok]||[]).forEach(c=>{ if(!c.d) flat.push({c,tok}); });});
+  const nextCourse= flat[0]?flat[0].c:null;
+  const upI= flat[1]||null;
+  const artBg=(title,fallback)=>ART[title]?("#11151a url('"+ART[title]+"') center/cover"):fallback;
 
   const feat=document.getElementById('feature');
   if(nextCourse){
     const fcol=(COLORS[activeTok]||["#333"])[0];
     feat.innerHTML=`
       <div class="feature">
-        <div class="fart" style="background:linear-gradient(135deg,${fcol},#0c0e10)"></div>
+        <div class="fart" style="background:${artBg(nextCourse.t,'linear-gradient(135deg,'+fcol+',#0c0e10)')}"></div>
         <div class="fov">
           <div class="flabel">Continue where you left off</div>
           <div class="ftitle">${nextCourse.t}</div>
@@ -289,9 +309,14 @@ function renderTrack(key){
     feat.innerHTML=`<div class="feature"><div class="fart" style="background:linear-gradient(135deg,#1d9e75,#0c0e10)"></div><div class="fov"><div class="flabel">Status</div><div class="ftitle">Renewal complete</div><div class="fmeta">Every domain finished.</div></div></div>`;
   }
 
+  const up=document.getElementById('upnext');
+  if(upI){
+    const ucol=(COLORS[upI.tok]||["#333"])[0];
+    up.innerHTML=`<div class="upnext"><div class="upthumb" style="background:${artBg(upI.c.t,ucol)}"><span class="material-icons">play_arrow</span></div><div class="upinfo"><div class="uplabel">Up next</div><div class="uptitle">${upI.c.t}</div><div class="upsub">${META[upI.tok].n} &middot; ${r1(upI.c.h)} hr${upI.c.h===1?'':'s'}</div></div></div>`;
+  } else { up.innerHTML=''; }
+
   const cont=document.getElementById('paths');
   cont.innerHTML="";
-  const ordered= activeTok? [activeTok,...present.filter(t=>t!==activeTok)] : present.slice();
   ordered.forEach((tok)=>{
     const list=groups[tok]||[]; if(!list.length)return;
     const th=list.reduce((a,c)=>a+c.h,0), dh=list.filter(c=>c.d).reduce((a,c)=>a+c.h,0), dc=list.filter(c=>c.d).length;
@@ -300,15 +325,15 @@ function renderTrack(key){
     const isActive=tok===activeTok;
     const tiles=list.map(c=>`
       <div class="pcard ${c.d?'done':''}">
-        <div class="poster" style="background:${col}"><span class="picon2 material-icons">${c.d?'check_circle':'play_circle'}</span></div>
+        <div class="poster" style="background:${ART[c.t]?("#222 url('"+ART[c.t]+"') center/cover"):col}"><span class="picon2 material-icons">${c.d?'check_circle':'play_circle'}</span></div>
         <div class="pinfo"><div class="nm2">${c.t}</div><div class="mt2"><span>${r1(c.h)} hr${c.h===1?'':'s'}</span><span class="pst ${c.d?'d':'s'}">${c.d?'Complete':'Start'}</span></div></div>
       </div>`).join("");
     const el=document.createElement('div');
-    el.className='path'+(isActive?' active':'');
+    el.className='path'+(isActive?' active':'')+(complete?' complete':'');
     el.id='path-'+tok;
     el.innerHTML=`
       <div class="phead">
-        <div class="pt"><div class="nm">${present.indexOf(tok)+1}. ${META[tok].n} ${complete?'<span class="badge">DONE</span>':''}</div>
+        <div class="pt"><div class="nm">${present.indexOf(tok)+1}. ${META[tok].n} ${complete?'<span class="badge"><span class="material-icons" style="font-size:13px;vertical-align:-2px">check</span> DONE</span>':''}</div>
           <div class="mt">${dc}/${list.length} courses &middot; ${r1(dh)} / ${r1(th)} hrs &middot; ${pct}%</div></div>
         <span class="chevbtn"><span class="chev material-icons">expand_more</span></span>
       </div>
