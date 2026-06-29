@@ -43,7 +43,14 @@
   .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
   .seg button:not(.active):hover{color:var(--text);}
   /* progress header (unboxed) */
-  .hero{display:flex;gap:36px;align-items:center;padding:8px 0 26px;flex-wrap:wrap;}
+  .hero{display:flex;gap:22px;align-items:center;padding:0;flex-wrap:wrap;}
+  .topgrid{display:grid;grid-template-columns:300px 1fr;gap:30px;align-items:start;margin-bottom:28px;}
+  .feature{position:relative;border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;min-height:212px;border:1px solid var(--line);}
+  .fov{width:100%;padding:20px 24px;background:linear-gradient(to top,rgba(0,0,0,.82) 8%,rgba(0,0,0,.2) 62%,rgba(0,0,0,.05));}
+  .flabel{font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.72);}
+  .ftitle{font-size:26px;font-weight:500;margin:4px 0 5px;line-height:1.1;}
+  .fmeta{font-size:13px;color:rgba(255,255,255,.78);margin-bottom:16px;}
+  @media(max-width:760px){.topgrid{grid-template-columns:1fr;}}
   .ring{--pct:0;width:152px;height:152px;border-radius:50%;flex-shrink:0;
     background:conic-gradient(var(--green) calc(var(--pct)*1%), var(--track) 0);
     display:flex;align-items:center;justify-content:center;position:relative;}
@@ -123,7 +130,10 @@
     <button data-k="t100">IBSC 100-hour</button>
   </div>
 
-  <div id="hero"></div>
+  <div class="topgrid">
+    <div id="hero"></div>
+    <div id="feature"></div>
+  </div>
   <div id="paths"></div>
 </div>
 
@@ -256,6 +266,22 @@ function renderTrack(key){
   if(!activeTok){ for(const tok of present){ if(groups[tok].some(c=>!c.d)){activeTok=tok;break;} } }
   const nextCourse= activeTok? groups[activeTok].find(c=>!c.d):null;
 
+  const feat=document.getElementById('feature');
+  if(nextCourse){
+    const fcol=(COLORS[activeTok]||["#333"])[0];
+    feat.innerHTML=`
+      <div class="feature" style="background:linear-gradient(140deg,${fcol},#0c0e10)">
+        <div class="fov">
+          <div class="flabel">Continue where you left off</div>
+          <div class="ftitle">${nextCourse.t}</div>
+          <div class="fmeta">${META[activeTok].n} &middot; ${r1(nextCourse.h)} hr${nextCourse.h===1?'':'s'}</div>
+          <button class="resumebtn"><span class="material-icons" style="font-size:18px">play_arrow</span>Resume</button>
+        </div>
+      </div>`;
+  } else {
+    feat.innerHTML=`<div class="feature" style="background:linear-gradient(140deg,#1d9e75,#0c0e10)"><div class="fov"><div class="flabel">Status</div><div class="ftitle">Renewal complete</div><div class="fmeta">Every domain finished.</div></div></div>`;
+  }
+
   const cont=document.getElementById('paths');
   cont.innerHTML="";
   const ordered= activeTok? [activeTok,...present.filter(t=>t!==activeTok)] : present.slice();
@@ -270,11 +296,6 @@ function renderTrack(key){
         <div class="poster" style="background:${col}"><span class="picon2 material-icons">${c.d?'check_circle':'play_circle'}</span></div>
         <div class="pinfo"><div class="nm2">${c.t}</div><div class="mt2"><span>${r1(c.h)} hr${c.h===1?'':'s'}</span><span class="pst ${c.d?'d':'s'}">${c.d?'Complete':'Start'}</span></div></div>
       </div>`).join("");
-    const contRow=(isActive&&nextCourse)?`
-      <div class="controw">
-        <div style="flex:1;min-width:0"><div class="cl">Continue where you left off</div><div class="ct">${nextCourse.t}</div></div>
-        <button class="resumebtn"><span class="material-icons" style="font-size:18px">play_arrow</span>Resume</button>
-      </div>`:'';
     const el=document.createElement('div');
     el.className='path'+(isActive?' active':'');
     el.id='path-'+tok;
@@ -284,7 +305,7 @@ function renderTrack(key){
           <div class="mt">${dc}/${list.length} courses &middot; ${r1(dh)} / ${r1(th)} hrs &middot; ${pct}%</div></div>
         <span class="chevbtn"><span class="chev material-icons">expand_more</span></span>
       </div>
-      <div class="pbody"><div class="pbody-in">${contRow}<div class="shelf">${tiles}</div></div></div>`;
+      <div class="pbody"><div class="pbody-in"><div class="shelf">${tiles}</div></div></div>`;
     const head=el.querySelector('.phead'), body=el.querySelector('.pbody'), chev=el.querySelector('.chev');
     head.addEventListener('click',()=>{
       const open=body.style.maxHeight&&body.style.maxHeight!=='0px';
