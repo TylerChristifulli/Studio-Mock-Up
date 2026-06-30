@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create Special Certification — FOAMfrat Studio Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a0a0a;--surface:#1c1f23;--surface-2:#262a30;
+    --line:rgba(255,255,255,0.08);--line-2:rgba(255,255,255,0.18);
+    --text:#fff;--text-2:rgba(255,255,255,0.62);--text-3:rgba(255,255,255,0.40);
+    --green:#66bb6a;--amber:#ffa726;--info:#29b6f6;--yellow:#eceb5e;--track:rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box;}
+  .material-icons{font-family:'Material Symbols Outlined';font-weight:400;line-height:1;display:inline-block;vertical-align:middle;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .appbar{background:#000;border-bottom:1px solid var(--line);padding:13px 0;}
+  .bar-inner{max-width:1260px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;}
+  .appbar .left,.appbar .right{display:flex;align-items:center;gap:22px;}
+  .appbar .material-icons{font-size:23px;color:#fff;cursor:pointer;}
+  .logo{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;}
+  .user{display:flex;align-items:center;gap:6px;font-size:14.5px;}
+  .user .material-icons{font-size:19px;color:var(--text-2);}
+  .wrap{max-width:1260px;margin:0 auto;padding:24px 32px 80px;}
+  .crumb{font-size:12.5px;color:var(--text-3);margin-bottom:12px;}
+  .crumb b{color:var(--text-2);font-weight:400;}
+  .titlerow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;}
+  h1{font-size:26px;font-weight:400;margin:0;}
+  .titlerow .sub{font-size:13px;color:var(--text-3);margin-top:3px;}
+  .btn{border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+  .btn .material-icons{font-size:18px;}
+  .btn.ghost{background:var(--surface-2);color:var(--text);border:1px solid var(--line-2);}
+  .btn.primary{background:var(--green);color:#06210a;}
+  .layout{display:grid;grid-template-columns:1fr 350px;gap:26px;align-items:start;}
+  /* cards */
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:18px;}
+  .card h2{font-size:16px;font-weight:500;margin:0 0 4px;display:flex;align-items:center;gap:9px;}
+  .card h2 .num{width:24px;height:24px;border-radius:50%;background:var(--surface-2);color:var(--green);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+  .card .hint{font-size:12.5px;color:var(--text-3);margin:0 0 18px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:7px;}
+  .field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:14px;}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--green);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chipsel{font-size:12.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);cursor:pointer;user-select:none;}
+  .chipsel.on{background:rgba(102,187,106,0.16);border-color:var(--green);color:var(--green);}
+  /* package toggle */
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px;}
+  .seg button{border:none;background:transparent;color:var(--text-2);font-family:inherit;font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;}
+  .seg button.active{background:var(--green);color:#06210a;font-weight:500;}
+  /* domains */
+  .dom{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:12px;}
+  .domhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+  .domhead .nm{font-size:14.5px;font-weight:500;}
+  .domright{display:flex;align-items:center;gap:12px;}
+  .domhead .hrs{font-size:12px;color:var(--text-3);}
+  .domhead .hrs b{color:var(--green);font-weight:500;}
+  .domdel{cursor:pointer;color:var(--text-3);display:flex;align-items:center;}
+  .domdel:hover{color:#ff6b6b;}
+  .domdel .material-icons{font-size:18px;}
+  .coursechips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px;}
+  .cc{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:5px 8px 5px 11px;font-size:12.5px;}
+  .cc .tagop{font-size:9.5px;letter-spacing:.4px;color:var(--amber);border:1px solid rgba(255,167,38,.4);border-radius:4px;padding:1px 4px;}
+  .cc .tagrev{font-size:9.5px;letter-spacing:.4px;color:var(--info);border:1px solid rgba(41,182,246,.4);border-radius:4px;padding:1px 4px;}
+  .cc .x{cursor:pointer;color:var(--text-3);font-size:16px;line-height:1;}
+  .cc .x:hover{color:#ff6b6b;}
+  .picker{display:flex;gap:8px;}
+  .picker select{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text-2);font-family:inherit;font-size:12.5px;}
+  .addbtn{background:var(--surface);border:1px solid var(--line-2);color:var(--text);border-radius:8px;padding:0 13px;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:5px;}
+  .adddom{width:100%;background:transparent;border:1px dashed var(--line-2);color:var(--text-2);border-radius:10px;padding:11px;cursor:pointer;font-family:inherit;font-size:13px;}
+  .adddom:hover{border-color:var(--green);color:var(--green);}
+  /* dark modal */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.62);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;z-index:200;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--line-2);border-radius:14px;padding:24px;width:430px;max-width:90vw;box-shadow:0 24px 60px rgba(0,0,0,0.55);}
+  .modal h3{font-size:17px;font-weight:500;margin:0 0 6px;}
+  .modal .m_msg{font-size:13px;color:var(--text-2);margin:0 0 16px;}
+  .modal input{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:inherit;font-size:14px;margin-top:4px;}
+  .modal input:focus{outline:none;border-color:var(--green);}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;}
+  .btn.danger{background:#e25a5a;color:#2a0000;}
+  /* check panel */
+  .check{position:sticky;top:20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;}
+  .check h3{font-size:14px;font-weight:500;margin:0 0 3px;}
+  .check .csub{font-size:12px;color:var(--text-3);margin:0 0 16px;}
+  .crow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);}
+  .crow:first-of-type{border-top:none;}
+  .crow .cl{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:9px;}
+  .crow .cl .material-icons{font-size:18px;}
+  .crow .cv{font-size:13.5px;font-weight:500;}
+  .ok{color:var(--green);} .warn{color:var(--amber);}
+  .overall{margin-top:16px;border-radius:11px;padding:13px 15px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;}
+  .overall .material-icons{font-size:20px;}
+  .overall.good{background:rgba(102,187,106,0.14);color:var(--green);}
+  .overall.bad{background:rgba(255,167,38,0.12);color:var(--amber);}
+  .note{font-size:11.5px;color:var(--text-3);margin-top:14px;line-height:1.5;}
+  @media(max-width:920px){.layout{grid-template-columns:1fr;} .check{position:static;}}
+</style>
+</head>
+<body>
+<header class="appbar"><div class="bar-inner">
+  <div class="left">
+    <span class="material-icons">menu</span>
+    <div class="logo"><span class="material-icons">hexagon</span></div>
+  </div>
+  <div class="right">
+    <span class="material-icons">search</span>
+    <span class="material-icons">notifications</span>
+    <span class="user">Tyler Christifulli <span class="material-icons">expand_more</span></span>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <div class="crumb"><b>Admin</b> &nbsp;›&nbsp; <b>Special Certifications</b> &nbsp;›&nbsp; Create</div>
+  <div class="titlerow">
+    <div>
+      <h1>Create Special Certification</h1>
+      <div class="sub">Today this is just a name + a flat checklist of courses. This adds the topic grouping and the hour rules that IBSC actually requires.</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn ghost"><span class="material-icons">save</span>Save draft</button>
+      <button class="btn primary"><span class="material-icons">publish</span>Publish</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="main">
+      <!-- 1 Basics -->
+      <div class="card">
+        <h2><span class="num">1</span>Basics</h2>
+        <p class="hint">What this certification is and who accredits it.</p>
+        <div class="field">
+          <label>Certification name</label>
+          <input type="text" value="IBSC FP-C / CCP-C Renewal" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Credentialing body</label>
+            <select><option>IBSC (FP-C / CCP-C)</option><option>BCEN (CEN / CFRN / CTRN)</option><option>NREMT</option></select>
+          </div>
+          <div class="field">
+            <label>Renewal cycle</label>
+            <select><option>4 years</option><option>2 years</option><option>3 years</option></select>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Accreditation</label>
+          <div class="chips" id="accred">
+            <span class="chipsel on">CAPCE</span><span class="chipsel on">ANCC</span><span class="chipsel">CECBEMS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 Packages -->
+      <div class="card">
+        <h2><span class="num">2</span>Renewal packages</h2>
+        <p class="hint">Approved hour packages students can choose. Pick one to configure its rules below.</p>
+        <div class="seg" id="pkgseg">
+          <button class="active" data-p="40">40-Hour Renewal</button>
+          <button data-p="100">100-Hour Renewal</button>
+        </div>
+      </div>
+
+      <!-- 3 Rules -->
+      <div class="card">
+        <h2><span class="num">3</span>Requirement rules <span style="font-size:12px;color:var(--text-3);font-weight:400" id="rulespkg">· 40-Hour Renewal</span></h2>
+        <p class="hint">The accreditation limits this package must enforce.</p>
+        <div class="row3">
+          <div class="field"><label>Total hours</label><input id="r_total" type="text" value="40" /></div>
+          <div class="field"><label>Min clinical hrs</label><input id="r_clin" type="text" value="30" /></div>
+          <div class="field"><label>Max operational hrs</label><input id="r_op" type="text" value="10" /></div>
+        </div>
+        <div class="row2" style="margin-bottom:0">
+          <div class="field" style="margin-bottom:0"><label>Min review-course hrs</label><input id="r_rev" type="text" value="16" /></div>
+          <div class="field" style="margin-bottom:0">
+            <label>Domain coverage</label>
+            <select><option>Require breadth across all domains</option><option>No coverage requirement</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Domains -->
+      <div class="card">
+        <h2><span class="num">4</span>Topics &amp; course assignments</h2>
+        <p class="hint">Each topic is an official exam domain. Assign the courses that satisfy it — hours add up automatically.</p>
+        <div id="domains"></div>
+        <button class="adddom" onclick="addDomain()">+ Add topic / domain</button>
+      </div>
+
+      <!-- 5 Bundle -->
+      <div class="card">
+        <h2><span class="num">5</span>Bundle certificate</h2>
+        <p class="hint">The single certificate a student submits for this credential.</p>
+        <div class="field" style="margin-bottom:14px">
+          <label>Bundle certificate name</label>
+          <input type="text" value="IBSC 40-Hour Refresher — Bundle Certificate" />
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Issued when</label>
+          <select><option>All required hours &amp; coverage are complete</option><option>Manually released by admin</option></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- live check -->
+    <div>
+      <div class="check">
+        <h3>Requirement check</h3>
+        <p class="csub" id="checkpkg">40-Hour Renewal</p>
+        <div id="checks"></div>
+        <div class="overall" id="overall"></div>
+        <p class="note">These checks mirror the IBSC rules in real time as courses are assigned. A package can't be published until everything passes.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="m_title"></h3>
+    <p class="m_msg" id="m_msg"></p>
+    <input type="text" id="m_input" />
+    <div class="modal-actions">
+      <button class="btn ghost" id="m_cancel">Cancel</button>
+      <button class="btn primary" id="m_ok">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// catalog: [name, hours, type 'c'|'o', reviewCourse]
+const CATALOG = [
+  ["Flight Ops (FOAMfrat)",1,"o",false],
+  ["Crew Resource Management (FOAMfrat)",1,"o",false],
+  ["Administrative Betrayal (FOAMfrat)",1,"o",false],
+  ["The RSI Summit (FOAMfrat)",16,"c",true],
+  ["Airway Techniques (FOAMfrat)",1,"c",false],
+  ["Airway Procedure Lab (FOAMfrat)",1,"c",false],
+  ["Acute Coronary Syndrome (FOAMfrat)",1.5,"c",false],
+  ["Septic Shock (FOAMfrat)",1,"c",false],
+  ["Pulmonary Artery Catheters (FOAMfrat)",1,"c",false],
+  ["Acid-Base & Oxygenation (FOAMfrat)",1,"c",false],
+  ["Advanced Acid-Base (FOAMfrat)",1,"c",false],
+  ["Adrenal Crisis Vodcast (FOAMfrat)",1,"c",false],
+  ["Abdominal Trauma (FOAMfrat)",1,"c",false],
+  ["Neonatal Resuscitation (FOAMfrat)",1.5,"c",false],
+  ["Pediatric Trauma (FOAMfrat)",1,"c",false]
+];
+const DOMAINS = ["Safety & Transport","Flight Physiology","Airway, Anesthesia & Analgesics",
+  "Medical Emergencies","Neurological","Cardiac","Trauma & Burns",
+  "Maternal, Fetal & Neonatal","Pediatric","Professional Considerations"];
+// initial assignments: domain -> [catalog indices]
+let assign = {
+  "Safety & Transport":[0,1],
+  "Airway, Anesthesia & Analgesics":[3,4,5],
+  "Cardiac":[6,8],
+  "Medical Emergencies":[7,9,10,11],
+  "Trauma & Burns":[12],
+  "Maternal, Fetal & Neonatal":[13],
+  "Pediatric":[14],
+  "Professional Considerations":[2]
+};
+DOMAINS.forEach(d=>{if(!assign[d])assign[d]=[];});
+let pkg="40";
+const TARGETS={ "40":{total:40,clin:30,op:10,rev:16}, "100":{total:100,clin:75,op:25,rev:16} };
+
+function optionsHtml(){
+  return '<option value="">+ add course…</option>'+CATALOG.map((c,i)=>`<option value="${i}">${c[0]} · ${c[1]} hr${c[1]==1?'':'s'}</option>`).join('');
+}
+function domHours(d){ return assign[d].reduce((s,i)=>s+CATALOG[i][1],0); }
+
+function renderDomains(){
+  const host=document.getElementById('domains');
+  host.innerHTML = DOMAINS.map(d=>{
+    const chips = assign[d].map((ci,k)=>{
+      const c=CATALOG[ci];
+      const tag = c[3]?'<span class="tagrev">REVIEW</span>':(c[2]=='o'?'<span class="tagop">OPS</span>':'');
+      return `<span class="cc">${c[0]} · ${c[1]} hr${c[1]==1?'':'s'} ${tag}<span class="x" onclick="rm('${d}',${k})">×</span></span>`;
+    }).join('');
+    const h=domHours(d);
+    return `<div class="dom">
+      <div class="domhead"><span class="nm">${d}</span><span class="domright"><span class="hrs"><b>${h}</b> hr${h==1?'':'s'} · ${assign[d].length} course${assign[d].length==1?'':'s'}</span><span class="domdel" onclick="removeDomain('${d}')" title="Remove this topic"><span class="material-icons">delete</span></span></span></div>
+      ${chips?`<div class="coursechips">${chips}</div>`:'<div class="coursechips" style="color:var(--text-3);font-size:12px">No courses yet</div>'}
+      <div class="picker">
+        <select id="sel_${btoa(d).replace(/=/g,'')}">${optionsHtml()}</select>
+        <button class="addbtn" onclick="add('${d}')"><span class="material-icons" style="font-size:16px">add</span>Add</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function add(d){
+  const sel=document.getElementById('sel_'+btoa(d).replace(/=/g,''));
+  const v=sel.value; if(v==="")return;
+  assign[d].push(parseInt(v)); renderDomains(); renderCheck();
+}
+function rm(d,k){ assign[d].splice(k,1); renderDomains(); renderCheck(); }
+// dark-themed modal (replaces native prompt/confirm)
+function showModal(o){
+  const ov=document.getElementById('modal');
+  document.getElementById('m_title').textContent=o.title||'';
+  const msg=document.getElementById('m_msg'); msg.textContent=o.message||''; msg.style.display=o.message?'block':'none';
+  const inp=document.getElementById('m_input');
+  inp.style.display=o.withInput?'block':'none'; inp.value=''; if(o.placeholder)inp.placeholder=o.placeholder;
+  const ok=document.getElementById('m_ok'); ok.textContent=o.okLabel||'Confirm'; ok.className='btn '+(o.danger?'danger':'primary');
+  const cancel=document.getElementById('m_cancel');
+  ov.classList.add('show'); if(o.withInput)setTimeout(()=>inp.focus(),30);
+  function close(){ov.classList.remove('show');ok.onclick=cancel.onclick=ov.onclick=inp.onkeydown=null;}
+  ok.onclick=()=>{const v=inp.value.trim();close();o.onOk&&o.onOk(v);};
+  cancel.onclick=close;
+  ov.onclick=e=>{if(e.target===ov)close();};
+  inp.onkeydown=e=>{if(e.key==='Enter')ok.click();else if(e.key==='Escape')close();};
+}
+function addDomain(){
+  showModal({title:'New topic / domain',withInput:true,placeholder:'e.g. Toxicology',okLabel:'Add topic',onOk:name=>{
+    if(!name)return;
+    if(!DOMAINS.includes(name)){DOMAINS.push(name);assign[name]=[];}
+    renderDomains();renderCheck();
+  }});
+}
+function removeDomain(d){
+  const n=assign[d]?assign[d].length:0;
+  showModal({title:`Remove “${d}”?`,message:n?`This unassigns its ${n} course${n==1?'':'s'}.`:'This topic has no courses assigned.',okLabel:'Remove topic',danger:true,onOk:()=>{
+    DOMAINS.splice(DOMAINS.indexOf(d),1);delete assign[d];
+    renderDomains();renderCheck();
+  }});
+}
+
+function totals(){
+  let total=0,clin=0,op=0,rev=0,covered=0;
+  DOMAINS.forEach(d=>{
+    if(assign[d].length)covered++;
+    assign[d].forEach(i=>{const c=CATALOG[i];total+=c[1];if(c[2]=='c')clin+=c[1];else op+=c[1];if(c[3])rev+=c[1];});
+  });
+  return {total,clin,op,rev,covered};
+}
+function renderCheck(){
+  const t=TARGETS[pkg], v=totals();
+  document.getElementById('checkpkg').textContent = pkg+"-Hour Renewal";
+  document.getElementById('rulespkg').textContent = "· "+pkg+"-Hour Renewal";
+  const rows=[
+    ["Total hours assigned", v.total, t.total, v.total>=t.total, "/ "+t.total+" min"],
+    ["Clinical hours", v.clin, t.clin, v.clin>=t.clin, "/ "+t.clin+" min"],
+    ["Operational hours", v.op, t.op, v.op<=t.op, "/ "+t.op+" max"],
+    ["Review-course hours", v.rev, t.rev, v.rev>=t.rev, "/ "+t.rev+" min"],
+    ["Domains covered", v.covered, DOMAINS.length, v.covered>=Math.min(8,DOMAINS.length), "of "+DOMAINS.length]
+  ];
+  document.getElementById('checks').innerHTML = rows.map(([l,val,tg,ok,suf])=>`
+    <div class="crow">
+      <span class="cl"><span class="material-icons ${ok?'ok':'warn'}">${ok?'check_circle':'error'}</span>${l}</span>
+      <span class="cv ${ok?'ok':'warn'}">${val} <span style="color:var(--text-3);font-weight:400;font-size:11.5px">${suf}</span></span>
+    </div>`).join('');
+  const allok = rows.every(r=>r[3]);
+  const o=document.getElementById('overall');
+  o.className = "overall "+(allok?"good":"bad");
+  o.innerHTML = allok
+    ? '<span class="material-icons">verified</span>All requirements met — ready to publish'
+    : '<span class="material-icons">pending</span>Keep assigning courses to meet every rule';
+}
+
+document.getElementById('pkgseg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  [...document.querySelectorAll('#pkgseg button')].forEach(x=>x.classList.toggle('active',x===b));
+  pkg=b.dataset.p;
+  // sync rule fields to package defaults
+  const t=TARGETS[pkg];
+  document.getElementById('r_total').value=t.total;
+  document.getElementById('r_clin').value=t.clin;
+  document.getElementById('r_op').value=t.op;
+  document.getElementById('r_rev').value=t.rev;
+  renderCheck();
+});
+document.querySelectorAll('#accred .chipsel').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+
+renderDomains(); renderCheck();
+</script>
+</body>
+</html>
