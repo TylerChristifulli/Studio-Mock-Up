@@ -78,7 +78,7 @@
 <header class="appbar">
   <div class="bar-inner">
   <div class="left">
-    <span class="material-icons" aria-label="menu">menu</span>
+    <span class="material-icons" aria-label="menu" id="navToggle">menu</span>
     <a href="studio-home.html" class="logo" style="text-decoration:none"><span class="material-icons">hexagon</span></a>
   </div>
   <div class="right">
@@ -164,5 +164,6 @@ const rows = ROWS.map(r=>{
 }).join('');
 document.getElementById('grid').insertAdjacentHTML('beforeend', rows);
 </script>
+<script src="studio-nav.js"></script>
 </body>
 </html>
