@@ -8,8 +8,9 @@
 <link rel="stylesheet" href="studio.css" />
 <style>
   .hero{position:relative;border-radius:0;height:340px;margin:-28px -34px 8px;overflow:hidden;display:flex;align-items:center;}
-  .hero .bgwrap{position:absolute;inset:0;background:linear-gradient(120deg,#2a3340,#3a2f24 55%,#52341f);}
-  .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 45%,rgba(10,10,10,.15) 75%,transparent 100%);}
+  .hero .bgwrap{position:absolute;inset:0;background:#11151a center/cover no-repeat;transition:opacity .4s;}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.94) 0%,rgba(10,10,10,.7) 42%,rgba(10,10,10,.25) 72%,rgba(10,10,10,.05) 100%);}
+  .dots i{cursor:pointer;}
   .hero .inner{position:relative;z-index:2;padding:0 44px;max-width:620px;}
   .hero .k{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.7);}
   .hero h1{font-size:46px;font-weight:700;margin:8px 0 6px;}
@@ -23,14 +24,14 @@
 <template id="main">
   <div class="page">
     <div class="hero">
-      <div class="bgwrap"></div><div class="scrim"></div>
+      <div class="bgwrap" id="heroBg"></div><div class="scrim"></div>
       <div class="inner">
-        <div class="k">Featured Series</div>
-        <h1>Pulmo Machina</h1>
-        <p>The FOAMfrat Mechanical Ventilation Series — a creative guide to mechanical ventilation.</p>
+        <div class="k">Featured</div>
+        <h1 id="heroTitle">Pulmo Machina</h1>
+        <p id="heroSub">The FOAMfrat Mechanical Ventilation Series.</p>
         <a class="btn yellow" href="studio-classroom.html"><span class="material-icons">play_arrow</span>Go to Series</a>
       </div>
-      <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="dots" id="heroDots"></div>
     </div>
     <div id="rows"></div>
   </div>
@@ -172,6 +173,25 @@ document.getElementById('rows').innerHTML = ROWS.map(r=>
   `<div class="rowhead"><h2>${r[0]}</h2><span class="viewall">View all</span></div>
    <div class="shelf">${r[1].map(tile).join('')}</div>`
 ).join('');
+
+// rotating hero banner (real artwork)
+const HERO=[
+  ["Psychological Injury","FOAMfrat provider wellness series","253de93c-2144-45e4-b936-c57a50532935.jpg"],
+  ["Good Reads","Quick, visual journal-club breakdowns","055be2fd-7535-4a8a-b2ae-7701a2e7696c.jpg"],
+  ["Obstetric Icebergs","The high-stakes OB emergencies series","3b64f565-38ac-4321-be0f-6332b61008ae.jpg"],
+  ["Exploring Evidence","Evidence reviews for EMS & nursing","00b03972-6f74-40d1-8c2e-977add551e7e.jpg"]
+];
+let hi=0;
+function showHero(i){
+  hi=i; const s=HERO[i];
+  document.getElementById('heroBg').style.backgroundImage="url('"+CDN+s[2]+"')";
+  document.getElementById('heroTitle').textContent=s[0];
+  document.getElementById('heroSub').textContent=s[1];
+  [...document.getElementById('heroDots').children].forEach((d,k)=>d.className=k===i?'on':'');
+}
+document.getElementById('heroDots').innerHTML=HERO.map((_,k)=>`<i class="${k===0?'on':''}" onclick="showHero(${k})"></i>`).join('');
+showHero(0);
+setInterval(()=>showHero((hi+1)%HERO.length),6000);
 </script>
 </body>
 </html>
