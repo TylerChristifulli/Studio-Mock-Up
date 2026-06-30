@@ -174,6 +174,25 @@ document.getElementById('rows').innerHTML = ROWS.map(r=>
    <div class="shelf">${r[1].map(tile).join('')}</div>`
 ).join('');
 
+// Series row — portrait posters (title baked into artwork)
+const HOST="https://d29e3091pe8039.cloudfront.net/";
+const SERIES=[
+  "images/resized/thumbnails/FOAMfrat/5aaa658d-503c-427e-b36a-66bd486dbffa.jpg",
+  "images/resized/thumbnails/FOAMfrat/c7a5a64f-3949-459c-b977-9522b8d1af28.jpg",
+  "images/resized/thumbnails/FOAMfrat/4ab23998-f487-4e65-9263-d799d00933c0.jpg",
+  "images/resized/thumbnails/FOAMfrat/0e2ad2f9-be4d-4ca5-a718-a3d3fccbb9a8.jpg",
+  "images/resized/thumbnails/FOAMfrat/6bb3424a-3253-4fbd-9027-824743af1cf8.jpg",
+  "images/resized/thumbnails/FOAMfrat/3f436b73-1f69-4cbb-8a20-291b81eb6e5c.jpg",
+  "images/resized/thumbnails/FOAMfrat/a9c3e27e-961d-4639-9be0-d4520d00bbfc.jpg",
+  "images/resized/thumbnails/FOAMfrat/94ab6120-f58d-4411-8aed-e7733e2602d3.jpg",
+  "images/resized/thumbnails/FOAMfrat/620ea8b8-569b-45f0-a2a8-081e93ea7d98.jpg",
+  "images/resized/thumbnails/FOAMfrat/1e29a909-4625-42e4-8d4a-8cd3ce2498cd.jpg",
+  "images/resized/thumbnails/FOAMfrat/ef6d3d5b-4673-45a0-a233-768a5128c6b0.jpg"
+];
+var seriesHtml='<div class="rowhead"><h2>Series</h2><span class="viewall">View all</span></div>'+
+  '<div class="shelf poster">'+SERIES.map(p=>`<a class="tile poster" href="studio-classroom.html"><div class="art" style="background:#11151a url('${HOST+p}') center/cover"></div><span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span></a>`).join('')+'</div>';
+document.getElementById('rows').insertAdjacentHTML('beforeend', seriesHtml);
+
 // rotating hero banner (real artwork)
 const HERO=[
   ["Psychological Injury","FOAMfrat provider wellness series","253de93c-2144-45e4-b936-c57a50532935.jpg"],
