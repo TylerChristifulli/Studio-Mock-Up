@@ -38,27 +38,44 @@
 <script>STUDIO_PAGE='home';</script>
 <script src="studio-shell.js"></script>
 <script>
-const GRAD=['linear-gradient(135deg,#243b55,#141e30)','linear-gradient(135deg,#3a1c1c,#2b1810)',
-  'linear-gradient(135deg,#1d3a2a,#10261a)','linear-gradient(135deg,#332a4d,#1b1530)',
-  'linear-gradient(135deg,#143d44,#0c2429)','linear-gradient(135deg,#42321a,#241808)'];
+const CDN="https://d29e3091pe8039.cloudfront.net/public/";
 const ROWS=[
-  ["Airway / Respiratory / Ventilation",["The Resus Room","Understanding COPD","The Advanced Airway Course","The Airway Assistant Course","OPA / NPA"]],
-  ["Cardiovascular",["Acute Coronary Syndrome","Cardiac Infections","Intra-aortic Balloon Pump","Pulmonary Artery Catheters","Bedside Vasopressors"]],
-  ["Critical Care",["Introduction to ECMO","Impella Transport","Infusion Logistics","Sedation & Analgesia","Septic Shock"]],
-  ["Series",["The Scan Artist Files","Critical Care Rounds","Critical Care 101","The Foundation Series","Good Reads"]]
+  ["Airway / Respiratory / Ventilation",[
+    ["Understanding COPD","3a417ef2-1048-46d4-ae35-1039c5d860da.jpg"],
+    ["The Advanced Airway Course","9f4c5607-f017-45f9-8442-759e01cfed8d.jpg"],
+    ["The Airway Assistant Course","4f74a11e-86ab-442a-a218-efc073527892.jpg"],
+    ["Endotracheal Intubation","283a33c2-19f3-49bf-bf45-b755ed733579.jpg"],
+    ["Training For Surgical Cricothyrotomy","8969df5b-b60f-4c85-ab69-7c641233ab9b.jpg"],
+    ["RSI Cocktail","8ffa6e01-eb62-4b00-a540-e66117d842ba.jpg"],
+    ["Laryngoscopy Micro Skills","10dff89a-b3c5-481f-a804-3a9442e402ef.jpg"],
+    ["Respiratory Pharmacopeia","7ae37d78-9529-4334-a7ad-a92fd9840833.jpg"],
+    ["Distress vs Failure, Treading Water","7c7ae05f-dea8-4dfe-a53d-1b546da48139.jpg"]
+  ]],
+  ["Cardiovascular",[
+    ["Sinus Tachycardia","0918f90b-77f0-47e9-94a1-643907bf0385.jpg"],
+    ["Understanding CPR","aaff9a19-20b0-4615-8102-d252bce157f2.jpg"]
+  ]],
+  ["Trauma",[
+    ["Trauma Anesthesia","f8d27f81-02e8-4e38-94a0-8f7efc2dc959.jpg"],
+    ["Blood Transfusion and Resuscitation","42a9808f-1627-435c-9884-e051510d3bbf.jpg"],
+    ["Ultrasound & The FAST Exam","13c63d43-b5dc-41fb-afa6-0218398659a0.jpg"]
+  ]],
+  ["Recently Added",[
+    ["Exploring Evidence Episode 5","2b2ced41-9f75-4be0-9750-ef3ea9e5c464.jpg"],
+    ["Casualties: Basic Airways - Episode 2","9636c837-c1b7-4172-a751-413158b9374a.jpg"]
+  ]]
 ];
-function tile(t,i,poster){
-  return `<a class="tile ${poster?'poster':''}" href="studio-classroom.html">
-    <div class="art" style="background:${GRAD[i%GRAD.length]}">${t}</div>
+function tile(c){
+  return `<a class="tile" href="studio-classroom.html">
+    <div class="art" style="background:#11151a url('${CDN+c[1]}') center/cover"></div>
     <span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span>
-    <div class="cap"><div class="t">${t}</div><div class="m">FOAMfrat · CE</div></div>
+    <div class="cap"><div class="t">${c[0]}</div><div class="m">FOAMfrat · CE</div></div>
   </a>`;
 }
-document.getElementById('rows').innerHTML = ROWS.map((r,ri)=>{
-  const poster = r[0]==='Series';
-  return `<div class="rowhead"><h2>${r[0]}</h2><span class="viewall">View all</span></div>
-  <div class="shelf ${poster?'poster':''}">${r[1].map((t,i)=>tile(t,i+ri,poster)).join('')}</div>`;
-}).join('');
+document.getElementById('rows').innerHTML = ROWS.map(r=>
+  `<div class="rowhead"><h2>${r[0]}</h2><span class="viewall">View all</span></div>
+   <div class="shelf">${r[1].map(tile).join('')}</div>`
+).join('');
 </script>
 </body>
 </html>

@@ -57,8 +57,12 @@
   /* domains */
   .dom{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:12px;}
   .domhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
-  .domhead .nm{font-size:14.5px;font-weight:500;}
-  .domright{display:flex;align-items:center;gap:12px;}
+  .domhead .nm{font-size:14.5px;font-weight:500;cursor:text;border-bottom:1px dashed transparent;}
+  .domhead .nm:hover{border-bottom-color:var(--line-2);}
+  .domright{display:flex;align-items:center;gap:10px;}
+  .domedit{cursor:pointer;color:var(--text-3);display:flex;align-items:center;}
+  .domedit:hover{color:var(--green);}
+  .domedit .material-icons{font-size:17px;}
   .domhead .hrs{font-size:12px;color:var(--text-3);}
   .domhead .hrs b{color:var(--green);font-weight:500;}
   .domdel{cursor:pointer;color:var(--text-3);display:flex;align-items:center;}
@@ -285,7 +289,7 @@ function renderDomains(){
     }).join('');
     const h=domHours(d);
     return `<div class="dom">
-      <div class="domhead"><span class="nm">${d}</span><span class="domright"><span class="hrs"><b>${h}</b> hr${h==1?'':'s'} · ${assign[d].length} course${assign[d].length==1?'':'s'}</span><span class="domdel" onclick="removeDomain('${d}')" title="Remove this topic"><span class="material-icons">delete</span></span></span></div>
+      <div class="domhead"><span class="nm" onclick="renameDomain('${d}')" title="Click to rename">${d}</span><span class="domright"><span class="hrs"><b>${h}</b> hr${h==1?'':'s'} · ${assign[d].length} course${assign[d].length==1?'':'s'}</span><span class="domedit" onclick="renameDomain('${d}')" title="Rename this topic"><span class="material-icons">edit</span></span><span class="domdel" onclick="removeDomain('${d}')" title="Remove this topic"><span class="material-icons">delete</span></span></span></div>
       ${chips?`<div class="coursechips">${chips}</div>`:'<div class="coursechips" style="color:var(--text-3);font-size:12px">No courses yet</div>'}
       <div class="picker">
         <select id="sel_${btoa(d).replace(/=/g,'')}">${optionsHtml()}</select>
@@ -306,10 +310,10 @@ function showModal(o){
   document.getElementById('m_title').textContent=o.title||'';
   const msg=document.getElementById('m_msg'); msg.textContent=o.message||''; msg.style.display=o.message?'block':'none';
   const inp=document.getElementById('m_input');
-  inp.style.display=o.withInput?'block':'none'; inp.value=''; if(o.placeholder)inp.placeholder=o.placeholder;
+  inp.style.display=o.withInput?'block':'none'; inp.value=o.value||''; if(o.placeholder)inp.placeholder=o.placeholder;
   const ok=document.getElementById('m_ok'); ok.textContent=o.okLabel||'Confirm'; ok.className='btn '+(o.danger?'danger':'primary');
   const cancel=document.getElementById('m_cancel');
-  ov.classList.add('show'); if(o.withInput)setTimeout(()=>inp.focus(),30);
+  ov.classList.add('show'); if(o.withInput)setTimeout(()=>{inp.focus();inp.select();},30);
   function close(){ov.classList.remove('show');ok.onclick=cancel.onclick=ov.onclick=inp.onkeydown=null;}
   ok.onclick=()=>{const v=inp.value.trim();close();o.onOk&&o.onOk(v);};
   cancel.onclick=close;
@@ -320,6 +324,14 @@ function addDomain(){
   showModal({title:'New topic / domain',withInput:true,placeholder:'e.g. Toxicology',okLabel:'Add topic',onOk:name=>{
     if(!name)return;
     if(!DOMAINS.includes(name)){DOMAINS.push(name);assign[name]=[];}
+    renderDomains();renderCheck();
+  }});
+}
+function renameDomain(d){
+  showModal({title:'Rename topic',withInput:true,value:d,okLabel:'Save name',onOk:name=>{
+    if(!name||name===d)return;
+    if(DOMAINS.includes(name)){alert('A topic with that name already exists.');return;}
+    const i=DOMAINS.indexOf(d); DOMAINS[i]=name; assign[name]=assign[d]; delete assign[d];
     renderDomains();renderCheck();
   }});
 }
