@@ -29,7 +29,7 @@
   <header class="appbar">
     <div class="left">
       <span class="material-icons" id="menuToggle">menu</span>
-      <a href="studio-home.html" class="logo"><span class="material-icons">hexagon</span></a>
+      <a href="studio-home.html" class="logo"><img src="studio%20logo.png" alt="FOAMfrat Studio" style="width:100%;height:100%;border-radius:50%;object-fit:cover;display:block"></a>
     </div>
     <div class="right">
       <span class="material-icons">search</span>
