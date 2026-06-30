@@ -214,7 +214,48 @@ const META = {
   PROF:{n:"Professional Considerations"}
 };
 const COLORS = {SAFE:["#3d5a80"],PHYS:["#5e548e"],AIR:["#1d7874"],MED:["#2a6f97"],NEU:["#6d597a"],CARD:["#9e2a2b"],TRAU:["#bb6b00"],MFN:["#a23670"],PED:["#2b8a3e"],PROF:["#52677d"]};
-const ART = {"Flight Ops":"flight%20ops%20thumbnail.png","The RSI Summit":"rsi%20summit%20thumbnail.png"};
+const _CDN="https://d29e3091pe8039.cloudfront.net/public/";
+const ART = {
+  "Flight Ops":"flight%20ops%20thumbnail.png",
+  "The RSI Summit":"rsi%20summit%20thumbnail.png",
+  "Acute Coronary Syndrome":_CDN+"b966b1f2-40e1-4755-be5d-e374763000c1.jpg",
+  "The Advanced Airway Course":_CDN+"9f4c5607-f017-45f9-8442-759e01cfed8d.jpg",
+  "The Airway Assistant Course":_CDN+"4f74a11e-86ab-442a-a218-efc073527892.jpg",
+  "Sedation & Analgesia":_CDN+"e1ffb33d-546b-404c-98fe-f6b65c30f8df.jpg",
+  "Mechanical Ventilation - Breath Delivery":_CDN+"05a63451-417a-45a3-af95-34569540324c.jpg",
+  "Mechanical Ventilation - Flow and Triggering":_CDN+"0fe81022-eb1e-4fe9-9f3e-ebf404bc9aaa.jpg",
+  "Non-Invasive Positive Pressure Ventilation":_CDN+"1d2ba74b-3745-479a-aa67-146ce97ab694.jpg",
+  "Tidal Volume":_CDN+"31a131e9-1883-4e23-9236-050af13177c7.jpg",
+  "Ventilator Language":_CDN+"88babd0a-5831-4df1-81a6-9aa2ffe5a032.jpg",
+  "Respiratory A&P":_CDN+"797143ea-c028-49b8-b9ed-c3484fcd2beb.jpg",
+  "Respiratory Distress vs. Failure":_CDN+"7c7ae05f-dea8-4dfe-a53d-1b546da48139.jpg",
+  "Acid-Base & Oxygenation":_CDN+"d9ec2e84-bc48-4e19-97a5-ba7df3965a65.jpg",
+  "Airway Procedure Lab":_CDN+"79442c21-1340-47bd-9b2e-2428b8c106c6.jpg",
+  "Trauma Anesthesia":_CDN+"f8d27f81-02e8-4e38-94a0-8f7efc2dc959.jpg",
+  "Neurological Trauma":_CDN+"ab3003ab-709f-45a1-b68d-0be05b8ffefe.jpg",
+  "Geriatric Trauma":_CDN+"6c70ae74-7fcf-48ef-a5f0-ab44b3546b17.jpg",
+  "Musculoskeletal Trauma (Sticks & Stones)":_CDN+"8e8d3b97-6a29-478d-ac8f-ffda00676717.jpg",
+  "Trauma in Pregnancy":_CDN+"065a0ab6-4876-4783-9c51-31404d5a1b76.jpg",
+  "Pediatric Trauma":_CDN+"a98d8e30-0f6b-4c3a-9998-c1ada1750fe4.jpg",
+  "Burns":_CDN+"714ba25f-a313-422b-9e3c-ca6b8e618d3e.jpg",
+  "Hemorrhage Control":_CDN+"ed0e9d54-0bf6-414a-84e8-b545d7f36444.jpg",
+  "Toxic inhalation":_CDN+"0eb859cc-b6d1-4a55-b531-c6e8d876d556.jpg",
+  "Traumatic Head Injuries and CT":_CDN+"6305f5c6-67c2-43f2-8c31-e4592dc5a2cd.jpg",
+  "Animated Guide to Disseminated Intravascular Coagulation":_CDN+"0efbd71c-c164-49f4-b637-9d35f69764b6.jpg",
+  "Seizures":_CDN+"fba53d80-495d-42ac-bd37-a7d57252d574.jpg",
+  "Gas laws Part Two Vodcast":_CDN+"5fabba0f-6a9a-4adf-92ad-53048df7aded.jpg",
+  "Working With Risk":_CDN+"ecf9d3de-0b81-4e29-b404-a148e0982bc1.jpg",
+  "Death Notification":_CDN+"84384d66-e206-43da-8906-0bb74059d8fa.jpg",
+  "Flight Physiology":_CDN+"a03582bf-cd17-49a0-bf9c-bd8c411ab227.jpg",
+  "Pediatric Transport":_CDN+"e70b38e3-849d-49d3-b83d-6bea5641a3bb.jpg",
+  "Congestive Heart Failure":_CDN+"4587b5b9-3135-492f-ada8-8364c76e5172.jpg",
+  "LVAD":_CDN+"0e7201cb-8346-4b59-9d3b-84a016307daa.jpg",
+  "Pediatric Respiratory - Part 1":_CDN+"b3d244fd-f803-40a2-b4c6-e684625aebf8.jpg",
+  "Pediatric Respiratory - Part 2":_CDN+"e76883c8-b9d1-4869-ba52-2dd4354130d0.jpg",
+  "Cardiac Arrest":_CDN+"b7af8554-c595-4451-a0a2-de7555c2fa84.jpg",
+  "Understanding Pressors":_CDN+"de12b587-e497-43d1-b2bd-a8f9c5dc1baf.jpg",
+  "ECG Interpretation":_CDN+"b7d77faf-cad5-4f5a-b872-05eb794c4929.jpg"
+};
 // [title, hours, done, clusterToken, operational]
 const T40 = [
   ["Acute Coronary Syndrome",1.5,1,"CARD",0],["Cardiac Infections",1,1,"CARD",0],
