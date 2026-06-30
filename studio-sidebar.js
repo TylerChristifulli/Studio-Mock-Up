@@ -32,10 +32,9 @@
   #studioSb a .material-icons{font-size:21px;flex-shrink:0;}
   #studioSb .sep{height:1px;background:rgba(255,255,255,.08);margin:10px 8px;}
   #studioSb .lbl{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);padding:6px 14px 4px;}
-  #studioSb.collapsed{width:64px;}
-  #studioSb.collapsed a span:not(.material-icons),#studioSb.collapsed .lbl{display:none;}
+  #studioSb.collapsed{width:0;padding:0;border:none;overflow:hidden;}
   .wrap{margin-left:230px !important;max-width:none !important;transition:margin-left .2s;}
-  body.sbcol .wrap{margin-left:64px !important;}
+  body.sbcol .wrap{margin-left:0 !important;}
   @media(max-width:840px){
     .wrap{margin-left:64px !important;}
     #studioSb{width:64px;}
