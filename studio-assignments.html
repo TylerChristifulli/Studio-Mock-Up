@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Assignments — FOAMfrat Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<link rel="stylesheet" href="studio.css" />
+<style>
+  .grid{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);}
+  .gr{display:grid;grid-template-columns:1fr 180px 130px 120px 120px;align-items:center;gap:12px;padding:14px 18px;border-top:1px solid var(--line);}
+  .gr.head{border-top:none;background:var(--surface-2);font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:var(--text-3);}
+  .nm{font-size:14px;font-weight:500;}
+  .sub{font-size:11.5px;color:var(--text-3);}
+  .st{font-size:11.5px;padding:4px 10px;border-radius:999px;width:fit-content;}
+  .st.due{background:rgba(255,167,38,.14);color:var(--amber);}
+  .st.done{background:rgba(102,187,106,.14);color:var(--green);}
+  .st.new{background:rgba(41,182,246,.14);color:var(--info);}
+</style>
+</head>
+<body>
+<template id="main">
+  <div class="page">
+    <h1 class="h1">Assignments</h1>
+    <p class="lead">Courses assigned to you by your agency or program, with due dates.</p>
+    <div class="grid" id="grid">
+      <div class="gr head"><div>Assignment</div><div>Assigned by</div><div>Due</div><div>Status</div><div></div></div>
+    </div>
+  </div>
+</template>
+<script>STUDIO_PAGE='assignments';</script>
+<script src="studio-shell.js"></script>
+<script>
+const A=[
+  ["The RSI Summit","Approved review course","Life Link III","Aug 30, 2026","due"],
+  ["Mechanical Ventilation","Pulmo Machina series","Life Link III","Sep 15, 2026","new"],
+  ["Septic Shock","Medical emergencies","Life Link III","Jul 01, 2026","done"],
+  ["Crew Resource Management","Operational","Life Link III","Oct 10, 2026","new"]
+];
+const LBL={due:"Due soon",done:"Completed",new:"Not started"};
+document.getElementById('grid').insertAdjacentHTML('beforeend', A.map(([t,s,by,due,st])=>`
+  <div class="gr">
+    <div><div class="nm">${t}</div><div class="sub">${s}</div></div>
+    <div class="sub">${by}</div>
+    <div class="sub">${due}</div>
+    <div><span class="st ${st}">${LBL[st]}</span></div>
+    <div><a class="btn ${st==='done'?'ghost':'primary'}" style="padding:7px 14px;font-size:12.5px" href="studio-classroom.html">${st==='done'?'Review':'Start'}</a></div>
+  </div>`).join(''));
+</script>
+</body>
+</html>

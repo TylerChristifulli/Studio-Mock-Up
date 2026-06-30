@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning — FOAMfrat Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<link rel="stylesheet" href="studio.css" />
+<style>
+  .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;}
+  .lcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .15s,transform .15s;}
+  .lcard:hover{border-color:var(--line-2);transform:translateY(-3px);}
+  .lcard .art{height:118px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-weight:700;}
+  .lcard .b{padding:12px 14px;}
+  .lcard .t{font-size:14px;font-weight:500;}
+  .lcard .m{font-size:11.5px;color:var(--text-3);margin:3px 0 9px;}
+  .pbar{height:5px;border-radius:999px;background:var(--track);overflow:hidden;}
+  .pbar>div{height:100%;background:var(--green);}
+  .pct{font-size:11px;color:var(--text-3);margin-top:5px;}
+</style>
+</head>
+<body>
+<template id="main">
+  <div class="page">
+    <h1 class="h1">My Learning</h1>
+    <p class="lead">Pick up where you left off, and revisit anything you've completed.</p>
+    <div class="rowhead"><h2>Continue Watching</h2></div>
+    <div class="lgrid" id="cont"></div>
+    <div class="rowhead"><h2>Completed</h2></div>
+    <div class="lgrid" id="done"></div>
+  </div>
+</template>
+<script>STUDIO_PAGE='learning';</script>
+<script src="studio-shell.js"></script>
+<script>
+const G=['linear-gradient(135deg,#243b55,#141e30)','linear-gradient(135deg,#3a1c1c,#2b1810)','linear-gradient(135deg,#1d3a2a,#10261a)','linear-gradient(135deg,#332a4d,#1b1530)'];
+const CONT=[["Flight Ops",20],["Mechanical Ventilation",65],["The RSI Summit",40],["Septic Shock",80]];
+const DONE=["Acute Coronary Syndrome","Pulmonary Artery Catheters","Renal Physiology","Cardiac Infections"];
+document.getElementById('cont').innerHTML=CONT.map((c,i)=>`
+  <a class="lcard" href="studio-classroom.html"><div class="art" style="background:${G[i%4]}">${c[0]}</div>
+  <div class="b"><div class="t">${c[0]}</div><div class="m">In progress</div>
+  <div class="pbar"><div style="width:${c[1]}%"></div></div><div class="pct">${c[1]}% complete</div></div></a>`).join('');
+document.getElementById('done').innerHTML=DONE.map((c,i)=>`
+  <a class="lcard" href="studio-classroom.html"><div class="art" style="background:${G[i%4]}">${c}</div>
+  <div class="b"><div class="t">${c}</div><div class="m" style="color:var(--green)">✓ Completed · certificate ready</div></div></a>`).join('');
+</script>
+</body>
+</html>

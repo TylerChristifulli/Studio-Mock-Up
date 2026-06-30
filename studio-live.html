@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live Classes — FOAMfrat Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<link rel="stylesheet" href="studio.css" />
+<style>
+  .live{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .date{width:64px;text-align:center;flex-shrink:0;}
+  .date .mo{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);}
+  .date .d{font-size:26px;font-weight:600;}
+  .info{flex:1;min-width:0;}
+  .info .t{font-size:15.5px;font-weight:500;}
+  .info .m{font-size:12.5px;color:var(--text-3);margin-top:2px;}
+  .ltag{font-size:10.5px;color:#ff6b6b;border:1px solid rgba(255,107,107,.4);border-radius:5px;padding:2px 7px;margin-left:8px;}
+</style>
+</head>
+<body>
+<template id="main">
+  <div class="page">
+    <h1 class="h1">Live Classes</h1>
+    <p class="lead">Instructor-led sessions you can register for and attend in real time.</p>
+    <div id="list"></div>
+  </div>
+</template>
+<script>STUDIO_PAGE='live';</script>
+<script src="studio-shell.js"></script>
+<script>
+const L=[
+  ["JUL","09","Advanced Airway Workshop","Jake Good · 2 CE hrs · 7:00 PM CT",true],
+  ["JUL","23","Ventilator Deep Dive","Tyler Christifulli · 1.5 CE hrs · 7:00 PM CT",false],
+  ["AUG","06","Critical Care Rounds — Live","Nurse Dose · 1 CE hr · 8:00 PM CT",false],
+  ["AUG","20","12-Lead Masterclass","Sara Simmons · 2 CE hrs · 7:00 PM CT",false]
+];
+document.getElementById('list').innerHTML=L.map(([mo,d,t,m,soon])=>`
+  <div class="live">
+    <div class="date"><div class="mo">${mo}</div><div class="d">${d}</div></div>
+    <div class="info"><div class="t">${t}${soon?'<span class="ltag">FILLING UP</span>':''}</div><div class="m">${m}</div></div>
+    <button class="btn primary">Register</button>
+  </div>`).join('');
+</script>
+</body>
+</html>

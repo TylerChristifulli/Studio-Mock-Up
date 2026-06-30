@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Self-Paced — FOAMfrat Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<link rel="stylesheet" href="studio.css" />
+<style>
+  .hero{position:relative;border-radius:0;height:340px;margin:-28px -34px 8px;overflow:hidden;display:flex;align-items:center;}
+  .hero .bgwrap{position:absolute;inset:0;background:linear-gradient(120deg,#2a3340,#3a2f24 55%,#52341f);}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 45%,rgba(10,10,10,.15) 75%,transparent 100%);}
+  .hero .inner{position:relative;z-index:2;padding:0 44px;max-width:620px;}
+  .hero .k{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.7);}
+  .hero h1{font-size:46px;font-weight:700;margin:8px 0 6px;}
+  .hero p{font-size:15px;color:rgba(255,255,255,.82);margin:0 0 20px;}
+  .dots{position:absolute;bottom:16px;left:0;right:0;display:flex;gap:7px;justify-content:center;z-index:2;}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);}
+  .dots i.on{background:#fff;}
+</style>
+</head>
+<body>
+<template id="main">
+  <div class="page">
+    <div class="hero">
+      <div class="bgwrap"></div><div class="scrim"></div>
+      <div class="inner">
+        <div class="k">Featured Series</div>
+        <h1>Pulmo Machina</h1>
+        <p>The FOAMfrat Mechanical Ventilation Series — a creative guide to mechanical ventilation.</p>
+        <a class="btn yellow" href="studio-classroom.html"><span class="material-icons">play_arrow</span>Go to Series</a>
+      </div>
+      <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div id="rows"></div>
+  </div>
+</template>
+<script>STUDIO_PAGE='home';</script>
+<script src="studio-shell.js"></script>
+<script>
+const GRAD=['linear-gradient(135deg,#243b55,#141e30)','linear-gradient(135deg,#3a1c1c,#2b1810)',
+  'linear-gradient(135deg,#1d3a2a,#10261a)','linear-gradient(135deg,#332a4d,#1b1530)',
+  'linear-gradient(135deg,#143d44,#0c2429)','linear-gradient(135deg,#42321a,#241808)'];
+const ROWS=[
+  ["Airway / Respiratory / Ventilation",["The Resus Room","Understanding COPD","The Advanced Airway Course","The Airway Assistant Course","OPA / NPA"]],
+  ["Cardiovascular",["Acute Coronary Syndrome","Cardiac Infections","Intra-aortic Balloon Pump","Pulmonary Artery Catheters","Bedside Vasopressors"]],
+  ["Critical Care",["Introduction to ECMO","Impella Transport","Infusion Logistics","Sedation & Analgesia","Septic Shock"]],
+  ["Series",["The Scan Artist Files","Critical Care Rounds","Critical Care 101","The Foundation Series","Good Reads"]]
+];
+function tile(t,i,poster){
+  return `<a class="tile ${poster?'poster':''}" href="studio-classroom.html">
+    <div class="art" style="background:${GRAD[i%GRAD.length]}">${t}</div>
+    <span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span>
+    <div class="cap"><div class="t">${t}</div><div class="m">FOAMfrat · CE</div></div>
+  </a>`;
+}
+document.getElementById('rows').innerHTML = ROWS.map((r,ri)=>{
+  const poster = r[0]==='Series';
+  return `<div class="rowhead"><h2>${r[0]}</h2><span class="viewall">View all</span></div>
+  <div class="shelf ${poster?'poster':''}">${r[1].map((t,i)=>tile(t,i+ri,poster)).join('')}</div>`;
+}).join('');
+</script>
+</body>
+</html>

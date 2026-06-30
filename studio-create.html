@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create — FOAMfrat Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+<link rel="stylesheet" href="studio.css" />
+<style>
+  .cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .c{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;cursor:pointer;transition:border-color .15s,transform .15s;}
+  .c:hover{border-color:var(--green);transform:translateY(-3px);}
+  .c .ic{width:48px;height:48px;border-radius:12px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .c .ic .material-icons{color:var(--green);font-size:26px;}
+  .c .t{font-size:16px;font-weight:500;}
+  .c .d{font-size:12.5px;color:var(--text-3);margin-top:5px;}
+  .c .badge{display:inline-block;margin-top:10px;font-size:10.5px;color:var(--green);background:rgba(102,187,106,.14);border-radius:6px;padding:3px 8px;}
+  @media(max-width:840px){.cgrid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<template id="main">
+  <div class="page">
+    <h1 class="h1">Create</h1>
+    <p class="lead">Start something new — a course, a series, a live class, or a special certification.</p>
+    <div class="cgrid" id="c"></div>
+  </div>
+</template>
+<script>STUDIO_PAGE='create';</script>
+<script src="studio-shell.js"></script>
+<script>
+const C=[
+  ["workspace_premium","Special Certification","Build an IBSC/BCEN renewal with topics, hour rules, and a bundle certificate.","admin-create-certification.html","Improved builder"],
+  ["video_library","Course","A new self-paced course with lessons, objectives, and a quiz.","studio-soon.html?t=Create%20Course",""],
+  ["playlist_play","Series","Group related courses into a binge-able series.","studio-soon.html?t=Create%20Series",""],
+  ["videocam","Live Class","Schedule an instructor-led session.","studio-soon.html?t=Create%20Live%20Class",""],
+  ["assignment","Assignment","Assign courses to an agency or cohort.","studio-soon.html?t=Create%20Assignment",""],
+  ["event","Event","Add a conference or workshop.","studio-soon.html?t=Create%20Event",""]
+];
+document.getElementById('c').innerHTML=C.map(([ic,t,d,h,b])=>`
+  <a class="c" href="${h}"><div class="ic"><span class="material-icons">${ic}</span></div>
+  <div class="t">${t}</div><div class="d">${d}</div>${b?`<span class="badge">${b}</span>`:''}</a>`).join('');
+</script>
+</body>
+</html>
