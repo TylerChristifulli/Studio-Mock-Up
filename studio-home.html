@@ -163,10 +163,9 @@ const ROWS=[
   ]]
 ];
 function tile(c){
-  return `<a class="tile" href="studio-classroom.html">
+  return `<a class="tile" href="studio-classroom.html" title="${c[0]}">
     <div class="art" style="background:#11151a url('${CDN+c[1]}') center/cover"></div>
     <span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span>
-    <div class="cap"><div class="t">${c[0]}</div><div class="m">FOAMfrat · CE</div></div>
   </a>`;
 }
 // Series row — portrait posters (title baked into artwork)
