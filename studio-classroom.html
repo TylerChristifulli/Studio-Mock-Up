@@ -16,7 +16,7 @@
   .material-icons{font-family:'Material Symbols Outlined';font-weight:400;line-height:1;display:inline-block;vertical-align:middle;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
   a{color:inherit;text-decoration:none;}
-  /* appbar */
+  .hidden{display:none !important;}
   .appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid var(--line);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
   .appbar .left,.appbar .right{display:flex;align-items:center;gap:22px;}
   .appbar .material-icons{font-size:23px;color:#fff;cursor:pointer;}
@@ -24,33 +24,29 @@
   .appbar .user{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;}
   .appbar .user .material-icons{font-size:19px;color:var(--text-2);}
   .crumb{max-width:1440px;margin:0 auto;padding:16px 30px 0;font-size:12.5px;color:var(--text-3);}
-  .crumb a:hover{color:var(--text-2);}
-  .cwrap{max-width:1440px;margin:0 auto;padding:14px 30px 70px;display:grid;grid-template-columns:1fr 350px;gap:28px;align-items:start;}
-  /* ---- player ---- */
+  .cwrap{max-width:1440px;margin:0 auto;padding:14px 30px 70px;display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;}
+  /* player */
   .player{position:relative;border-radius:14px;overflow:hidden;background:#000 center/cover;aspect-ratio:16/9;border:1px solid var(--line);}
   .player .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 34%,rgba(0,0,0,0) 55%);}
   .player .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;}
   .player .play:hover{transform:translate(-50%,-50%) scale(1.06);}
   .player .play .material-icons{font-size:40px;color:#fff;margin-left:4px;}
-  .player .cap{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-size:20px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.9);padding:0 20px;}
+  .player .cap{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-size:19px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.9);padding:0 26px;}
   .player .badge{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.55);border:1px solid var(--line-2);border-radius:7px;padding:5px 10px;font-size:11px;letter-spacing:.4px;color:#fff;}
-  /* control bar */
   .ctrl{position:absolute;left:0;right:0;bottom:0;padding:10px 16px 12px;display:flex;align-items:center;gap:14px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);}
   .ctrl .material-icons{font-size:22px;color:#fff;cursor:pointer;}
   .scrub{flex:1;height:5px;border-radius:999px;background:rgba(255,255,255,.25);position:relative;cursor:pointer;}
-  .scrub > div{position:absolute;left:0;top:0;bottom:0;width:35%;background:var(--green);border-radius:999px;}
-  .scrub > span{position:absolute;left:35%;top:50%;width:13px;height:13px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);}
-  .time{font-size:12px;color:#fff;white-space:nowrap;}
+  .scrub > div{position:absolute;left:0;top:0;bottom:0;background:var(--green);border-radius:999px;}
+  .scrub > span{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);}
+  .time{font-size:12px;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums;}
   .spd{font-size:12px;color:#fff;border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;cursor:pointer;}
-  /* title + meta */
-  .titlerow{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:18px 0 8px;}
+  .titlerow{margin:18px 0 8px;}
   h1{font-size:24px;font-weight:500;margin:0;}
   .lesson-of{font-size:12.5px;color:var(--text-3);margin-top:4px;}
   .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
   .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);}
   .chip .material-icons{font-size:14px;}
   .chip.hr{background:rgba(102,187,106,0.14);border-color:transparent;color:var(--green);}
-  /* tabs */
   .tabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin:20px 0 20px;overflow-x:auto;white-space:nowrap;}
   .tabs button{background:none;border:none;color:var(--text-2);font-family:inherit;font-size:14px;padding:0 2px 12px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
   .tabs button .material-icons{font-size:17px;}
@@ -59,63 +55,83 @@
   .tabs button.codex.active{border-bottom-color:var(--codex);}
   .panel{display:none;font-size:14.5px;color:var(--text-2);font-weight:300;line-height:1.65;}
   .panel.on{display:block;}
-  .panel h3{font-size:14px;color:var(--text);font-weight:500;margin:0 0 10px;letter-spacing:.2px;}
+  .panel h3{font-size:14px;color:var(--text);font-weight:500;margin:0 0 10px;}
   .panel ol{margin:0;padding-left:20px;} .panel ol li{margin-bottom:9px;}
   .panel .ref{font-size:13px;color:var(--text-3);}
-  /* codex */
+  #codexPanel.flash{animation:fl 1.2s ease;}
+  @keyframes fl{0%,100%{background:transparent}30%{background:rgba(217,180,91,0.08)}}
   .codexhead{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
   .codexhead .bk{width:34px;height:34px;border-radius:9px;background:rgba(217,180,91,0.16);display:flex;align-items:center;justify-content:center;}
   .codexhead .bk .material-icons{color:var(--codex);font-size:20px;}
-  .codexhead .t{font-size:15px;color:#fff;font-weight:500;}
-  .codexhead .s{font-size:12px;color:var(--text-3);}
-  .chap{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
-  .chap:hover{border-color:var(--codex);}
+  .codexhead .t{font-size:15px;color:#fff;font-weight:500;} .codexhead .s{font-size:12px;color:var(--text-3);}
+  .chap{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:10px;}
   .chap .num{font-size:11px;color:var(--codex);border:1px solid rgba(217,180,91,0.4);border-radius:6px;padding:3px 7px;white-space:nowrap;}
-  .chap .ct{flex:1;}
-  .chap .ct .nm{font-size:14px;color:#fff;font-weight:500;}
-  .chap .ct .ds{font-size:12px;color:var(--text-3);margin-top:2px;}
-  .chap .go{font-size:12.5px;color:var(--codex);display:flex;align-items:center;gap:4px;white-space:nowrap;}
-  /* instructor */
+  .chap .ct{flex:1;} .chap .ct .nm{font-size:14px;color:#fff;font-weight:500;} .chap .ct .ds{font-size:12px;color:var(--text-3);margin-top:2px;}
+  .chap .acts{display:flex;gap:12px;align-items:center;}
+  .chap .save{font-size:12px;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;}
+  .chap .save:hover{color:var(--codex);}
+  .chap .go{font-size:12.5px;color:var(--codex);display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap;}
   .instr{display:flex;gap:15px;align-items:center;}
   .instr .av{width:56px;height:56px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:var(--green);flex-shrink:0;}
-  .instr .nm{font-size:16px;color:#fff;font-weight:500;}
-  .instr .ti{font-size:13px;color:var(--text-3);}
-  /* accreditation */
+  .instr .nm{font-size:16px;color:#fff;font-weight:500;} .instr .ti{font-size:13px;color:var(--text-3);}
   .applies{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
   .applies .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
-  .applies .big{font-size:16px;color:#fff;font-weight:500;}
-  .applies .cnts{font-size:13px;color:var(--text-2);margin-top:6px;}
-  .accred-item{border-top:1px solid var(--line);padding:12px 0;font-size:13px;}
-  .accred-item:first-of-type{border-top:none;}
-  .accred-item b{color:#fff;font-weight:500;}
+  .applies .big{font-size:16px;color:#fff;font-weight:500;} .applies .cnts{font-size:13px;color:var(--text-2);margin-top:6px;}
+  .accred-item{border-top:1px solid var(--line);padding:12px 0;font-size:13px;} .accred-item:first-of-type{border-top:none;} .accred-item b{color:#fff;font-weight:500;}
   .disc{font-size:11.5px;color:var(--text-3);font-style:italic;margin-top:10px;}
-  /* ---- right rail ---- */
+  /* right rail */
   .rail{position:sticky;top:78px;}
+  .railtabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:12px;}
+  .railtabs button{flex:1;background:none;border:none;color:var(--text-2);font-family:inherit;font-size:12.5px;padding:8px 0;border-radius:7px;cursor:pointer;}
+  .railtabs button.active{background:var(--surface-2);color:#fff;font-weight:500;}
   .railcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
   .railhead{padding:16px 18px 14px;border-bottom:1px solid var(--line);}
-  .railhead .t{font-size:14px;font-weight:500;}
-  .railhead .p{font-size:12px;color:var(--text-3);margin-top:3px;}
-  .pbar{height:6px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:10px;}
-  .pbar>div{height:100%;background:var(--green);width:33%;}
+  .railhead .t{font-size:14px;font-weight:500;} .railhead .p{font-size:12px;color:var(--text-3);margin-top:3px;}
+  .pbar{height:6px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:10px;} .pbar>div{height:100%;background:var(--green);width:33%;}
   .les{display:flex;align-items:center;gap:13px;padding:13px 18px;border-top:1px solid var(--line);cursor:pointer;}
-  .les:hover{background:var(--surface-2);}
-  .les.active{background:var(--surface-2);}
+  .les:hover{background:var(--surface-2);} .les.active{background:var(--surface-2);}
   .les .ic{width:30px;height:30px;border-radius:8px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   .les.active .ic{background:var(--green);} .les.active .ic .material-icons{color:#06210a;}
   .les.done .ic{background:rgba(102,187,106,.2);}
-  .les .ic .material-icons{font-size:17px;color:var(--text-2);}
-  .les.done .ic .material-icons{color:var(--green);}
-  .les .lt{flex:1;min-width:0;}
-  .les .lt .nm{font-size:13.5px;color:#fff;}
-  .les .lt .mt{font-size:11.5px;color:var(--text-3);margin-top:1px;}
+  .les .ic .material-icons{font-size:17px;color:var(--text-2);} .les.done .ic .material-icons{color:var(--green);}
+  .les .lt{flex:1;min-width:0;} .les .lt .nm{font-size:13.5px;color:#fff;} .les .lt .mt{font-size:11.5px;color:var(--text-3);margin-top:1px;}
   .les.locked{opacity:.55;}
   .cecard{padding:16px 18px;border-top:1px solid var(--line);background:rgba(102,187,106,0.06);}
-  .cecard .ct{font-size:13px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px;}
-  .cecard .ct .material-icons{color:var(--green);font-size:19px;}
+  .cecard .ct{font-size:13px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px;} .cecard .ct .material-icons{color:var(--green);font-size:19px;}
   .cecard .cs{font-size:12px;color:var(--text-2);margin:6px 0 12px;}
-  .cebtn{width:100%;border:none;border-radius:9px;padding:11px;font-family:inherit;font-size:13.5px;font-weight:500;background:var(--surface-2);color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:7px;cursor:not-allowed;border:1px solid var(--line);}
+  .cebtn{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px;font-family:inherit;font-size:13.5px;font-weight:500;background:var(--surface-2);color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:7px;cursor:not-allowed;}
   .cebtn .material-icons{font-size:17px;}
-  @media(max-width:1000px){.cwrap{grid-template-columns:1fr;} .rail{position:static;}}
+  /* transcript */
+  .tsbox{padding:12px;}
+  .tsearchbox{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:8px 11px;color:var(--text-3);margin-bottom:8px;}
+  .tsearchbox input{background:none;border:none;color:var(--text);font-family:inherit;font-size:13px;width:100%;outline:none;}
+  .tsearchbox .material-icons{font-size:17px;}
+  .scrollbox{max-height:56vh;overflow-y:auto;}
+  .tline{position:relative;display:flex;gap:11px;padding:9px 34px 9px 10px;border-radius:8px;cursor:pointer;}
+  .tline:hover{background:var(--surface-2);}
+  .tline.active{background:rgba(102,187,106,0.12);}
+  .tline .ts{font-size:11px;color:var(--green);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums;}
+  .tline .tx{font-size:13px;color:var(--text-2);} .tline.active .tx{color:#fff;}
+  .tline .cx{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--codex);margin-left:6px;}
+  .tline .tadd{position:absolute;right:8px;top:8px;opacity:0;color:var(--text-3);font-size:17px;}
+  .tline:hover .tadd{opacity:1;} .tline .tadd:hover{color:var(--green);}
+  /* notes */
+  .notebox{padding:14px;}
+  .note{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:11px 12px;margin-bottom:9px;}
+  .note .nh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .nstamp{font-size:11px;color:var(--green);background:rgba(102,187,106,.14);border-radius:5px;padding:2px 8px;cursor:pointer;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:4px;}
+  .nstamp .material-icons{font-size:12px;}
+  .nstamp.codex{color:var(--codex);background:rgba(217,180,91,.14);}
+  .note .del{color:var(--text-3);font-size:15px;cursor:pointer;} .note .del:hover{color:#ff6b6b;}
+  .note .quote{font-size:12px;color:var(--text-3);font-style:italic;border-left:2px solid var(--line-2);padding-left:8px;margin-bottom:6px;}
+  .note .ntext{font-size:13px;color:var(--text);white-space:pre-wrap;}
+  .emptynote{font-size:12.5px;color:var(--text-3);text-align:center;padding:22px 6px;}
+  .addnote{border-top:1px solid var(--line);padding:12px 14px;}
+  .addnote .lbl{font-size:11px;color:var(--text-3);margin-bottom:6px;}
+  .addnote textarea{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:8px;color:var(--text);font-family:inherit;font-size:13px;padding:9px;resize:vertical;min-height:52px;outline:none;}
+  .addnote button{margin-top:8px;width:100%;background:var(--green);color:#06210a;border:none;border-radius:8px;padding:9px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .addnote button .material-icons{font-size:16px;}
+  @media(max-width:1000px){.cwrap{grid-template-columns:1fr;} .rail{position:static;} .scrollbox{max-height:none;}}
 </style>
 </head>
 <body>
@@ -133,17 +149,16 @@
 <div class="crumb"><a href="studio-home.html">Self-Paced</a> &nbsp;›&nbsp; Airway / Respiratory / Ventilation &nbsp;›&nbsp; Understanding COPD</div>
 
 <div class="cwrap">
-  <!-- LEFT -->
   <div>
-    <div class="player" id="player" style="background-image:url('https://d29e3091pe8039.cloudfront.net/public/3a417ef2-1048-46d4-ae35-1039c5d860da.jpg')">
+    <div class="player" style="background-image:url('https://d29e3091pe8039.cloudfront.net/public/3a417ef2-1048-46d4-ae35-1039c5d860da.jpg')">
       <div class="scrim"></div>
       <div class="badge">LESSON 2 OF 3 · VIDEO</div>
-      <div class="cap">…positive pressure splints the airways and helps recruit alveoli</div>
+      <div class="cap" id="cap">…positive pressure splints the airways and helps recruit alveoli</div>
       <div class="play" id="playBtn"><span class="material-icons">play_arrow</span></div>
       <div class="ctrl">
         <span class="material-icons" id="playIcon">play_arrow</span>
-        <div class="scrub"><div></div><span></span></div>
-        <span class="time">3:12 / 9:04</span>
+        <div class="scrub" id="scrub"><div id="scrubFill" style="width:35%"></div><span id="scrubHandle" style="left:35%"></span></div>
+        <span class="time" id="timeDisp">3:12 / 9:04</span>
         <span class="material-icons">closed_caption</span>
         <span class="spd">1x</span>
         <span class="material-icons">settings</span>
@@ -152,15 +167,12 @@
     </div>
 
     <div class="titlerow">
-      <div>
-        <h1>Understanding COPD</h1>
-        <div class="lesson-of">Treatment &amp; Scenarios · Lesson 2 of 3</div>
-      </div>
+      <h1>Understanding COPD</h1>
+      <div class="lesson-of">Treatment &amp; Scenarios · Lesson 2 of 3</div>
     </div>
     <div class="meta">
       <span class="chip hr"><span class="material-icons">schedule</span>0.5 CE hr · Airway, Respiratory &amp; Ventilation (F3)</span>
-      <span class="chip"><span class="material-icons">verified</span>ANCC</span>
-      <span class="chip"><span class="material-icons">verified</span>CAPCE</span>
+      <span class="chip"><span class="material-icons">verified</span>ANCC</span><span class="chip"><span class="material-icons">verified</span>CAPCE</span>
       <span class="chip">Kentucky</span><span class="chip">Tennessee</span><span class="chip">Virginia</span>
     </div>
 
@@ -173,70 +185,51 @@
       <button data-t="refs"><span class="material-icons">format_quote</span>References</button>
     </div>
 
-    <div class="panel on" data-p="overview">
-      This course reviews the fundamentals of COPD pathophysiology and the evidence-based treatment of the COPD patient — from recognizing airflow limitation and gas trapping to prioritizing interventions in real transport scenarios.
-    </div>
-
-    <div class="panel" data-p="objectives">
-      <h3>By the end of this lesson you will be able to:</h3>
-      <ol>
-        <li>Define the core pathophysiologic mechanisms of COPD, including airflow limitation, gas trapping, and ventilation–perfusion mismatch.</li>
-        <li>Identify appropriate evidence-based treatments for COPD when presented with scenario-based clinical questions.</li>
-        <li>Analyze COPD patient scenarios to determine treatment priorities and justify the sequence of interventions based on underlying physiologic principles.</li>
-      </ol>
-    </div>
-
-    <div class="panel" data-p="codex">
-      <div class="codexhead">
-        <div class="bk"><span class="material-icons">menu_book</span></div>
-        <div><div class="t">From the Codex</div><div class="s">Related chapters in FOAMfrat's living textbook</div></div>
-      </div>
+    <div class="panel on" data-p="overview">This course reviews the fundamentals of COPD pathophysiology and the evidence-based treatment of the COPD patient — from recognizing airflow limitation and gas trapping to prioritizing interventions in real transport scenarios.</div>
+    <div class="panel" data-p="objectives"><h3>By the end of this lesson you will be able to:</h3><ol><li>Define the core pathophysiologic mechanisms of COPD, including airflow limitation, gas trapping, and ventilation–perfusion mismatch.</li><li>Identify appropriate evidence-based treatments for COPD when presented with scenario-based clinical questions.</li><li>Analyze COPD patient scenarios to determine treatment priorities and justify the sequence of interventions.</li></ol></div>
+    <div class="panel" data-p="codex" id="codexPanel">
+      <div class="codexhead"><div class="bk"><span class="material-icons">menu_book</span></div><div><div class="t">From the Codex</div><div class="s">Related chapters in FOAMfrat's living textbook</div></div></div>
       <div id="chapters"></div>
     </div>
-
-    <div class="panel" data-p="instructor">
-      <div class="instr">
-        <div class="av">JO</div>
-        <div><div class="nm">James Ownbey</div><div class="ti">Flight Paramedic · FOAMfrat Educator</div></div>
-      </div>
-      <p style="margin-top:14px">Critical care and flight paramedic with a focus on respiratory physiology and mechanical ventilation. Contributor to the FOAMfrat Ventilation series.</p>
-    </div>
-
+    <div class="panel" data-p="instructor"><div class="instr"><div class="av">JO</div><div><div class="nm">James Ownbey</div><div class="ti">Flight Paramedic · FOAMfrat Educator</div></div></div><p style="margin-top:14px">Critical care and flight paramedic with a focus on respiratory physiology and mechanical ventilation. Contributor to the FOAMfrat Ventilation series.</p></div>
     <div class="panel" data-p="accred">
-      <div class="applies">
-        <div class="k">Where this hour applies</div>
-        <div class="big">0.5 hour · Airway, Respiratory &amp; Ventilation (F3 — Advanced/Clinical)</div>
-        <div class="cnts">Counts toward: IBSC FP-C / CCP-C renewal (Airway domain) · NREMT recertification · state EMS relicensure · ANCC nursing contact hours.</div>
-      </div>
+      <div class="applies"><div class="k">Where this hour applies</div><div class="big">0.5 hour · Airway, Respiratory &amp; Ventilation (F3 — Advanced/Clinical)</div><div class="cnts">Counts toward: IBSC FP-C / CCP-C renewal (Airway domain) · NREMT recertification · state EMS relicensure · ANCC nursing contact hours.</div></div>
       <div class="accred-item"><b>CAPCE</b> — FOAMfrat is accredited by the Commission on Accreditation for Pre-Hospital Continuing Education. This activity, <b>25-FOAM-F3-0416</b>, is approved for 0.5 Advanced (F3) CE hour. <span class="disc">(placeholder approval number)</span></div>
       <div class="accred-item"><b>ANCC</b> — FOAMfrat is accredited as a provider of nursing continuing professional development by the American Nurses Credentialing Center's Commission on Accreditation. This activity awards <b>0.5 contact hours</b>.</div>
       <div class="accred-item"><b>State approvals</b> — Approved for 0.5 CE hour by Kentucky (CE Broker), Tennessee (CE Broker), and Virginia Office of EMS.</div>
-      <div class="disc">No relevant financial relationships to disclose. Completion requires viewing all lessons and passing the knowledge check. Accreditation wording shown here is placeholder for the prototype.</div>
+      <div class="disc">No relevant financial relationships to disclose. Accreditation wording shown here is placeholder for the prototype.</div>
     </div>
-
-    <div class="panel" data-p="refs">
-      <ol class="ref">
-        <li>Global Initiative for Chronic Obstructive Lung Disease. (2024). Global Strategy for the Diagnosis, Management, and Prevention of COPD.</li>
-        <li>Biondi-Zoccai, G., et al. (2011). Evidence review in mechanical support. HSR Proceedings in Intensive Care &amp; Cardiovascular Anesthesia, 3(3), 203–205.</li>
-        <li>Brochard, L., et al. (1995). Noninvasive ventilation for acute exacerbations of COPD. NEJM, 333(13), 817–822.</li>
-      </ol>
-    </div>
+    <div class="panel" data-p="refs"><ol class="ref"><li>Global Initiative for Chronic Obstructive Lung Disease. (2024). Global Strategy for the Diagnosis, Management, and Prevention of COPD.</li><li>Brochard, L., et al. (1995). Noninvasive ventilation for acute exacerbations of COPD. NEJM, 333(13), 817–822.</li></ol></div>
   </div>
 
   <!-- RIGHT RAIL -->
   <div>
     <div class="rail">
-      <div class="railcard">
-        <div class="railhead">
-          <div class="t">Course contents</div>
-          <div class="p">1 of 3 complete · 33%</div>
-          <div class="pbar"><div></div></div>
-        </div>
+      <div class="railtabs" id="railtabs">
+        <button data-r="contents" class="active">Contents</button>
+        <button data-r="transcript">Transcript</button>
+        <button data-r="notes">Notes</button>
+      </div>
+
+      <div class="railcard" data-rp="contents">
+        <div class="railhead"><div class="t">Course contents</div><div class="p">1 of 3 complete · 33%</div><div class="pbar"><div></div></div></div>
         <div id="lessons"></div>
-        <div class="cecard">
-          <div class="ct"><span class="material-icons">workspace_premium</span>Earn 0.5 CE hours</div>
-          <div class="cs">Finish all lessons and pass the knowledge check to unlock your certificate.</div>
-          <button class="cebtn"><span class="material-icons">lock</span>Certificate locked</button>
+        <div class="cecard"><div class="ct"><span class="material-icons">workspace_premium</span>Earn 0.5 CE hours</div><div class="cs">Finish all lessons and pass the knowledge check to unlock your certificate.</div><button class="cebtn"><span class="material-icons">lock</span>Certificate locked</button></div>
+      </div>
+
+      <div class="railcard hidden" data-rp="transcript">
+        <div class="tsbox">
+          <div class="tsearchbox"><span class="material-icons">search</span><input id="tsearch" placeholder="Search transcript…"></div>
+          <div class="scrollbox" id="transcript"></div>
+        </div>
+      </div>
+
+      <div class="railcard hidden" data-rp="notes">
+        <div class="scrollbox notebox" id="notesList"></div>
+        <div class="addnote">
+          <div class="lbl" id="addlbl">New note at 3:12</div>
+          <textarea id="noteInput" placeholder="Type a note… it'll be linked to this moment in the video."></textarea>
+          <button id="addNoteBtn"><span class="material-icons">add</span>Add note</button>
         </div>
       </div>
     </div>
@@ -245,42 +238,90 @@
 
 <script src="studio-nav.js"></script>
 <script>
-// tabs
-document.getElementById('tabs').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(!b)return;
-  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('active',x===b));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));
-});
-// play toggle (mock)
-const pb=document.getElementById('playBtn'), pi=document.getElementById('playIcon');
-let playing=false;
+const DUR=544; // 9:04
+let cur=192;   // 3:12
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+
+// left tabs
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));});
+function openCodex(){const cb=document.querySelector('#tabs button[data-t="codex"]');cb.click();const cp=document.getElementById('codexPanel');cp.scrollIntoView({behavior:'smooth',block:'center'});cp.classList.remove('flash');void cp.offsetWidth;cp.classList.add('flash');}
+
+// play toggle
+const pb=document.getElementById('playBtn'),pi=document.getElementById('playIcon');let playing=false;
 function toggle(){playing=!playing;pb.style.display=playing?'none':'flex';pi.textContent=playing?'pause':'play_arrow';}
-pb.addEventListener('click',toggle);
-pi.addEventListener('click',toggle);
-// lessons
-const LES=[
-  ["Introduction &amp; Pathophysiology","Video · 4:20","done","play_circle"],
-  ["Treatment &amp; Scenarios","Video · 9:04","active","play_circle"],
-  ["Knowledge Check","Quiz · 5 questions","locked","quiz"]
-];
-document.getElementById('lessons').innerHTML=LES.map(l=>`
-  <div class="les ${l[2]}">
-    <div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div>
-    <div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>
-    ${l[2]==='locked'?'<span class="material-icons" style="font-size:16px;color:var(--text-3)">lock</span>':''}
-  </div>`).join('');
+pb.onclick=toggle;pi.onclick=toggle;
+
+// rail tabs
+document.getElementById('railtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#railtabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-rp]').forEach(p=>p.classList.toggle('hidden',p.dataset.rp!==b.dataset.r));});
+function showRail(r){document.querySelector('#railtabs button[data-r="'+r+'"]').click();}
+
+// contents
+const LES=[["Introduction & Pathophysiology","Video · 4:20","done","play_circle"],["Treatment & Scenarios","Video · 9:04","active","play_circle"],["Knowledge Check","Quiz · 5 questions","locked","quiz"]];
+document.getElementById('lessons').innerHTML=LES.map(l=>`<div class="les ${l[2]}"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:16px;color:var(--text-3)">lock</span>':''}</div>`).join('');
+
 // codex chapters
-const CH=[
-  ["Ch. 12","Obstructive Airway Disease","Pathophysiology, phenotypes & staging"],
-  ["Ch. 13","Ventilation Strategies in COPD","NIV, settings & auto-PEEP"],
-  ["Ch. 4","Acid–Base & Gas Exchange","Interpreting the COPD blood gas"]
+const CH=[["Ch. 12","Obstructive Airway Disease","Pathophysiology, phenotypes & staging"],["Ch. 13","Ventilation Strategies in COPD","NIV, settings & auto-PEEP"],["Ch. 4","Acid–Base & Gas Exchange","Interpreting the COPD blood gas"]];
+document.getElementById('chapters').innerHTML=CH.map((c,i)=>`<div class="chap"><span class="num">${c[0]}</span><div class="ct"><div class="nm">${c[1]}</div><div class="ds">${c[2]}</div></div><div class="acts"><span class="save" onclick="saveCodexNote(${i})"><span class="material-icons" style="font-size:15px">bookmark_add</span>Save</span><span class="go">Read <span class="material-icons" style="font-size:15px">arrow_forward</span></span></div></div>`).join('');
+
+// transcript [sec, text, codexChapterIndex|null]
+const TR=[
+ [0,"Let's start with what's actually happening in the COPD airway.",null],
+ [24,"Chronic inflammation narrows the small airways and destroys elastic recoil.",0],
+ [52,"That loss of recoil is why these patients trap air — the hallmark of obstruction.",0],
+ [90,"On exam you'll hear a prolonged expiratory phase and wheezing.",null],
+ [125,"The goal isn't to normalize the gas — it's to treat the patient in front of you.",null],
+ [160,"Bronchodilators first: albuterol and ipratropium open the airways.",null],
+ [192,"Then steroids to calm the underlying inflammation over the next hours.",null],
+ [230,"If they're tiring, non-invasive ventilation buys time and reduces work of breathing.",1],
+ [270,"Positive pressure splints the airways and helps recruit alveoli.",1],
+ [320,"Watch for auto-PEEP — give them time to fully exhale.",1],
+ [400,"Permissive hypercapnia is often the right call here.",null],
+ [490,"Let's put it together with a transport scenario.",null]
 ];
-document.getElementById('chapters').innerHTML=CH.map(c=>`
-  <div class="chap">
-    <span class="num">${c[0]}</span>
-    <div class="ct"><div class="nm">${c[1]}</div><div class="ds">${c[2]}</div></div>
-    <span class="go">Read chapter <span class="material-icons" style="font-size:15px">arrow_forward</span></span>
-  </div>`).join('');
+function renderTranscript(filter){
+  filter=(filter||'').toLowerCase();
+  const host=document.getElementById('transcript');
+  host.innerHTML=TR.filter(l=>!filter||l[1].toLowerCase().includes(filter)).map(l=>{
+    const idx=TR.indexOf(l);
+    const active=(cur>=l[0] && (idx===TR.length-1 || cur<TR[idx+1][0]))?' active':'';
+    const cx=l[2]!=null?`<span class="cx" onclick="event.stopPropagation();openCodex()"><span class="material-icons" style="font-size:13px">menu_book</span>${CH[l[2]][0]}</span>`:'';
+    return `<div class="tline${active}" onclick="seek(${l[0]})"><span class="ts">${fmt(l[0])}</span><span class="tx">${l[1]}${cx}</span><span class="material-icons tadd" onclick="event.stopPropagation();noteFromLine(${idx})" title="Save to notes">note_add</span></div>`;
+  }).join('');
+  const a=host.querySelector('.tline.active'); if(a&&!filter)a.scrollIntoView({block:'nearest'});
+}
+document.getElementById('tsearch').addEventListener('input',e=>renderTranscript(e.target.value));
+
+function seek(sec){
+  cur=sec;
+  const pct=(sec/DUR*100);
+  document.getElementById('scrubFill').style.width=pct+'%';
+  document.getElementById('scrubHandle').style.left=pct+'%';
+  document.getElementById('timeDisp').textContent=fmt(sec)+' / 9:04';
+  // caption = current line
+  let line=TR[0][1]; for(const l of TR){if(l[0]<=sec)line=l[1];}
+  document.getElementById('cap').textContent=line;
+  document.getElementById('addlbl').textContent='New note at '+fmt(sec);
+  renderTranscript(document.getElementById('tsearch').value);
+}
+
+// notes
+let notes=[{kind:'video',t:52,quote:"That loss of recoil is why these patients trap air…",text:"Loss of elastic recoil = air trapping. This is THE core concept."}];
+function renderNotes(){
+  const host=document.getElementById('notesList');
+  if(!notes.length){host.innerHTML='<div class="emptynote">No notes yet. Add one below, or use the note icon on any transcript line.</div>';return;}
+  host.innerHTML=notes.map((n,i)=>{
+    const stamp=n.kind==='codex'
+      ? `<span class="nstamp codex" onclick="openCodex()"><span class="material-icons">menu_book</span>${n.ref}</span>`
+      : `<span class="nstamp" onclick="seek(${n.t})"><span class="material-icons">play_arrow</span>${fmt(n.t)}</span>`;
+    return `<div class="note"><div class="nh">${stamp}<span class="material-icons del" onclick="delNote(${i})">close</span></div>${n.quote?`<div class="quote">"${n.quote}"</div>`:''}${n.text?`<div class="ntext">${n.text}</div>`:''}</div>`;
+  }).join('');
+}
+function delNote(i){notes.splice(i,1);renderNotes();}
+function noteFromLine(idx){notes.unshift({kind:'video',t:TR[idx][0],quote:TR[idx][1],text:''});renderNotes();showRail('notes');document.getElementById('noteInput').focus();}
+function saveCodexNote(i){notes.unshift({kind:'codex',ref:CH[i][0],quote:CH[i][1],text:''});renderNotes();showRail('notes');}
+document.getElementById('addNoteBtn').onclick=function(){const ta=document.getElementById('noteInput');const v=ta.value.trim();if(!v)return;notes.unshift({kind:'video',t:cur,text:v});ta.value='';renderNotes();};
+
+renderTranscript();renderNotes();
 </script>
 </body>
 </html>
