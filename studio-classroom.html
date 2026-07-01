@@ -5,86 +5,282 @@
 <title>Classroom — FOAMfrat Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
-<link rel="stylesheet" href="studio.css" />
 <style>
-  .crumb{font-size:12.5px;color:var(--text-3);margin-bottom:10px;}
-  .cls{display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:start;}
-  .accred{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px;}
-  .player{position:relative;background:#000 url('https://d29e3091pe8039.cloudfront.net/public/3a417ef2-1048-46d4-ae35-1039c5d860da.jpg') center/cover;border:1px solid var(--line);border-radius:12px;height:340px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
-  .player::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.4);border-radius:12px;}
-  .player .pbtn{position:relative;z-index:1;width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-  .player .pbtn .material-icons{font-size:40px;color:#fff;}
-  .meta{font-size:14px;color:var(--text-2);font-weight:300;}
-  .meta b{color:var(--text);font-weight:500;}
-  .sec{margin-top:18px;}
-  .sec h4{font-size:14px;color:var(--text);margin:0 0 8px;font-weight:500;}
-  .sec ol{margin:0;padding-left:20px;color:var(--text-2);font-size:13.5px;font-weight:300;}
-  .sec ol li{margin-bottom:7px;}
-  .stepper{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px;position:sticky;top:84px;}
-  .step{display:flex;gap:12px;padding:14px 12px;border-radius:10px;cursor:pointer;}
-  .step:hover{background:var(--surface-2);}
-  .step .n{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600;background:var(--surface-2);color:var(--text-3);}
-  .step.active .n{background:var(--green);color:#06210a;}
-  .step.done .n{background:rgba(102,187,106,.2);color:var(--green);}
-  .step .st{font-size:13.5px;}
-  .step .sd{font-size:12px;color:var(--text-3);margin-top:3px;}
-  .step.active{background:var(--surface-2);}
-  .stepacts{display:flex;gap:10px;margin-top:10px;padding-left:38px;}
-  .lnk{font-size:13px;color:var(--text-2);cursor:pointer;padding:7px 0;}
-  @media(max-width:840px){.cls{grid-template-columns:1fr;}.stepper{position:static;}}
+  :root{
+    --bg:#0a0a0a;--surface:#1c1f23;--surface-2:#262a30;
+    --line:rgba(255,255,255,0.08);--line-2:rgba(255,255,255,0.18);
+    --text:#fff;--text-2:rgba(255,255,255,0.62);--text-3:rgba(255,255,255,0.40);
+    --green:#66bb6a;--amber:#ffa726;--info:#29b6f6;--yellow:#eceb5e;--codex:#d9b45b;--track:rgba(255,255,255,0.12);
+  }
+  *{box-sizing:border-box;}
+  .material-icons{font-family:'Material Symbols Outlined';font-weight:400;line-height:1;display:inline-block;vertical-align:middle;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  /* appbar */
+  .appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid var(--line);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
+  .appbar .left,.appbar .right{display:flex;align-items:center;gap:22px;}
+  .appbar .material-icons{font-size:23px;color:#fff;cursor:pointer;}
+  .appbar .logo{width:42px;height:42px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .appbar .user{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;}
+  .appbar .user .material-icons{font-size:19px;color:var(--text-2);}
+  .crumb{max-width:1440px;margin:0 auto;padding:16px 30px 0;font-size:12.5px;color:var(--text-3);}
+  .crumb a:hover{color:var(--text-2);}
+  .cwrap{max-width:1440px;margin:0 auto;padding:14px 30px 70px;display:grid;grid-template-columns:1fr 350px;gap:28px;align-items:start;}
+  /* ---- player ---- */
+  .player{position:relative;border-radius:14px;overflow:hidden;background:#000 center/cover;aspect-ratio:16/9;border:1px solid var(--line);}
+  .player .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 34%,rgba(0,0,0,0) 55%);}
+  .player .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;}
+  .player .play:hover{transform:translate(-50%,-50%) scale(1.06);}
+  .player .play .material-icons{font-size:40px;color:#fff;margin-left:4px;}
+  .player .cap{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-size:20px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.9);padding:0 20px;}
+  .player .badge{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.55);border:1px solid var(--line-2);border-radius:7px;padding:5px 10px;font-size:11px;letter-spacing:.4px;color:#fff;}
+  /* control bar */
+  .ctrl{position:absolute;left:0;right:0;bottom:0;padding:10px 16px 12px;display:flex;align-items:center;gap:14px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);}
+  .ctrl .material-icons{font-size:22px;color:#fff;cursor:pointer;}
+  .scrub{flex:1;height:5px;border-radius:999px;background:rgba(255,255,255,.25);position:relative;cursor:pointer;}
+  .scrub > div{position:absolute;left:0;top:0;bottom:0;width:35%;background:var(--green);border-radius:999px;}
+  .scrub > span{position:absolute;left:35%;top:50%;width:13px;height:13px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);}
+  .time{font-size:12px;color:#fff;white-space:nowrap;}
+  .spd{font-size:12px;color:#fff;border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;cursor:pointer;}
+  /* title + meta */
+  .titlerow{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:18px 0 8px;}
+  h1{font-size:24px;font-weight:500;margin:0;}
+  .lesson-of{font-size:12.5px;color:var(--text-3);margin-top:4px;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);}
+  .chip .material-icons{font-size:14px;}
+  .chip.hr{background:rgba(102,187,106,0.14);border-color:transparent;color:var(--green);}
+  /* tabs */
+  .tabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin:20px 0 20px;overflow-x:auto;white-space:nowrap;}
+  .tabs button{background:none;border:none;color:var(--text-2);font-family:inherit;font-size:14px;padding:0 2px 12px;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+  .tabs button .material-icons{font-size:17px;}
+  .tabs button:hover{color:#fff;}
+  .tabs button.active{color:#fff;border-bottom-color:var(--green);}
+  .tabs button.codex.active{border-bottom-color:var(--codex);}
+  .panel{display:none;font-size:14.5px;color:var(--text-2);font-weight:300;line-height:1.65;}
+  .panel.on{display:block;}
+  .panel h3{font-size:14px;color:var(--text);font-weight:500;margin:0 0 10px;letter-spacing:.2px;}
+  .panel ol{margin:0;padding-left:20px;} .panel ol li{margin-bottom:9px;}
+  .panel .ref{font-size:13px;color:var(--text-3);}
+  /* codex */
+  .codexhead{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .codexhead .bk{width:34px;height:34px;border-radius:9px;background:rgba(217,180,91,0.16);display:flex;align-items:center;justify-content:center;}
+  .codexhead .bk .material-icons{color:var(--codex);font-size:20px;}
+  .codexhead .t{font-size:15px;color:#fff;font-weight:500;}
+  .codexhead .s{font-size:12px;color:var(--text-3);}
+  .chap{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .15s;}
+  .chap:hover{border-color:var(--codex);}
+  .chap .num{font-size:11px;color:var(--codex);border:1px solid rgba(217,180,91,0.4);border-radius:6px;padding:3px 7px;white-space:nowrap;}
+  .chap .ct{flex:1;}
+  .chap .ct .nm{font-size:14px;color:#fff;font-weight:500;}
+  .chap .ct .ds{font-size:12px;color:var(--text-3);margin-top:2px;}
+  .chap .go{font-size:12.5px;color:var(--codex);display:flex;align-items:center;gap:4px;white-space:nowrap;}
+  /* instructor */
+  .instr{display:flex;gap:15px;align-items:center;}
+  .instr .av{width:56px;height:56px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;color:var(--green);flex-shrink:0;}
+  .instr .nm{font-size:16px;color:#fff;font-weight:500;}
+  .instr .ti{font-size:13px;color:var(--text-3);}
+  /* accreditation */
+  .applies{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+  .applies .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;}
+  .applies .big{font-size:16px;color:#fff;font-weight:500;}
+  .applies .cnts{font-size:13px;color:var(--text-2);margin-top:6px;}
+  .accred-item{border-top:1px solid var(--line);padding:12px 0;font-size:13px;}
+  .accred-item:first-of-type{border-top:none;}
+  .accred-item b{color:#fff;font-weight:500;}
+  .disc{font-size:11.5px;color:var(--text-3);font-style:italic;margin-top:10px;}
+  /* ---- right rail ---- */
+  .rail{position:sticky;top:78px;}
+  .railcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .railhead{padding:16px 18px 14px;border-bottom:1px solid var(--line);}
+  .railhead .t{font-size:14px;font-weight:500;}
+  .railhead .p{font-size:12px;color:var(--text-3);margin-top:3px;}
+  .pbar{height:6px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:10px;}
+  .pbar>div{height:100%;background:var(--green);width:33%;}
+  .les{display:flex;align-items:center;gap:13px;padding:13px 18px;border-top:1px solid var(--line);cursor:pointer;}
+  .les:hover{background:var(--surface-2);}
+  .les.active{background:var(--surface-2);}
+  .les .ic{width:30px;height:30px;border-radius:8px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .les.active .ic{background:var(--green);} .les.active .ic .material-icons{color:#06210a;}
+  .les.done .ic{background:rgba(102,187,106,.2);}
+  .les .ic .material-icons{font-size:17px;color:var(--text-2);}
+  .les.done .ic .material-icons{color:var(--green);}
+  .les .lt{flex:1;min-width:0;}
+  .les .lt .nm{font-size:13.5px;color:#fff;}
+  .les .lt .mt{font-size:11.5px;color:var(--text-3);margin-top:1px;}
+  .les.locked{opacity:.55;}
+  .cecard{padding:16px 18px;border-top:1px solid var(--line);background:rgba(102,187,106,0.06);}
+  .cecard .ct{font-size:13px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px;}
+  .cecard .ct .material-icons{color:var(--green);font-size:19px;}
+  .cecard .cs{font-size:12px;color:var(--text-2);margin:6px 0 12px;}
+  .cebtn{width:100%;border:none;border-radius:9px;padding:11px;font-family:inherit;font-size:13.5px;font-weight:500;background:var(--surface-2);color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:7px;cursor:not-allowed;border:1px solid var(--line);}
+  .cebtn .material-icons{font-size:17px;}
+  @media(max-width:1000px){.cwrap{grid-template-columns:1fr;} .rail{position:static;}}
 </style>
 </head>
 <body>
-<template id="main">
-  <div class="page">
-    <div class="crumb"><a href="studio-home.html">Self-Paced</a> &nbsp;›&nbsp; Airway / Respiratory / Ventilation &nbsp;›&nbsp; Understanding COPD</div>
-    <div class="cls">
-      <div>
-        <h1 class="h1" style="font-family:Roboto">Understanding COPD</h1>
-        <div class="accred">
-          <span class="chip">ANCC</span><span class="chip">CAPCE</span>
-          <span class="chip">Kentucky (CE Broker)</span><span class="chip">Tennessee (CE Broker)</span><span class="chip">Virginia</span>
-        </div>
-        <div class="player"><div class="pbtn"><span class="material-icons">play_arrow</span></div></div>
-        <div class="meta"><b>Hour Type:</b> Airway, Respiratory, Ventilation (0.5 Hour F3 CE)</div>
-        <div class="sec"><h4>Description</h4>
-          <div class="meta" style="font-weight:300">This course reviews the fundamentals of COPD pathophysiology and treatments for the COPD patient.</div></div>
-        <div class="sec"><h4>Objectives</h4>
-          <ol>
-            <li>Define the core pathophysiologic mechanisms of COPD, including airflow limitation, gas trapping, and V/Q mismatch.</li>
-            <li>Identify appropriate evidence-based treatments for COPD in scenario-based clinical questions.</li>
-            <li>Analyze COPD scenarios to determine treatment priorities and justify the sequence of interventions.</li>
-          </ol></div>
-        <div class="sec"><h4>Instructor</h4><div class="meta" style="font-weight:300">James Ownbey</div></div>
-        <div class="sec"><h4>References</h4>
-          <ol><li>Biondi-Zoccai, G., et al. (2011). Evidence reviews in mechanical support. <em>HSR Proceedings.</em></li>
-          <li>GOLD Report (2024). Global Strategy for Prevention, Diagnosis and Management of COPD.</li></ol></div>
+<header class="appbar">
+  <div class="left">
+    <span class="material-icons" id="navToggle">menu</span>
+    <a href="studio-home.html" class="logo"><img src="studio%20logo.png" alt="FOAMfrat Studio" style="width:100%;height:100%;object-fit:cover"></a>
+  </div>
+  <div class="right">
+    <span class="material-icons">search</span><span class="material-icons">notifications</span><span class="material-icons">explore</span>
+    <a href="certificates.html" class="user">Tyler Christifulli <span class="material-icons">expand_more</span></a>
+  </div>
+</header>
+
+<div class="crumb"><a href="studio-home.html">Self-Paced</a> &nbsp;›&nbsp; Airway / Respiratory / Ventilation &nbsp;›&nbsp; Understanding COPD</div>
+
+<div class="cwrap">
+  <!-- LEFT -->
+  <div>
+    <div class="player" id="player" style="background-image:url('https://d29e3091pe8039.cloudfront.net/public/3a417ef2-1048-46d4-ae35-1039c5d860da.jpg')">
+      <div class="scrim"></div>
+      <div class="badge">LESSON 2 OF 3 · VIDEO</div>
+      <div class="cap">…positive pressure splints the airways and helps recruit alveoli</div>
+      <div class="play" id="playBtn"><span class="material-icons">play_arrow</span></div>
+      <div class="ctrl">
+        <span class="material-icons" id="playIcon">play_arrow</span>
+        <div class="scrub"><div></div><span></span></div>
+        <span class="time">3:12 / 9:04</span>
+        <span class="material-icons">closed_caption</span>
+        <span class="spd">1x</span>
+        <span class="material-icons">settings</span>
+        <span class="material-icons">fullscreen</span>
       </div>
+    </div>
+
+    <div class="titlerow">
       <div>
-        <div class="stepper" id="stepper"></div>
+        <h1>Understanding COPD</h1>
+        <div class="lesson-of">Treatment &amp; Scenarios · Lesson 2 of 3</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip hr"><span class="material-icons">schedule</span>0.5 CE hr · Airway, Respiratory &amp; Ventilation (F3)</span>
+      <span class="chip"><span class="material-icons">verified</span>ANCC</span>
+      <span class="chip"><span class="material-icons">verified</span>CAPCE</span>
+      <span class="chip">Kentucky</span><span class="chip">Tennessee</span><span class="chip">Virginia</span>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button data-t="overview" class="active"><span class="material-icons">notes</span>Overview</button>
+      <button data-t="objectives"><span class="material-icons">checklist</span>Objectives</button>
+      <button data-t="codex" class="codex"><span class="material-icons">menu_book</span>Codex Chapters</button>
+      <button data-t="instructor"><span class="material-icons">person</span>Instructor</button>
+      <button data-t="accred"><span class="material-icons">workspace_premium</span>Accreditation</button>
+      <button data-t="refs"><span class="material-icons">format_quote</span>References</button>
+    </div>
+
+    <div class="panel on" data-p="overview">
+      This course reviews the fundamentals of COPD pathophysiology and the evidence-based treatment of the COPD patient — from recognizing airflow limitation and gas trapping to prioritizing interventions in real transport scenarios.
+    </div>
+
+    <div class="panel" data-p="objectives">
+      <h3>By the end of this lesson you will be able to:</h3>
+      <ol>
+        <li>Define the core pathophysiologic mechanisms of COPD, including airflow limitation, gas trapping, and ventilation–perfusion mismatch.</li>
+        <li>Identify appropriate evidence-based treatments for COPD when presented with scenario-based clinical questions.</li>
+        <li>Analyze COPD patient scenarios to determine treatment priorities and justify the sequence of interventions based on underlying physiologic principles.</li>
+      </ol>
+    </div>
+
+    <div class="panel" data-p="codex">
+      <div class="codexhead">
+        <div class="bk"><span class="material-icons">menu_book</span></div>
+        <div><div class="t">From the Codex</div><div class="s">Related chapters in FOAMfrat's living textbook</div></div>
+      </div>
+      <div id="chapters"></div>
+    </div>
+
+    <div class="panel" data-p="instructor">
+      <div class="instr">
+        <div class="av">JO</div>
+        <div><div class="nm">James Ownbey</div><div class="ti">Flight Paramedic · FOAMfrat Educator</div></div>
+      </div>
+      <p style="margin-top:14px">Critical care and flight paramedic with a focus on respiratory physiology and mechanical ventilation. Contributor to the FOAMfrat Ventilation series.</p>
+    </div>
+
+    <div class="panel" data-p="accred">
+      <div class="applies">
+        <div class="k">Where this hour applies</div>
+        <div class="big">0.5 hour · Airway, Respiratory &amp; Ventilation (F3 — Advanced/Clinical)</div>
+        <div class="cnts">Counts toward: IBSC FP-C / CCP-C renewal (Airway domain) · NREMT recertification · state EMS relicensure · ANCC nursing contact hours.</div>
+      </div>
+      <div class="accred-item"><b>CAPCE</b> — FOAMfrat is accredited by the Commission on Accreditation for Pre-Hospital Continuing Education. This activity, <b>25-FOAM-F3-0416</b>, is approved for 0.5 Advanced (F3) CE hour. <span class="disc">(placeholder approval number)</span></div>
+      <div class="accred-item"><b>ANCC</b> — FOAMfrat is accredited as a provider of nursing continuing professional development by the American Nurses Credentialing Center's Commission on Accreditation. This activity awards <b>0.5 contact hours</b>.</div>
+      <div class="accred-item"><b>State approvals</b> — Approved for 0.5 CE hour by Kentucky (CE Broker), Tennessee (CE Broker), and Virginia Office of EMS.</div>
+      <div class="disc">No relevant financial relationships to disclose. Completion requires viewing all lessons and passing the knowledge check. Accreditation wording shown here is placeholder for the prototype.</div>
+    </div>
+
+    <div class="panel" data-p="refs">
+      <ol class="ref">
+        <li>Global Initiative for Chronic Obstructive Lung Disease. (2024). Global Strategy for the Diagnosis, Management, and Prevention of COPD.</li>
+        <li>Biondi-Zoccai, G., et al. (2011). Evidence review in mechanical support. HSR Proceedings in Intensive Care &amp; Cardiovascular Anesthesia, 3(3), 203–205.</li>
+        <li>Brochard, L., et al. (1995). Noninvasive ventilation for acute exacerbations of COPD. NEJM, 333(13), 817–822.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- RIGHT RAIL -->
+  <div>
+    <div class="rail">
+      <div class="railcard">
+        <div class="railhead">
+          <div class="t">Course contents</div>
+          <div class="p">1 of 3 complete · 33%</div>
+          <div class="pbar"><div></div></div>
+        </div>
+        <div id="lessons"></div>
+        <div class="cecard">
+          <div class="ct"><span class="material-icons">workspace_premium</span>Earn 0.5 CE hours</div>
+          <div class="cs">Finish all lessons and pass the knowledge check to unlock your certificate.</div>
+          <button class="cebtn"><span class="material-icons">lock</span>Certificate locked</button>
+        </div>
       </div>
     </div>
   </div>
-</template>
-<script>STUDIO_PAGE='home';</script>
-<script src="studio-shell.js"></script>
+</div>
+
+<script src="studio-nav.js"></script>
 <script>
-const STEPS=[
-  ["Understanding COPD","COPD pathophysiology and treatment.","active"],
-  ["Understanding COPD","Treatment priorities & scenarios.",""],
-  ["Understanding COPD Quiz","3 questions · pass to earn CE.",""]
+// tabs
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('active',x===b));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));
+});
+// play toggle (mock)
+const pb=document.getElementById('playBtn'), pi=document.getElementById('playIcon');
+let playing=false;
+function toggle(){playing=!playing;pb.style.display=playing?'none':'flex';pi.textContent=playing?'pause':'play_arrow';}
+pb.addEventListener('click',toggle);
+pi.addEventListener('click',toggle);
+// lessons
+const LES=[
+  ["Introduction &amp; Pathophysiology","Video · 4:20","done","play_circle"],
+  ["Treatment &amp; Scenarios","Video · 9:04","active","play_circle"],
+  ["Knowledge Check","Quiz · 5 questions","locked","quiz"]
 ];
-let cur=0;
-function render(){
-  document.getElementById('stepper').innerHTML = STEPS.map((s,i)=>{
-    const cls = i<cur?'done':(i===cur?'active':'');
-    const acts = i===cur?`<div class="stepacts"><span class="lnk" onclick="go(${i-1})">${i>0?'‹ Back':''}</span><button class="btn primary" onclick="go(${i+1})">${i<STEPS.length-1?'Next':'Finish'} <span class="material-icons">arrow_forward</span></button></div>`:'';
-    return `<div class="step ${cls}" onclick="jump(${i})"><span class="n">${i<cur?'✓':i+1}</span><div><div class="st">${s[0]}</div>${i===cur?`<div class="sd">${s[1]}</div>`:''}</div></div>${acts}`;
-  }).join('');
-}
-function go(i){ if(i<0)return; if(i>=STEPS.length){alert('Course complete — certificate issued (mock).');return;} cur=i; render(); }
-function jump(i){ cur=i; render(); }
-render();
+document.getElementById('lessons').innerHTML=LES.map(l=>`
+  <div class="les ${l[2]}">
+    <div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div>
+    <div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>
+    ${l[2]==='locked'?'<span class="material-icons" style="font-size:16px;color:var(--text-3)">lock</span>':''}
+  </div>`).join('');
+// codex chapters
+const CH=[
+  ["Ch. 12","Obstructive Airway Disease","Pathophysiology, phenotypes & staging"],
+  ["Ch. 13","Ventilation Strategies in COPD","NIV, settings & auto-PEEP"],
+  ["Ch. 4","Acid–Base & Gas Exchange","Interpreting the COPD blood gas"]
+];
+document.getElementById('chapters').innerHTML=CH.map(c=>`
+  <div class="chap">
+    <span class="num">${c[0]}</span>
+    <div class="ct"><div class="nm">${c[1]}</div><div class="ds">${c[2]}</div></div>
+    <span class="go">Read chapter <span class="material-icons" style="font-size:15px">arrow_forward</span></span>
+  </div>`).join('');
 </script>
 </body>
 </html>
