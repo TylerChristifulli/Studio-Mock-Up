@@ -11,8 +11,7 @@
   *{box-sizing:border-box;}
   .material-icons{font-family:'Material Symbols Outlined';font-weight:400;line-height:1;display:inline-block;vertical-align:middle;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'Roboto',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
-  a{color:inherit;text-decoration:none;}
-  .hidden{display:none !important;}
+  a{color:inherit;text-decoration:none;} .hidden{display:none !important;}
   .appbar{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid var(--line);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;}
   .appbar .left,.appbar .right{display:flex;align-items:center;gap:22px;}
   .appbar .material-icons{font-size:23px;color:#fff;cursor:pointer;}
@@ -20,11 +19,9 @@
   .appbar .user{display:flex;align-items:center;gap:6px;font-size:14px;} .appbar .user .material-icons{font-size:19px;color:var(--text-2);}
   .crumb{max-width:1440px;margin:0 auto;padding:16px 30px 0;font-size:12.5px;color:var(--text-3);}
   .cwrap{max-width:1440px;margin:0 auto;padding:14px 30px 70px;display:grid;grid-template-columns:1fr 350px;gap:26px;align-items:start;}
-  /* player */
   .player{position:relative;border-radius:14px;overflow:hidden;background:#000 center/cover;aspect-ratio:16/9;border:1px solid var(--line);}
   .player .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 34%,rgba(0,0,0,0) 55%);}
-  .player .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;}
-  .player .play:hover{transform:translate(-50%,-50%) scale(1.06);}
+  .player .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:78px;height:78px;border-radius:50%;background:rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .player .play .material-icons{font-size:40px;color:#fff;margin-left:4px;}
   .player .cap{position:absolute;left:0;right:0;bottom:64px;text-align:center;font-size:19px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.9);padding:0 26px;}
   .player .badge{position:absolute;top:14px;left:14px;background:rgba(0,0,0,.55);border:1px solid var(--line-2);border-radius:7px;padding:5px 10px;font-size:11px;letter-spacing:.4px;color:#fff;}
@@ -35,99 +32,74 @@
   .scrub > span{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);}
   .time{font-size:12px;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums;}
   .spd{font-size:12px;color:#fff;border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;cursor:pointer;}
-  h1{font-size:23px;font-weight:500;margin:16px 0 3px;}
-  .lesson-of{font-size:12.5px;color:var(--text-3);}
+  h1{font-size:23px;font-weight:500;margin:16px 0 3px;} .lesson-of{font-size:12.5px;color:var(--text-3);}
   .meta{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0;}
-  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);}
-  .chip .material-icons{font-size:14px;}
-  .chip.hr{background:rgba(102,187,106,0.14);border-color:transparent;color:var(--green);}
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);} .chip .material-icons{font-size:14px;} .chip.hr{background:rgba(102,187,106,0.14);border-color:transparent;color:var(--green);}
   /* codex spotlight strip */
-  .codexstrip{display:flex;align-items:center;gap:14px;margin:20px 0 0;padding:15px 18px;border-radius:13px;
-    background:linear-gradient(90deg,rgba(224,182,91,0.13),rgba(224,182,91,0.04));border:1px solid rgba(224,182,91,0.3);cursor:pointer;transition:border-color .15s;}
-  .codexstrip:hover{border-color:rgba(224,182,91,0.6);}
-  .codexstrip .bk{width:40px;height:40px;border-radius:11px;background:rgba(224,182,91,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .codexstrip .bk .material-icons{color:var(--codex);font-size:22px;}
+  .codexstrip{display:flex;align-items:center;gap:14px;margin:20px 0 0;padding:14px 18px;border-radius:13px 13px 0 0;background:linear-gradient(90deg,rgba(224,182,91,0.13),rgba(224,182,91,0.04));border:1px solid rgba(224,182,91,0.3);cursor:pointer;}
+  .codexstrip.closed{border-radius:13px;}
+  .codexstrip .bk{width:40px;height:40px;border-radius:11px;background:rgba(224,182,91,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .codexstrip .bk .material-icons{color:var(--codex);font-size:22px;}
   .codexstrip .csx{flex:1;} .codexstrip .csx .t{font-size:14px;font-weight:500;color:#fff;} .codexstrip .csx .s{font-size:12px;color:var(--codex);margin-top:1px;}
-  .codexstrip .arrow{color:var(--codex);}
-  /* about (declutter) */
+  .codexstrip .arrow{color:var(--codex);transition:transform .2s;} .codexstrip.open .arrow{transform:rotate(180deg);}
+  /* codex fold-out reader */
+  .codexreader{border:1px solid rgba(224,182,91,0.3);border-top:none;border-radius:0 0 13px 13px;background:#14120c;overflow:hidden;}
+  .cr-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .cr-follow{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--codex);}
+  .cr-follow .dot{width:7px;height:7px;border-radius:50%;background:var(--codex);box-shadow:0 0 0 3px rgba(224,182,91,.2);}
+  .cr-resume{font-size:11.5px;color:var(--codex);cursor:pointer;border:1px solid rgba(224,182,91,.35);border-radius:999px;padding:4px 11px;}
+  .cr-grid{display:grid;grid-template-columns:190px 1fr;min-height:220px;}
+  .cr-nav{border-right:1px solid rgba(255,255,255,.06);padding:8px;overflow-y:auto;max-height:360px;}
+  .cr-ch{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;border-radius:9px;cursor:pointer;}
+  .cr-ch:hover{background:rgba(255,255,255,.04);} .cr-ch.viewing{background:rgba(224,182,91,.12);}
+  .cr-ch .lab{font-size:10.5px;color:var(--codex);white-space:nowrap;padding-top:1px;}
+  .cr-ch .nm{font-size:12.5px;color:var(--text-2);} .cr-ch.viewing .nm{color:#fff;}
+  .cr-ch .now{font-size:9px;color:#241c07;background:var(--codex);border-radius:4px;padding:1px 5px;margin-top:4px;display:inline-block;}
+  .cr-read{padding:18px 22px;overflow-y:auto;max-height:360px;}
+  .cr-read h2{font-size:16px;margin:0 0 3px;} .cr-read .sec{font-size:11.5px;color:var(--codex);margin-bottom:8px;}
+  .cr-read .at{font-size:11.5px;color:var(--text-3);margin-bottom:14px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;} .cr-read .at:hover{color:var(--codex);}
+  .cr-read p{font-size:13.5px;color:rgba(255,255,255,.8);font-weight:300;line-height:1.7;margin:0 0 12px;}
+  .cr-read .save{font-size:12px;color:var(--codex);cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(224,182,91,.35);border-radius:8px;padding:7px 12px;}
+  @media(max-width:620px){.cr-grid{grid-template-columns:1fr;} .cr-nav{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);max-height:150px;}}
+  /* about */
   .about{margin-top:16px;border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden;}
   .about-toggle{width:100%;background:none;border:none;color:#fff;font-family:inherit;font-size:14.5px;font-weight:500;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-  .about-toggle .material-icons{transition:transform .2s;color:var(--text-2);}
-  .about.open .about-toggle .material-icons{transform:rotate(180deg);}
-  .about-body{display:none;padding:0 18px 8px;}
-  .about.open .about-body{display:block;}
+  .about-toggle .material-icons{transition:transform .2s;color:var(--text-2);} .about.open .about-toggle .material-icons{transform:rotate(180deg);}
+  .about-body{display:none;padding:0 18px 8px;} .about.open .about-body{display:block;}
   .about-body section{border-top:1px solid var(--line);padding:16px 0;}
   .about-body h3{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--text-3);margin:0 0 9px;}
   .about-body p,.about-body li{font-size:14px;color:var(--text-2);font-weight:300;line-height:1.6;}
   .about-body ol{margin:0;padding-left:18px;} .about-body ol li{margin-bottom:7px;}
   .instr{display:flex;gap:14px;align-items:center;} .instr .av{width:50px;height:50px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;color:var(--green);flex-shrink:0;}
   .instr .nm{font-size:15px;color:#fff;font-weight:500;} .instr .ti{font-size:12.5px;color:var(--text-3);}
-  .applies{background:var(--surface-2);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
-  .applies .k{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;}
-  .applies .big{font-size:15px;color:#fff;font-weight:500;} .applies .cnts{font-size:12.5px;color:var(--text-2);margin-top:5px;}
-  .accred-item{font-size:12.5px;color:var(--text-2);margin-bottom:9px;} .accred-item b{color:#fff;font-weight:500;}
-  .disc{font-size:11.5px;color:var(--text-3);font-style:italic;}
-  /* right rail (sleeker) */
+  .applies{background:var(--surface-2);border-radius:10px;padding:14px 16px;margin-bottom:12px;} .applies .k{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;} .applies .big{font-size:15px;color:#fff;font-weight:500;} .applies .cnts{font-size:12.5px;color:var(--text-2);margin-top:5px;}
+  .accred-item{font-size:12.5px;color:var(--text-2);margin-bottom:9px;} .accred-item b{color:#fff;font-weight:500;} .disc{font-size:11.5px;color:var(--text-3);font-style:italic;}
+  /* right rail */
   .rail{position:sticky;top:78px;}
   .railtabs{display:flex;gap:3px;background:var(--surface);border-radius:11px;padding:4px;margin-bottom:12px;}
-  .railtabs button{flex:1;background:none;border:none;color:var(--text-2);font-family:inherit;font-size:12.5px;padding:8px 0;border-radius:8px;cursor:pointer;transition:background .12s;}
-  .railtabs button.active{background:var(--surface-2);color:#fff;font-weight:500;}
+  .railtabs button{flex:1;background:none;border:none;color:var(--text-2);font-family:inherit;font-size:12.5px;padding:8px 0;border-radius:8px;cursor:pointer;} .railtabs button.active{background:var(--surface-2);color:#fff;font-weight:500;}
   .railcard{background:var(--surface);border-radius:14px;overflow:hidden;}
   .railhead{padding:15px 18px 13px;} .railhead .t{font-size:13.5px;font-weight:500;} .railhead .p{font-size:12px;color:var(--text-3);margin-top:3px;}
   .pbar{height:5px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:9px;} .pbar>div{height:100%;background:var(--green);width:33%;}
-  .les{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer;}
-  .les:hover{background:var(--surface-2);} .les.active{background:var(--surface-2);}
-  .les .ic{width:28px;height:28px;border-radius:8px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .les.active .ic{background:var(--green);} .les.active .ic .material-icons{color:#06210a;} .les.done .ic{background:rgba(102,187,106,.2);}
+  .les{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer;} .les:hover{background:var(--surface-2);} .les.active{background:var(--surface-2);}
+  .les .ic{width:28px;height:28px;border-radius:8px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .les.active .ic{background:var(--green);} .les.active .ic .material-icons{color:#06210a;} .les.done .ic{background:rgba(102,187,106,.2);}
   .les .ic .material-icons{font-size:16px;color:var(--text-2);} .les.done .ic .material-icons{color:var(--green);}
   .les .lt{flex:1;min-width:0;} .les .lt .nm{font-size:13px;color:#fff;} .les .lt .mt{font-size:11.5px;color:var(--text-3);margin-top:1px;} .les.locked{opacity:.5;}
-  .cecard{padding:15px 18px;margin-top:6px;border-top:1px solid var(--line);}
-  .cecard .ct{font-size:13px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px;} .cecard .ct .material-icons{color:var(--green);font-size:18px;}
-  .cecard .cs{font-size:12px;color:var(--text-2);margin:6px 0 12px;}
+  .cecard{padding:15px 18px;margin-top:6px;border-top:1px solid var(--line);} .cecard .ct{font-size:13px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px;} .cecard .ct .material-icons{color:var(--green);font-size:18px;} .cecard .cs{font-size:12px;color:var(--text-2);margin:6px 0 12px;}
   .cebtn{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;font-family:inherit;font-size:13px;font-weight:500;background:var(--surface-2);color:var(--text-3);display:flex;align-items:center;justify-content:center;gap:7px;cursor:not-allowed;} .cebtn .material-icons{font-size:16px;}
-  .tsbox{padding:12px;}
-  .tsearchbox{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 11px;color:var(--text-3);margin-bottom:6px;}
-  .tsearchbox input{background:none;border:none;color:var(--text);font-family:inherit;font-size:13px;width:100%;outline:none;} .tsearchbox .material-icons{font-size:17px;}
+  .tsbox{padding:12px;} .tsearchbox{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 11px;color:var(--text-3);margin-bottom:6px;} .tsearchbox input{background:none;border:none;color:var(--text);font-family:inherit;font-size:13px;width:100%;outline:none;} .tsearchbox .material-icons{font-size:17px;}
   .scrollbox{max-height:58vh;overflow-y:auto;}
-  .tline{position:relative;padding:9px 32px 9px 10px;border-radius:8px;cursor:pointer;}
-  .tline:hover{background:var(--surface-2);} .tline.active{background:rgba(102,187,106,0.12);}
-  .tline .row{display:flex;gap:11px;}
-  .tline .ts{font-size:11px;color:var(--green);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums;}
-  .tline .tx{font-size:13px;color:var(--text-2);} .tline.active .tx{color:#fff;}
-  .tline .cxlink{display:inline-flex;align-items:center;gap:5px;margin:7px 0 1px 34px;font-size:11.5px;color:var(--codex);cursor:pointer;padding:3px 9px;border:1px solid rgba(224,182,91,.35);border-radius:999px;background:rgba(224,182,91,.08);}
-  .tline .cxlink:hover{background:rgba(224,182,91,.16);}
+  .tline{position:relative;padding:9px 32px 9px 10px;border-radius:8px;cursor:pointer;} .tline:hover{background:var(--surface-2);} .tline.active{background:rgba(102,187,106,0.12);}
+  .tline .row{display:flex;gap:11px;} .tline .ts{font-size:11px;color:var(--green);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums;} .tline .tx{font-size:13px;color:var(--text-2);} .tline.active .tx{color:#fff;}
+  .tline .cxlink{display:inline-flex;align-items:center;gap:5px;margin:7px 0 1px 34px;font-size:11.5px;color:var(--codex);cursor:pointer;padding:3px 9px;border:1px solid rgba(224,182,91,.35);border-radius:999px;background:rgba(224,182,91,.08);} .tline .cxlink:hover{background:rgba(224,182,91,.16);}
   .tline .tadd{position:absolute;right:8px;top:8px;opacity:0;color:var(--text-3);font-size:17px;} .tline:hover .tadd{opacity:1;} .tline .tadd:hover{color:var(--green);}
   .notebox{padding:14px;}
-  .note{background:var(--surface-2);border-radius:9px;padding:11px 12px;margin-bottom:9px;}
-  .note .nh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-  .nstamp{font-size:11px;color:var(--green);background:rgba(102,187,106,.14);border-radius:5px;padding:2px 8px;cursor:pointer;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:4px;} .nstamp .material-icons{font-size:12px;} .nstamp.codex{color:var(--codex);background:rgba(224,182,91,.14);}
+  .nhint{font-size:11.5px;color:var(--text-3);padding:0 2px 10px;line-height:1.4;}
+  .note{background:var(--surface-2);border-radius:9px;padding:11px 12px;margin-bottom:9px;} .note .nh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .nstamp{font-size:11px;color:var(--green);background:rgba(102,187,106,.14);border-radius:6px;padding:3px 9px;cursor:pointer;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:5px;} .nstamp .material-icons{font-size:13px;} .nstamp.reel{color:var(--yellow);background:rgba(236,235,94,.14);} .nstamp.codex{color:var(--codex);background:rgba(224,182,91,.14);}
   .note .del{color:var(--text-3);font-size:15px;cursor:pointer;} .note .del:hover{color:#ff6b6b;}
-  .note .quote{font-size:12px;color:var(--text-3);font-style:italic;border-left:2px solid var(--line-2);padding-left:8px;margin-bottom:6px;}
-  .note .ntext{font-size:13px;color:var(--text);white-space:pre-wrap;}
+  .note .quote{font-size:12px;color:var(--text-3);font-style:italic;border-left:2px solid var(--line-2);padding-left:8px;margin-bottom:6px;} .note .ntext{font-size:13px;color:var(--text);white-space:pre-wrap;}
   .emptynote{font-size:12.5px;color:var(--text-3);text-align:center;padding:22px 6px;}
-  .addnote{border-top:1px solid var(--line);padding:12px 14px;}
-  .addnote .lbl{font-size:11px;color:var(--text-3);margin-bottom:6px;}
-  .addnote textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:inherit;font-size:13px;padding:9px;resize:vertical;min-height:52px;outline:none;}
-  .addnote button{margin-top:8px;width:100%;background:var(--green);color:#06210a;border:none;border-radius:8px;padding:9px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;} .addnote button .material-icons{font-size:16px;}
-  /* codex slide-over */
-  .cx-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .2s;z-index:200;}
-  .cx-overlay.open{opacity:1;visibility:visible;}
-  .cx-panel{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#14120c;border-left:1px solid rgba(224,182,91,.3);transform:translateX(100%);transition:transform .26s ease;z-index:201;display:flex;flex-direction:column;}
-  .cx-panel.open{transform:translateX(0);}
-  .cx-head{padding:20px 22px 14px;border-bottom:1px solid rgba(224,182,91,.18);display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
-  .cx-k{font-size:11px;letter-spacing:1.5px;color:var(--codex);}
-  .cx-title{font-size:20px;font-weight:600;margin-top:6px;}
-  .cx-close{color:var(--text-2);cursor:pointer;} .cx-close:hover{color:#fff;}
-  .cx-chaptabs{display:flex;gap:8px;padding:12px 22px;overflow-x:auto;border-bottom:1px solid rgba(255,255,255,.06);}
-  .cx-chaptabs button{white-space:nowrap;background:rgba(224,182,91,.08);border:1px solid rgba(224,182,91,.25);color:var(--codex);font-family:inherit;font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;}
-  .cx-chaptabs button.active{background:var(--codex);color:#241c07;border-color:var(--codex);font-weight:600;}
-  .cx-body{flex:1;overflow-y:auto;padding:20px 22px;}
-  .cx-body h2{font-size:16px;margin:0 0 4px;} .cx-body .sec{font-size:12px;color:var(--codex);margin-bottom:14px;}
-  .cx-body p{font-size:14px;color:rgba(255,255,255,.8);font-weight:300;line-height:1.7;margin:0 0 14px;}
-  .cx-foot{border-top:1px solid rgba(255,255,255,.08);padding:14px 22px;display:flex;gap:10px;}
-  .cx-foot button{flex:1;border:none;border-radius:9px;padding:11px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
-  .cx-foot .back{background:var(--surface-2);color:#fff;border:1px solid var(--line-2);} .cx-foot .save{background:rgba(224,182,91,.16);color:var(--codex);}
-  .cx-foot .material-icons{font-size:16px;}
+  .addnote{border-top:1px solid var(--line);padding:12px 14px;} .addnote .lbl{font-size:11px;color:var(--text-3);margin-bottom:6px;} .addnote textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font-family:inherit;font-size:13px;padding:9px;resize:vertical;min-height:52px;outline:none;} .addnote button{margin-top:8px;width:100%;background:var(--green);color:#06210a;border:none;border-radius:8px;padding:9px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;} .addnote button .material-icons{font-size:16px;}
   @media(max-width:1000px){.cwrap{grid-template-columns:1fr;} .rail{position:static;} .scrollbox{max-height:none;}}
 </style>
 </head>
@@ -144,16 +116,12 @@
 <div class="cwrap">
   <div>
     <div class="player" style="background-image:url('https://d29e3091pe8039.cloudfront.net/public/3a417ef2-1048-46d4-ae35-1039c5d860da.jpg')">
-      <div class="scrim"></div>
-      <div class="badge">LESSON 2 OF 3 · VIDEO</div>
+      <div class="scrim"></div><div class="badge">LESSON 2 OF 3 · VIDEO</div>
       <div class="cap" id="cap">…positive pressure splints the airways and helps recruit alveoli</div>
       <div class="play" id="playBtn"><span class="material-icons">play_arrow</span></div>
-      <div class="ctrl">
-        <span class="material-icons" id="playIcon">play_arrow</span>
+      <div class="ctrl"><span class="material-icons" id="playIcon">play_arrow</span>
         <div class="scrub"><div id="scrubFill" style="width:35%"></div><span id="scrubHandle" style="left:35%"></span></div>
-        <span class="time" id="timeDisp">3:12 / 9:04</span>
-        <span class="material-icons">closed_caption</span><span class="spd">1x</span><span class="material-icons">settings</span><span class="material-icons">fullscreen</span>
-      </div>
+        <span class="time" id="timeDisp">3:12 / 9:04</span><span class="material-icons">closed_caption</span><span class="spd">1x</span><span class="material-icons">settings</span><span class="material-icons">fullscreen</span></div>
     </div>
 
     <h1>Understanding COPD</h1>
@@ -164,34 +132,39 @@
       <span class="chip">Kentucky</span><span class="chip">Tennessee</span><span class="chip">Virginia</span>
     </div>
 
-    <div class="codexstrip" id="codexStrip" onclick="openCodex(0)">
+    <div class="codexstrip closed" id="codexStrip" onclick="toggleCodex()">
       <div class="bk"><span class="material-icons">menu_book</span></div>
-      <div class="csx"><div class="t">Go deeper in the Codex</div><div class="s" id="codexCount">3 chapters connected to this class</div></div>
-      <span class="material-icons arrow">chevron_right</span>
+      <div class="csx"><div class="t">Read along in the Codex</div><div class="s" id="codexCount">Chapters follow the video as it plays</div></div>
+      <span class="material-icons arrow">expand_more</span>
+    </div>
+    <div class="codexreader hidden" id="codexReader">
+      <div class="cr-bar">
+        <span class="cr-follow" id="crFollow"><span class="dot"></span>Following the video</span>
+        <span class="cr-resume hidden" id="crResume" onclick="event.stopPropagation();resumeFollow()">Resume following the video</span>
+      </div>
+      <div class="cr-grid"><div class="cr-nav" id="crNav"></div><div class="cr-read" id="crRead"></div></div>
     </div>
 
     <div class="about" id="about">
       <button class="about-toggle" id="aboutToggle"><span>About this class</span><span class="material-icons">expand_more</span></button>
       <div class="about-body">
         <section><h3>Description</h3><p id="ab_desc">This course reviews the fundamentals of COPD pathophysiology and the evidence-based treatment of the COPD patient — from recognizing airflow limitation and gas trapping to prioritizing interventions in real transport scenarios.</p></section>
-        <section><h3>Objectives</h3><ol id="ab_obj"><li>Define the core pathophysiologic mechanisms of COPD, including airflow limitation, gas trapping, and V/Q mismatch.</li><li>Identify appropriate evidence-based treatments for COPD in scenario-based clinical questions.</li><li>Analyze COPD scenarios to determine treatment priorities and justify the sequence of interventions.</li></ol></section>
+        <section><h3>Objectives</h3><ol id="ab_obj"><li>Define the core pathophysiologic mechanisms of COPD.</li><li>Identify appropriate evidence-based treatments in scenario-based questions.</li><li>Analyze COPD scenarios to prioritize interventions.</li></ol></section>
         <section><h3>Instructor</h3><div id="ab_instr"><div class="instr"><div class="av">JO</div><div><div class="nm">James Ownbey</div><div class="ti">Flight Paramedic · FOAMfrat Educator</div></div></div></div></section>
         <section><h3>Where this hour applies</h3><div id="ab_accred">
-          <div class="applies"><div class="k">Credit</div><div class="big">0.5 hour · Airway, Respiratory &amp; Ventilation (F3 — Advanced/Clinical)</div><div class="cnts">Counts toward IBSC FP-C / CCP-C renewal (Airway) · NREMT · state EMS relicensure · ANCC contact hours.</div></div>
-          <div class="accred-item"><b>CAPCE</b> — Accredited by the Commission on Accreditation for Pre-Hospital Continuing Education. Activity 25-FOAM-F3-0416, 0.5 Advanced (F3) CE hour.</div>
-          <div class="accred-item"><b>ANCC</b> — Accredited provider of nursing continuing professional development. Awards 0.5 contact hours.</div>
-          <div class="accred-item"><b>State</b> — Approved by Kentucky (CE Broker), Tennessee (CE Broker), and Virginia Office of EMS.</div>
-          <div class="disc">No relevant financial relationships to disclose. Placeholder wording for the prototype.</div></div></section>
-        <section style="border-bottom:none"><h3>References</h3><ol id="ab_refs" class="ref"><li>Global Initiative for Chronic Obstructive Lung Disease. (2024). Global Strategy for COPD.</li><li>Brochard, L., et al. (1995). Noninvasive ventilation for acute exacerbations of COPD. NEJM, 333(13), 817–822.</li></ol></section>
+          <div class="applies"><div class="k">Credit</div><div class="big">0.5 hour · Airway, Respiratory &amp; Ventilation (F3)</div><div class="cnts">Counts toward IBSC FP-C / CCP-C (Airway) · NREMT · state EMS relicensure · ANCC contact hours.</div></div>
+          <div class="accred-item"><b>CAPCE</b> — Activity 25-FOAM-F3-0416, 0.5 Advanced (F3) CE hour.</div>
+          <div class="accred-item"><b>ANCC</b> — Awards 0.5 contact hours.</div>
+          <div class="accred-item"><b>State</b> — Approved by Kentucky, Tennessee (CE Broker), Virginia Office of EMS.</div>
+          <div class="disc">Placeholder wording for the prototype.</div></div></section>
+        <section style="border-bottom:none"><h3>References</h3><ol id="ab_refs"><li>GOLD. (2024). Global Strategy for COPD.</li><li>Brochard, L., et al. (1995). NIV for acute exacerbations of COPD. NEJM.</li></ol></section>
       </div>
     </div>
   </div>
 
   <div>
     <div class="rail">
-      <div class="railtabs" id="railtabs">
-        <button data-r="contents" class="active">Contents</button><button data-r="transcript">Transcript</button><button data-r="notes">Notes</button>
-      </div>
+      <div class="railtabs" id="railtabs"><button data-r="contents" class="active">Contents</button><button data-r="transcript">Transcript</button><button data-r="notes">Notes</button></div>
       <div class="railcard" data-rp="contents">
         <div class="railhead"><div class="t">Course contents</div><div class="p">1 of 3 complete · 33%</div><div class="pbar"><div></div></div></div>
         <div id="lessons"></div>
@@ -202,48 +175,35 @@
       </div>
       <div class="railcard hidden" data-rp="notes">
         <div class="scrollbox notebox" id="notesList"></div>
-        <div class="addnote"><div class="lbl" id="addlbl">New note at 3:12</div><textarea id="noteInput" placeholder="Type a note… linked to this moment in the video."></textarea><button id="addNoteBtn"><span class="material-icons">add</span>Add note</button></div>
+        <div class="addnote"><div class="lbl" id="addlbl">New note at 3:12</div><textarea id="noteInput" placeholder="Jot a thought at this moment…"></textarea><button id="addNoteBtn"><span class="material-icons">add</span>Add note</button></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Codex slide-over -->
-<div class="cx-overlay" id="cxOverlay"></div>
-<aside class="cx-panel" id="cxPanel">
-  <div class="cx-head"><div><div class="cx-k">CODEX · LIVING TEXTBOOK</div><div class="cx-title" id="cxTitle">Codex</div></div><span class="material-icons cx-close" id="cxClose">close</span></div>
-  <div class="cx-chaptabs" id="cxChapTabs"></div>
-  <div class="cx-body" id="cxBody"></div>
-  <div class="cx-foot" id="cxFoot"></div>
-</aside>
-
 <script src="studio-nav.js"></script>
 <script>
-let DUR=544, cur=192, VID=null, cxReturn=null;
+let DUR=544, cur=192, VID=null, reelTimer=null;
+let readerOpen=false, following=true, viewingIdx=0;
 function fmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 function getTime(){return VID?VID.currentTime:cur;}
 
-// mock play toggle
 (function(){const pb=document.getElementById('playBtn'),pi=document.getElementById('playIcon');if(!pb)return;let p=false;function t(){p=!p;pb.style.display=p?'none':'flex';pi.textContent=p?'pause':'play_arrow';}pb.onclick=t;pi.onclick=t;})();
-// about toggle
 document.getElementById('aboutToggle').onclick=()=>document.getElementById('about').classList.toggle('open');
-// rail tabs
 document.getElementById('railtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#railtabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-rp]').forEach(p=>p.classList.toggle('hidden',p.dataset.rp!==b.dataset.r));});
 function showRail(r){document.querySelector('#railtabs button[data-r="'+r+'"]').click();}
 
-// data
 let LES=[["Introduction & Pathophysiology","Video · 4:20","done","play_circle"],["Treatment & Scenarios","Video · 9:04","active","play_circle"],["Knowledge Check","Quiz · 5 questions","locked","quiz"]];
-// chapters: [label,title,section,body]
 let CH=[
- ["Ch. 12","Obstructive Airway Disease","Respiratory · Chapter 12","Chronic obstructive pulmonary disease is defined by persistent airflow limitation from small-airway inflammation and parenchymal destruction. The loss of elastic recoil reduces the driving pressure for expiration, so gas is trapped and functional residual capacity climbs.\n\nClinically this shows up as a prolonged expiratory phase, accessory muscle use, and a barrel chest in advanced disease. Understanding the mechanics here is what makes the treatment choices downstream make sense."],
- ["Ch. 13","Ventilation Strategies in COPD","Ventilation · Chapter 13","Non-invasive ventilation is first-line for the tiring COPD patient: it offloads the work of breathing and splints open collapsible airways. Start with modest pressures and titrate to comfort and tidal volume.\n\nThe danger is auto-PEEP — incomplete exhalation stacks breaths and raises intrathoracic pressure. Give a long expiratory time, watch the flow-time curve return to baseline, and don't over-ventilate."],
+ ["Ch. 12","Obstructive Airway Disease","Respiratory · Chapter 12","Chronic obstructive pulmonary disease is defined by persistent airflow limitation from small-airway inflammation and parenchymal destruction. The loss of elastic recoil reduces the driving pressure for expiration, so gas is trapped and functional residual capacity climbs.\n\nClinically this shows up as a prolonged expiratory phase, accessory muscle use, and a barrel chest in advanced disease."],
+ ["Ch. 13","Ventilation Strategies in COPD","Ventilation · Chapter 13","Non-invasive ventilation is first-line for the tiring COPD patient: it offloads the work of breathing and splints open collapsible airways. Start with modest pressures and titrate to comfort and tidal volume.\n\nThe danger is auto-PEEP — incomplete exhalation stacks breaths and raises intrathoracic pressure. Give a long expiratory time and watch the flow-time curve return to baseline."],
  ["Ch. 4","Acid–Base & Gas Exchange","Foundations · Chapter 4","Interpreting the COPD blood gas starts with the pH, not the CO2. A chronically elevated CO2 with a near-normal pH reflects renal compensation — this is the patient's baseline, not an emergency.\n\nPermissive hypercapnia accepts a higher CO2 to avoid the harms of aggressive ventilation, as long as the pH stays tolerable."]
 ];
 let TR=[
  [0,"Let's start with what's actually happening in the COPD airway.",null],
  [24,"Chronic inflammation narrows the small airways and destroys elastic recoil.",0],
  [52,"That loss of recoil is why these patients trap air — the hallmark of obstruction.",0],
- [90,"On exam you'll hear a prolonged expiratory phase and wheezing.",null],
+ [90,"On exam you'll hear a prolonged expiratory phase and wheezing.",0],
  [125,"The goal isn't to normalize the gas — it's to treat the patient in front of you.",2],
  [160,"Bronchodilators first: albuterol and ipratropium open the airways.",null],
  [192,"Then steroids to calm the underlying inflammation over the next hours.",null],
@@ -251,7 +211,7 @@ let TR=[
  [270,"Positive pressure splints the airways and helps recruit alveoli.",1],
  [320,"Watch for auto-PEEP — give them time to fully exhale.",1],
  [400,"Permissive hypercapnia is often the right call here.",2],
- [490,"Let's put it together with a transport scenario.",null]
+ [490,"Let's put it together with a transport scenario.",2]
 ];
 function renderLessons(){document.getElementById('lessons').innerHTML=LES.map(l=>`<div class="les ${l[2]}"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:15px;color:var(--text-3)">lock</span>':''}</div>`).join('');}
 function renderTranscript(filter){
@@ -263,8 +223,8 @@ function renderTranscript(filter){
     if(filter && !l[1].toLowerCase().includes(filter))return '';
     const t=l[0];
     const seekAttr=t!=null?`onclick="seek(${t})"`:'style="cursor:default"';
-    const cx=(l[2]!=null&&CH[l[2]])?`<div class="cxlink" onclick="event.stopPropagation();openCodex(${l[2]},${t!=null?t:'null'})"><span class="material-icons" style="font-size:14px">menu_book</span>Read in Codex · ${CH[l[2]][0]}</div>`:'';
-    return `<div class="tline${idx===act?' active':''}" ${seekAttr}><div class="row"><span class="ts">${t!=null?fmt(t):''}</span><span class="tx">${l[1]}</span></div>${cx}<span class="material-icons tadd" onclick="event.stopPropagation();noteFromLine(${idx})" title="Save to notes">note_add</span></div>`;
+    const cx=(l[2]!=null&&CH[l[2]])?`<div class="cxlink" onclick="event.stopPropagation();codexFromLine(${l[2]},${t!=null?t:'null'})"><span class="material-icons" style="font-size:14px">menu_book</span>Read in Codex · ${CH[l[2]][0]}</div>`:'';
+    return `<div class="tline${idx===act?' active':''}" ${seekAttr}><div class="row"><span class="ts">${t!=null?fmt(t):''}</span><span class="tx">${l[1]}</span></div>${cx}<span class="material-icons tadd" onclick="event.stopPropagation();reelFromLine(${idx})" title="Save this section as a reel">bookmark_add</span></div>`;
   }).join('');
   const a=host.querySelector('.tline.active'); if(a&&!filter)a.scrollIntoView({block:'nearest'});
 }
@@ -275,37 +235,61 @@ function seek(sec){
   else{const f=document.getElementById('scrubFill');if(f){cur=sec;const pct=sec/DUR*100;f.style.width=pct+'%';document.getElementById('scrubHandle').style.left=pct+'%';document.getElementById('timeDisp').textContent=fmt(sec)+' / '+fmt(DUR);let line='';for(const l of TR){if(l[0]!=null&&l[0]<=sec)line=l[1];}const cap=document.getElementById('cap');if(cap&&line)cap.textContent=line;}}
   document.getElementById('addlbl').textContent='New note at '+fmt(sec);
   renderTranscript(document.getElementById('tsearch').value);
+  if(readerOpen&&following)renderReader();
 }
-// codex slide-over
-function renderCodexCount(){const el=document.getElementById('codexCount');const strip=document.getElementById('codexStrip');if(!CH.length){strip.style.display='none';return;}strip.style.display='flex';el.textContent=CH.length+(CH.length===1?' chapter':' chapters')+' connected to this class';}
-let CURCH=0;
-function openCodex(i,backSec){
-  CURCH=i; cxReturn=(backSec!=null)?backSec:null;
-  document.getElementById('cxChapTabs').innerHTML=CH.map((c,k)=>`<button class="${k===i?'active':''}" onclick="openCodex(${k})">${c[0]}</button>`).join('');
-  const c=CH[i];
-  document.getElementById('cxTitle').textContent=c[1];
-  document.getElementById('cxBody').innerHTML=`<div class="sec">${c[2]||''}</div>`+(c[3]||'This chapter will appear here in the living textbook.').split('\n\n').map(p=>`<p>${p}</p>`).join('');
-  const foot=document.getElementById('cxFoot');
-  foot.innerHTML=(cxReturn!=null?`<button class="back" onclick="seek(${cxReturn});closeCodex()"><span class="material-icons">play_arrow</span>Back to ${fmt(cxReturn)}</button>`:'')+`<button class="save" onclick="saveCodexNote(${i})"><span class="material-icons">bookmark_add</span>Save to notes</button>`;
-  document.getElementById('cxOverlay').classList.add('open');
-  document.getElementById('cxPanel').classList.add('open');
+
+/* ----- Codex fold-out reader (follows the video) ----- */
+function currentChapterIdx(){const now=getTime();let idx=null;for(const l of TR){if(l[0]!=null&&l[0]<=now&&l[2]!=null)idx=l[2];}return idx;}
+function chapterFirstTime(i){let m=null;TR.forEach(l=>{if(l[2]===i&&l[0]!=null&&(m===null||l[0]<m))m=l[0];});return m;}
+function renderCodexCount(){const strip=document.getElementById('codexStrip');if(!CH.length){strip.style.display='none';return;}strip.style.display='flex';}
+function toggleCodex(force){
+  readerOpen=(force===undefined)?!readerOpen:force;
+  document.getElementById('codexReader').classList.toggle('hidden',!readerOpen);
+  document.getElementById('codexStrip').classList.toggle('open',readerOpen);
+  document.getElementById('codexStrip').classList.toggle('closed',!readerOpen);
+  if(readerOpen){const c=currentChapterIdx();if(following&&c!=null)viewingIdx=c;renderReader();}
 }
-function closeCodex(){document.getElementById('cxOverlay').classList.remove('open');document.getElementById('cxPanel').classList.remove('open');}
-document.getElementById('cxClose').onclick=closeCodex;
-document.getElementById('cxOverlay').onclick=closeCodex;
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCodex();});
-// notes
-let notes=[{kind:'video',t:52,quote:"That loss of recoil is why these patients trap air…",text:"Loss of elastic recoil = air trapping. Core concept."}];
-function renderNotes(){const host=document.getElementById('notesList');if(!notes.length){host.innerHTML='<div class="emptynote">No notes yet. Add one below, or use the note icon on any transcript line.</div>';return;}
-  host.innerHTML=notes.map((n,i)=>{const stamp=n.kind==='codex'?`<span class="nstamp codex" onclick="openCodex(${n.ci!=null?n.ci:0})"><span class="material-icons">menu_book</span>${n.ref}</span>`:`<span class="nstamp" onclick="seek(${n.t})"><span class="material-icons">play_arrow</span>${fmt(n.t)}</span>`;return `<div class="note"><div class="nh">${stamp}<span class="material-icons del" onclick="delNote(${i})">close</span></div>${n.quote?`<div class="quote">"${n.quote}"</div>`:''}${n.text?`<div class="ntext">${n.text}</div>`:''}</div>`;}).join('');}
+function renderReader(){
+  const cnow=currentChapterIdx();
+  if(following&&cnow!=null)viewingIdx=cnow;
+  if(viewingIdx==null||!CH[viewingIdx])viewingIdx=0;
+  document.getElementById('crNav').innerHTML=CH.map((c,i)=>`<div class="cr-ch ${i===viewingIdx?'viewing':''}" onclick="viewChapter(${i},true)"><span class="lab">${c[0]}</span><div><div class="nm">${c[1]}</div>${i===cnow?'<span class="now">▶ now</span>':''}</div></div>`).join('');
+  const c=CH[viewingIdx]; const ft=chapterFirstTime(viewingIdx);
+  document.getElementById('crRead').innerHTML=`<h2>${c[1]}</h2><div class="sec">${c[2]||''}</div>`+
+    (ft!=null?`<div class="at" onclick="seek(${ft})"><span class="material-icons" style="font-size:14px">play_arrow</span>Discussed at ${fmt(ft)} in the video</div>`:'')+
+    (c[3]||'This chapter will appear here in the living textbook.').split('\n\n').map(p=>`<p>${p}</p>`).join('')+
+    `<span class="save" onclick="saveCodexNote(${viewingIdx})"><span class="material-icons" style="font-size:14px">bookmark_add</span>Save to notes</span>`;
+  document.getElementById('crFollow').classList.toggle('hidden',!following);
+  document.getElementById('crResume').classList.toggle('hidden',following);
+}
+function viewChapter(i,manual){viewingIdx=i;if(manual)following=false;renderReader();}
+function resumeFollow(){following=true;renderReader();}
+function codexFromLine(ci,t){if(t!=null)seek(t);following=true;toggleCodex(true);}
+
+/* ----- notes + reels ----- */
+let notes=[{kind:'reel',t:52,end:90,quote:"That loss of recoil is why these patients trap air…",text:"Core concept — replay this bit."}];
+function playReel(a,b){seek(a);if(VID){VID.play&&VID.play().catch(()=>{});clearTimeout(reelTimer);reelTimer=setTimeout(()=>{VID.pause&&VID.pause();},Math.max(1,(b-a))*1000);}}
+function renderNotes(){
+  const host=document.getElementById('notesList');
+  const hint='<div class="nhint">Tip: use the bookmark on any transcript line to save that section as a replayable reel.</div>';
+  if(!notes.length){host.innerHTML=hint+'<div class="emptynote">No notes yet.</div>';return;}
+  host.innerHTML=hint+notes.map((n,i)=>{
+    let stamp;
+    if(n.kind==='codex')stamp=`<span class="nstamp codex" onclick="codexOpen(${n.ci!=null?n.ci:0})"><span class="material-icons">menu_book</span>${n.ref}</span>`;
+    else if(n.kind==='reel')stamp=`<span class="nstamp reel" onclick="playReel(${n.t},${n.end})"><span class="material-icons">movie</span>Reel ${fmt(n.t)}–${fmt(n.end)}</span>`;
+    else stamp=`<span class="nstamp" onclick="seek(${n.t})"><span class="material-icons">play_arrow</span>${fmt(n.t)}</span>`;
+    return `<div class="note"><div class="nh">${stamp}<span class="material-icons del" onclick="delNote(${i})">close</span></div>${n.quote?`<div class="quote">"${n.quote}"</div>`:''}${n.text?`<div class="ntext">${n.text}</div>`:''}</div>`;
+  }).join('');
+}
+function codexOpen(i){following=false;viewingIdx=i;toggleCodex(true);}
 function delNote(i){notes.splice(i,1);renderNotes();}
-function noteFromLine(idx){notes.unshift({kind:'video',t:TR[idx][0]||0,quote:TR[idx][1],text:''});renderNotes();showRail('notes');document.getElementById('noteInput').focus();}
-function saveCodexNote(i){notes.unshift({kind:'codex',ref:CH[i][0],ci:i,quote:CH[i][1],text:''});renderNotes();}
+function reelFromLine(idx){const start=TR[idx][0]||0;const end=TR[idx+1]&&TR[idx+1][0]!=null?TR[idx+1][0]:start+20;notes.unshift({kind:'reel',t:start,end:end,quote:TR[idx][1],text:''});renderNotes();showRail('notes');}
+function saveCodexNote(i){notes.unshift({kind:'codex',ref:CH[i][0],ci:i,quote:CH[i][1],text:''});renderNotes();showRail('notes');}
 document.getElementById('addNoteBtn').onclick=function(){const ta=document.getElementById('noteInput');const v=ta.value.trim();if(!v)return;notes.unshift({kind:'video',t:getTime(),text:v});ta.value='';renderNotes();};
 
 renderLessons();renderTranscript();renderNotes();renderCodexCount();
 
-// ---------- uploaded-class (draft) mode ----------
+/* ----- uploaded-class (draft) mode ----- */
 function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstudio',1);r.onupgradeneeded=()=>r.result.createObjectStore('files');r.onsuccess=()=>{try{const tx=r.result.transaction('files','readonly');const g=tx.objectStore('files').get(key);g.onsuccess=()=>res(g.result);g.onerror=()=>res(null);}catch(e){res(null);}};r.onerror=()=>res(null);}catch(e){res(null);}});}
 (async function(){
   const p=new URLSearchParams(location.search); const raw=localStorage.getItem('ff_draft_class');
@@ -319,7 +303,7 @@ function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstud
   document.getElementById('ab_obj').innerHTML=(d.objectives&&d.objectives.length)?d.objectives.map(o=>'<li>'+o+'</li>').join(''):'<li style="color:var(--text-3)">No objectives added.</li>';
   const ini=(d.instructor||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
   document.getElementById('ab_instr').innerHTML='<div class="instr"><div class="av">'+(ini||'?')+'</div><div><div class="nm">'+(d.instructor||'Instructor')+'</div><div class="ti">FOAMfrat Educator</div></div></div>';
-  document.getElementById('ab_accred').innerHTML='<div class="applies"><div class="k">Credit</div><div class="big">'+(d.ceHrs||'')+' hour · '+(d.hourType||'')+'</div></div>'+(d.accred||[]).map(a=>'<div class="accred-item"><b>'+a+'</b> — approved for '+(d.ceHrs||'')+' CE hour'+(d.approvalNo?' · '+d.approvalNo:'')+'.</div>').join('')+'<div class="disc">Prototype preview — placeholder wording.</div>';
+  document.getElementById('ab_accred').innerHTML='<div class="applies"><div class="k">Credit</div><div class="big">'+(d.ceHrs||'')+' hour · '+(d.hourType||'')+'</div></div>'+(d.accred||[]).map(a=>'<div class="accred-item"><b>'+a+'</b> — '+(d.ceHrs||'')+' CE hour'+(d.approvalNo?' · '+d.approvalNo:'')+'.</div>').join('')+'<div class="disc">Prototype preview.</div>';
   document.getElementById('ab_refs').innerHTML=(d.references&&d.references.length)?d.references.map(r=>'<li>'+r+'</li>').join(''):'<li style="color:var(--text-3)">No references added.</li>';
   CH=(d.chapters||[]).map(c=>[c[0]||'Ch.',c[1]||'',(d.category||'Codex'),c[2]||'This chapter will appear here in the living textbook.']); renderCodexCount();
   TR=(d.transcript||[]).map(t=>[t[0],t[1],null]);
@@ -328,7 +312,7 @@ function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstud
   var pp=document.querySelector('[data-rp="contents"] .railhead .p'); if(pp)pp.textContent='Not started';
   var pf=document.querySelector('[data-rp="contents"] .pbar>div'); if(pf)pf.style.width='0%';
   const player=document.querySelector('.player'); const vb=await idbGet('draftVideo');
-  if(vb){player.style.background='#000';player.style.backgroundImage='none';player.innerHTML='<video id="vid" controls playsinline style="width:100%;height:100%;object-fit:contain;background:#000"></video>';VID=document.getElementById('vid');VID.src=URL.createObjectURL(vb);const tb=await idbGet('draftThumb');if(tb)VID.poster=URL.createObjectURL(tb);VID.addEventListener('loadedmetadata',()=>{DUR=VID.duration||DUR;});VID.addEventListener('timeupdate',()=>{document.getElementById('addlbl').textContent='New note at '+fmt(VID.currentTime);renderTranscript(document.getElementById('tsearch').value);});}
+  if(vb){player.style.background='#000';player.style.backgroundImage='none';player.innerHTML='<video id="vid" controls playsinline style="width:100%;height:100%;object-fit:contain;background:#000"></video>';VID=document.getElementById('vid');VID.src=URL.createObjectURL(vb);const tb=await idbGet('draftThumb');if(tb)VID.poster=URL.createObjectURL(tb);VID.addEventListener('loadedmetadata',()=>{DUR=VID.duration||DUR;});VID.addEventListener('timeupdate',()=>{document.getElementById('addlbl').textContent='New note at '+fmt(VID.currentTime);renderTranscript(document.getElementById('tsearch').value);if(readerOpen&&following)renderReader();});}
   else{const cap=document.getElementById('cap');if(cap)cap.textContent=d.title||'';const bd=player.querySelector('.badge');if(bd)bd.textContent='PREVIEW · NO VIDEO UPLOADED';}
   renderTranscript();
 })();
