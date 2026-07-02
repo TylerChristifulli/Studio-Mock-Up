@@ -29,7 +29,7 @@
         <div class="k">Featured</div>
         <h1 id="heroTitle">Pulmo Machina</h1>
         <p id="heroSub">The FOAMfrat Mechanical Ventilation Series.</p>
-        <a class="btn yellow" href="studio-classroom.html"><span class="material-icons">play_arrow</span>Go to Series</a>
+        <a class="btn yellow" href="studio-title.html"><span class="material-icons">play_arrow</span>Go to Series</a>
       </div>
       <div class="dots" id="heroDots"></div>
     </div>
@@ -163,7 +163,7 @@ const ROWS=[
   ]]
 ];
 function tile(c){
-  return `<a class="tile" href="studio-classroom.html" title="${c[0]}">
+  return `<a class="tile" href="studio-title.html" title="${c[0]}">
     <div class="art" style="background:#11151a url('${CDN+c[1]}') center/cover"></div>
     <span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span>
   </a>`;
@@ -184,7 +184,7 @@ const SERIES=[
   "images/resized/thumbnails/FOAMfrat/ef6d3d5b-4673-45a0-a233-768a5128c6b0.jpg"
 ];
 var seriesHtml='<div class="rowhead"><h2>Series</h2><span class="viewall">View all</span></div>'+
-  '<div class="shelf poster">'+SERIES.map(p=>`<a class="tile poster" href="studio-classroom.html"><div class="art" style="background:#11151a url('${HOST+p}') center/cover"></div><span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span></a>`).join('')+'</div>';
+  '<div class="shelf poster">'+SERIES.map(p=>`<a class="tile poster" href="studio-title.html"><div class="art" style="background:#11151a url('${HOST+p}') center/cover"></div><span class="dots"><span class="material-icons" style="font-size:18px">more_vert</span></span></a>`).join('')+'</div>';
 const rowHtml=r=>`<div class="rowhead"><h2>${r[0]}</h2><span class="viewall">View all</span></div><div class="shelf">${r[1].map(tile).join('')}</div>`;
 let _rowsHtml='';
 ROWS.forEach((r,i)=>{ _rowsHtml+=rowHtml(r); if(i===0)_rowsHtml+=seriesHtml; });
