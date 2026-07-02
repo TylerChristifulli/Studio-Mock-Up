@@ -35,14 +35,14 @@
   h1{font-size:23px;font-weight:500;margin:16px 0 3px;} .lesson-of{font-size:12.5px;color:var(--text-3);}
   .meta{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0;}
   .chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--text-2);} .chip .material-icons{font-size:14px;} .chip.hr{background:rgba(102,187,106,0.14);border-color:transparent;color:var(--green);}
-  /* codex spotlight strip */
-  .codexstrip{display:flex;align-items:center;gap:14px;margin:20px 0 0;padding:14px 18px;border-radius:13px 13px 0 0;background:linear-gradient(90deg,rgba(224,182,91,0.13),rgba(224,182,91,0.04));border:1px solid rgba(224,182,91,0.3);cursor:pointer;}
-  .codexstrip.closed{border-radius:13px;}
-  .codexstrip .bk{width:40px;height:40px;border-radius:11px;background:rgba(224,182,91,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;} .codexstrip .bk .material-icons{color:var(--codex);font-size:22px;}
-  .codexstrip .csx{flex:1;} .codexstrip .csx .t{font-size:14px;font-weight:500;color:#fff;} .codexstrip .csx .s{font-size:12px;color:var(--codex);margin-top:1px;}
-  .codexstrip .arrow{color:var(--codex);transition:transform .2s;} .codexstrip.open .arrow{transform:rotate(180deg);}
+  /* quiet under-player buttons */
+  .under{display:flex;gap:10px;margin:24px 0 0;}
+  .pillbtn{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);color:var(--text-2);font-family:inherit;font-size:13px;padding:9px 16px;border-radius:999px;cursor:pointer;}
+  .pillbtn:hover{color:#fff;border-color:var(--line-2);}
+  .pillbtn.on{color:#fff;background:var(--surface-2);border-color:var(--line-2);}
+  .pillbtn .material-icons{font-size:17px;} #codexBtn .material-icons{color:var(--codex);}
   /* codex fold-out reader */
-  .codexreader{border:1px solid rgba(224,182,91,0.3);border-top:none;border-radius:0 0 13px 13px;background:#14120c;overflow:hidden;}
+  .codexreader{border:1px solid rgba(224,182,91,0.3);border-radius:13px;background:#14120c;overflow:hidden;margin-top:10px;}
   .cr-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);}
   .cr-follow{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--codex);}
   .cr-follow .dot{width:7px;height:7px;border-radius:50%;background:var(--codex);box-shadow:0 0 0 3px rgba(224,182,91,.2);}
@@ -61,10 +61,8 @@
   .cr-read .save{font-size:12px;color:var(--codex);cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:1px solid rgba(224,182,91,.35);border-radius:8px;padding:7px 12px;}
   @media(max-width:620px){.cr-grid{grid-template-columns:1fr;} .cr-nav{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);max-height:150px;}}
   /* about */
-  .about{margin-top:16px;border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden;}
-  .about-toggle{width:100%;background:none;border:none;color:#fff;font-family:inherit;font-size:14.5px;font-weight:500;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-  .about-toggle .material-icons{transition:transform .2s;color:var(--text-2);} .about.open .about-toggle .material-icons{transform:rotate(180deg);}
-  .about-body{display:none;padding:0 18px 8px;} .about.open .about-body{display:block;}
+  .about{margin-top:10px;border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden;}
+  .about-body{padding:6px 20px 12px;}
   .about-body section{border-top:1px solid var(--line);padding:16px 0;}
   .about-body h3{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--text-3);margin:0 0 9px;}
   .about-body p,.about-body li{font-size:14px;color:var(--text-2);font-weight:300;line-height:1.6;}
@@ -125,17 +123,11 @@
     </div>
 
     <h1>Understanding COPD</h1>
-    <div class="lesson-of">Treatment &amp; Scenarios · Lesson 2 of 3</div>
-    <div class="meta">
-      <span class="chip hr"><span class="material-icons">schedule</span>0.5 CE hr · Airway, Respiratory &amp; Ventilation (F3)</span>
-      <span class="chip"><span class="material-icons">verified</span>ANCC</span><span class="chip"><span class="material-icons">verified</span>CAPCE</span>
-      <span class="chip">Kentucky</span><span class="chip">Tennessee</span><span class="chip">Virginia</span>
-    </div>
+    <div class="lesson-of" id="lessonOf">Treatment &amp; Scenarios · Lesson 2 of 3 · 0.5 CE hr</div>
 
-    <div class="codexstrip closed" id="codexStrip" onclick="toggleCodex()">
-      <div class="bk"><span class="material-icons">menu_book</span></div>
-      <div class="csx"><div class="t">Read along in the Codex</div><div class="s" id="codexCount">Chapters follow the video as it plays</div></div>
-      <span class="material-icons arrow">expand_more</span>
+    <div class="under">
+      <button class="pillbtn" id="codexBtn"><span class="material-icons">menu_book</span>Read along in the Codex</button>
+      <button class="pillbtn" id="aboutBtn"><span class="material-icons">info</span>About this class</button>
     </div>
     <div class="codexreader hidden" id="codexReader">
       <div class="cr-bar">
@@ -145,8 +137,7 @@
       <div class="cr-grid"><div class="cr-nav" id="crNav"></div><div class="cr-read" id="crRead"></div></div>
     </div>
 
-    <div class="about" id="about">
-      <button class="about-toggle" id="aboutToggle"><span>About this class</span><span class="material-icons">expand_more</span></button>
+    <div class="about hidden" id="about">
       <div class="about-body">
         <section><h3>Description</h3><p id="ab_desc">This course reviews the fundamentals of COPD pathophysiology and the evidence-based treatment of the COPD patient — from recognizing airflow limitation and gas trapping to prioritizing interventions in real transport scenarios.</p></section>
         <section><h3>Objectives</h3><ol id="ab_obj"><li>Define the core pathophysiologic mechanisms of COPD.</li><li>Identify appropriate evidence-based treatments in scenario-based questions.</li><li>Analyze COPD scenarios to prioritize interventions.</li></ol></section>
@@ -189,7 +180,8 @@ function fmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+Strin
 function getTime(){return VID?VID.currentTime:cur;}
 
 (function(){const pb=document.getElementById('playBtn'),pi=document.getElementById('playIcon');if(!pb)return;let p=false;function t(){p=!p;pb.style.display=p?'none':'flex';pi.textContent=p?'pause':'play_arrow';}pb.onclick=t;pi.onclick=t;})();
-document.getElementById('aboutToggle').onclick=()=>document.getElementById('about').classList.toggle('open');
+document.getElementById('aboutBtn').onclick=function(){const a=document.getElementById('about');a.classList.toggle('hidden');this.classList.toggle('on',!a.classList.contains('hidden'));};
+document.getElementById('codexBtn').onclick=()=>toggleCodex();
 document.getElementById('railtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#railtabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-rp]').forEach(p=>p.classList.toggle('hidden',p.dataset.rp!==b.dataset.r));});
 function showRail(r){document.querySelector('#railtabs button[data-r="'+r+'"]').click();}
 
@@ -240,12 +232,11 @@ function seek(sec){
 /* ----- Codex fold-out reader (follows the video) ----- */
 function currentChapterIdx(){const now=getTime();let idx=null;for(const l of TR){if(l[0]!=null&&l[0]<=now&&l[2]!=null)idx=l[2];}return idx;}
 function chapterFirstTime(i){let m=null;TR.forEach(l=>{if(l[2]===i&&l[0]!=null&&(m===null||l[0]<m))m=l[0];});return m;}
-function renderCodexCount(){const strip=document.getElementById('codexStrip');if(!CH.length){strip.style.display='none';return;}strip.style.display='flex';}
+function renderCodexCount(){const btn=document.getElementById('codexBtn');if(btn)btn.style.display=CH.length?'inline-flex':'none';}
 function toggleCodex(force){
   readerOpen=(force===undefined)?!readerOpen:force;
   document.getElementById('codexReader').classList.toggle('hidden',!readerOpen);
-  document.getElementById('codexStrip').classList.toggle('open',readerOpen);
-  document.getElementById('codexStrip').classList.toggle('closed',!readerOpen);
+  document.getElementById('codexBtn').classList.toggle('on',readerOpen);
   if(readerOpen){const c=currentChapterIdx();if(following&&c!=null)viewingIdx=c;renderReader();}
 }
 function renderReader(){
@@ -295,9 +286,8 @@ function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstud
   if(!p.get('draft')||!raw)return;
   let d; try{d=JSON.parse(raw);}catch(e){return;}
   document.querySelector('h1').textContent=d.title||'Untitled Class';
-  document.querySelector('.lesson-of').textContent=(d.category||'')+' · Preview';
+  document.getElementById('lessonOf').textContent=(d.category||'')+' · Preview'+(d.ceHrs?' · '+d.ceHrs+' CE hr':'');
   document.querySelector('.crumb').innerHTML='<a href="studio-home.html">Self-Paced</a> &nbsp;›&nbsp; '+(d.category||'')+' &nbsp;›&nbsp; '+(d.title||'');
-  document.querySelector('.meta').innerHTML=['<span class="chip hr"><span class="material-icons">schedule</span>'+(d.ceHrs||'')+' CE hr · '+(d.hourType||'')+'</span>'].concat((d.accred||[]).map(a=>'<span class="chip"><span class="material-icons">verified</span>'+a+'</span>')).join('');
   document.getElementById('ab_desc').textContent=d.description||'No description provided.';
   document.getElementById('ab_obj').innerHTML=(d.objectives&&d.objectives.length)?d.objectives.map(o=>'<li>'+o+'</li>').join(''):'<li style="color:var(--text-3)">No objectives added.</li>';
   const ini=(d.instructor||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
