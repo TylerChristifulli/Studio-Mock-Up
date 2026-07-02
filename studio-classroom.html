@@ -223,8 +223,7 @@ function renderTranscript(filter){
     if(filter && !l[1].toLowerCase().includes(filter))return '';
     const t=l[0];
     const seekAttr=t!=null?`onclick="seek(${t})"`:'style="cursor:default"';
-    const cx=(l[2]!=null&&CH[l[2]])?`<div class="cxlink" onclick="event.stopPropagation();codexFromLine(${l[2]},${t!=null?t:'null'})"><span class="material-icons" style="font-size:14px">menu_book</span>Read in Codex · ${CH[l[2]][0]}</div>`:'';
-    return `<div class="tline${idx===act?' active':''}" ${seekAttr}><div class="row"><span class="ts">${t!=null?fmt(t):''}</span><span class="tx">${l[1]}</span></div>${cx}<span class="material-icons tadd" onclick="event.stopPropagation();reelFromLine(${idx})" title="Save this section as a reel">bookmark_add</span></div>`;
+    return `<div class="tline${idx===act?' active':''}" ${seekAttr}><div class="row"><span class="ts">${t!=null?fmt(t):''}</span><span class="tx">${l[1]}</span></div><span class="material-icons tadd" onclick="event.stopPropagation();reelFromLine(${idx})" title="Save this section as a reel">bookmark_add</span></div>`;
   }).join('');
   const a=host.querySelector('.tline.active'); if(a&&!filter)a.scrollIntoView({block:'nearest'});
 }
