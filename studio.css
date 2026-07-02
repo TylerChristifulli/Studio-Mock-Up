@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none;}
 .navlabel{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);padding:6px 14px 4px;}
 .sidebar.collapsed .navitem span:not(.material-icons),.sidebar.collapsed .navlabel{display:none;}
 .content{flex:1;min-width:0;}
-.page{max-width:1180px;margin:0 auto;padding:28px 34px 80px;}
+.page{max-width:1600px;margin:0 auto;padding:28px 40px 80px;}
 
 /* shared bits */
 .h1{font-size:27px;font-weight:400;margin:0 0 6px;}
