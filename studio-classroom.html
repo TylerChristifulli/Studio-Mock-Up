@@ -34,11 +34,15 @@
   .bctrl .material-icons{font-size:23px;color:#fff;cursor:pointer;}
   .scrub{flex:1;height:5px;border-radius:999px;background:rgba(255,255,255,.28);position:relative;cursor:pointer;} .scrub>div{position:absolute;left:0;top:0;bottom:0;background:var(--yellow);border-radius:999px;} .scrub>span{position:absolute;top:50%;width:13px;height:13px;border-radius:50%;background:var(--yellow);transform:translate(-50%,-50%);}
   .time{font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums;} .spd{font-size:12.5px;border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;cursor:pointer;}
-  /* up next */
-  .upnext{position:fixed;right:26px;bottom:26px;z-index:35;width:320px;background:rgba(20,22,26,.96);border:1px solid var(--line-2);border-radius:13px;padding:16px;backdrop-filter:blur(6px);}
-  .upnext .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-3);}
-  .upnext .t{font-size:16px;font-weight:600;margin:4px 0 3px;} .upnext .s{font-size:12.5px;color:var(--text-2);margin-bottom:12px;}
-  .upnext .row{display:flex;gap:9px;} .upnext button{flex:1;border:none;border-radius:9px;padding:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;} .upnext .go{background:var(--yellow);color:#1a1700;} .upnext .no{background:rgba(255,255,255,.12);color:#fff;} .upnext .material-icons{font-size:17px;}
+  /* end-of-lesson overlay */
+  .ovcard{position:absolute;inset:0;background:rgba(0,0,0,.84);display:flex;align-items:center;justify-content:center;z-index:22;padding:20px;}
+  .ov-in{text-align:center;max-width:460px;}
+  .ov-in .k{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-3);}
+  .ov-in .ov-t{font-size:28px;font-weight:700;margin:8px 0 4px;}
+  .ov-in .ov-s{font-size:13.5px;color:var(--text-2);margin-bottom:20px;}
+  .ov-row{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
+  .ov-row button,.ov-row a{border:none;border-radius:10px;padding:12px 22px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+  .ov-row .go{background:var(--yellow);color:#1a1700;} .ov-row .no{background:rgba(255,255,255,.14);color:#fff;} .ov-row .material-icons{font-size:19px;}
   /* slide-in panel */
   .panelov{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;visibility:hidden;transition:opacity .2s;z-index:40;} .panelov.open{opacity:1;visibility:visible;}
   .panel{position:fixed;top:0;right:0;bottom:0;width:410px;max-width:94vw;background:#101316;border-left:1px solid var(--line);transform:translateX(100%);transition:transform .25s ease;z-index:41;display:flex;flex-direction:column;}
@@ -100,15 +104,11 @@
       <div class="scrub" id="scrub"><div id="scrubFill" style="width:35%"></div><span id="scrubHandle" style="left:35%"></span></div>
       <span class="time" id="timeDisp">3:12 / 9:04</span>
       <span class="material-icons">closed_caption</span><span class="spd">1x</span>
-      <span class="material-icons" onclick="showUpNext()">skip_next</span>
+      <span class="material-icons" onclick="showEnd()" title="Skip to end">skip_next</span>
       <span class="material-icons">fullscreen</span>
     </div>
+    <div class="ovcard hidden" id="ovcard"></div>
   </div>
-</div>
-
-<div class="upnext hidden" id="upnext">
-  <div class="k">Up next</div><div class="t" id="unTitle">Knowledge Check</div><div class="s" id="unSub">Quiz · 5 questions · starts in <span id="unCount">5</span>s</div>
-  <div class="row"><button class="go" onclick="hideUpNext()"><span class="material-icons">play_arrow</span>Play now</button><button class="no" onclick="hideUpNext()">Dismiss</button></div>
 </div>
 
 <div class="panelov" id="panelov"></div>
@@ -163,7 +163,7 @@ let TR=[
  [270,"Positive pressure splints the airways and helps recruit alveoli.",1],[320,"Watch for auto-PEEP — give them time to fully exhale.",1],
  [400,"Permissive hypercapnia is often the right call here.",2],[490,"Let's put it together with a transport scenario.",2]
 ];
-function renderLessons(){document.getElementById('lessons').innerHTML=LES.map(l=>`<div class="les ${l[2]}"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:15px;color:var(--text-3)">lock</span>':''}</div>`).join('');}
+function renderLessons(){document.getElementById('lessons').innerHTML=LES.map((l,i)=>`<div class="les ${l[2]}" onclick="selectLesson(${i})"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:15px;color:var(--text-3)">lock</span>':''}</div>`).join('');}
 function renderTranscript(filter){
   filter=(filter||'').toLowerCase();const host=document.getElementById('transcript');if(!host)return;
   if(!TR.length){host.innerHTML='<div style="color:var(--text-3);font-size:13px;padding:8px">No transcript for this class.</div>';return;}
@@ -198,9 +198,17 @@ function reelFromLine(idx){const start=TR[idx][0]||0;const end=TR[idx+1]&&TR[idx
 function saveCodexNote(i){notes.unshift({kind:'codex',ref:CH[i][0],ci:i,quote:CH[i][1],text:''});renderNotes();openPanel('notes');}
 document.getElementById('addNoteBtn').onclick=function(){const ta=document.getElementById('noteInput');const v=ta.value.trim();if(!v)return;notes.unshift({kind:'video',t:getTime(),text:v});ta.value='';renderNotes();};
 
-// up next
-function showUpNext(){const c=document.getElementById('upnext');c.classList.remove('hidden');let n=5;document.getElementById('unCount').textContent=n;clearInterval(unTimer);unTimer=setInterval(()=>{n--;document.getElementById('unCount').textContent=n;if(n<=0){clearInterval(unTimer);hideUpNext();}},1000);}
-function hideUpNext(){document.getElementById('upnext').classList.add('hidden');clearInterval(unTimer);}
+// end-of-lesson overlay + lesson navigation
+function activeIdx(){let i=LES.findIndex(l=>l[2]==='active');return i<0?0:i;}
+function ov(){return document.getElementById('ovcard');}
+function showOv(){ov().classList.remove('hidden');}
+function hideOv(){ov().classList.add('hidden');clearInterval(unTimer);}
+function showEnd(){const i=activeIdx();const nx=i+1;if(nx<LES.length){const l=LES[nx];ov().innerHTML=`<div class="ov-in"><div class="k">Up next · Lesson ${nx+1} of ${LES.length}</div><div class="ov-t">${l[0]}</div><div class="ov-s">${l[1]}</div><div class="ov-row"><button class="go" onclick="goNext()"><span class="material-icons">play_arrow</span>Play next <span id="ovCount">(5)</span></button><button class="no" onclick="hideOv()"><span class="material-icons">replay</span>Replay lesson</button></div></div>`;showOv();let n=5;clearInterval(unTimer);unTimer=setInterval(()=>{n--;const c=document.getElementById('ovCount');if(c)c.textContent='('+n+')';if(n<=0){clearInterval(unTimer);goNext();}},1000);}else{showComplete();}}
+function showComplete(){clearInterval(unTimer);ov().innerHTML=`<div class="ov-in"><div class="k">Class complete</div><div class="ov-t">Nice work 🎉</div><div class="ov-s">You've finished every lesson. Your certificate is ready.</div><div class="ov-row"><a class="go" href="studio-title.html"><span class="material-icons">workspace_premium</span>Back to class</a><button class="no" onclick="hideOv()"><span class="material-icons">replay</span>Rewatch</button></div></div>`;showOv();}
+function goNext(){clearInterval(unTimer);selectLesson(activeIdx()+1);}
+function selectLesson(i){if(i<0||i>=LES.length)return;LES.forEach((l,k)=>{l[2]=k<i?'done':(k===i?'active':'');});renderLessons();const l=LES[i];const tb=document.getElementById('tbLesson');if(tb)tb.innerHTML='· '+l[0]+' · Lesson '+(i+1)+' of '+LES.length;const done=LES.filter(x=>x[2]==='done').length;const pel=document.querySelector('[data-pp="contents"] .railhead .p');if(pel)pel.textContent=done+' of '+LES.length+' complete · '+Math.round(done/LES.length*100)+'%';const pf=document.querySelector('[data-pp="contents"] .pbar>div');if(pf)pf.style.width=(done/LES.length*100)+'%';if(/quiz/i.test(l[1])||l[3]==='quiz'){showQuiz(l);}else{resetPlayer();}}
+function showQuiz(l){ov().innerHTML=`<div class="ov-in"><div class="k">Knowledge Check</div><div class="ov-t">${l[0]}</div><div class="ov-s">${l[1]} · pass to earn your CE hour</div><div class="ov-row"><button class="go" onclick="hideOv()"><span class="material-icons">quiz</span>Start quiz</button></div></div>`;showOv();}
+function resetPlayer(){hideOv();if(VID){VID.currentTime=0;VID.play&&VID.play().catch(()=>{});}else{seek(0);const pb=document.getElementById('playBtn');if(pb)pb.style.display='flex';}}
 
 renderLessons();renderTranscript();renderNotes();
 
@@ -225,7 +233,7 @@ function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstud
     const tb=await idbGet('draftThumb');if(tb)el.poster=URL.createObjectURL(tb);
     el.addEventListener('loadedmetadata',()=>{DUR=el.duration||DUR;});
     el.addEventListener('timeupdate',()=>{document.getElementById('addlbl').textContent='New note at '+fmt(el.currentTime);renderTranscript(document.getElementById('tsearch').value);if(panelOpen&&following)renderReader();});
-    el.addEventListener('ended',showUpNext);
+    el.addEventListener('ended',showEnd);
   } else {const cap=document.getElementById('cap');if(cap)cap.textContent=d.title||'';}
   renderTranscript();
 })();
