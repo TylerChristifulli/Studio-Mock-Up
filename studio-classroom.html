@@ -238,33 +238,25 @@
 
 <script src="studio-nav.js"></script>
 <script>
-const DUR=544; // 9:04
-let cur=192;   // 3:12
-function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+let DUR=544, cur=192, VID=null;
+function fmt(s){s=Math.max(0,Math.round(s||0));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function getTime(){return VID?VID.currentTime:cur;}
 
 // left tabs
 document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#tabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.dataset.p===b.dataset.t));});
 function openCodex(){const cb=document.querySelector('#tabs button[data-t="codex"]');cb.click();const cp=document.getElementById('codexPanel');cp.scrollIntoView({behavior:'smooth',block:'center'});cp.classList.remove('flash');void cp.offsetWidth;cp.classList.add('flash');}
 
-// play toggle
-const pb=document.getElementById('playBtn'),pi=document.getElementById('playIcon');let playing=false;
-function toggle(){playing=!playing;pb.style.display=playing?'none':'flex';pi.textContent=playing?'pause':'play_arrow';}
-pb.onclick=toggle;pi.onclick=toggle;
+// mock play toggle (demo only)
+(function(){const pb=document.getElementById('playBtn'),pi=document.getElementById('playIcon');if(!pb)return;let playing=false;function t(){playing=!playing;pb.style.display=playing?'none':'flex';pi.textContent=playing?'pause':'play_arrow';}pb.onclick=t;pi.onclick=t;})();
 
 // rail tabs
 document.getElementById('railtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#railtabs button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('[data-rp]').forEach(p=>p.classList.toggle('hidden',p.dataset.rp!==b.dataset.r));});
 function showRail(r){document.querySelector('#railtabs button[data-r="'+r+'"]').click();}
 
-// contents
-const LES=[["Introduction & Pathophysiology","Video · 4:20","done","play_circle"],["Treatment & Scenarios","Video · 9:04","active","play_circle"],["Knowledge Check","Quiz · 5 questions","locked","quiz"]];
-document.getElementById('lessons').innerHTML=LES.map(l=>`<div class="les ${l[2]}"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:16px;color:var(--text-3)">lock</span>':''}</div>`).join('');
-
-// codex chapters
-const CH=[["Ch. 12","Obstructive Airway Disease","Pathophysiology, phenotypes & staging"],["Ch. 13","Ventilation Strategies in COPD","NIV, settings & auto-PEEP"],["Ch. 4","Acid–Base & Gas Exchange","Interpreting the COPD blood gas"]];
-document.getElementById('chapters').innerHTML=CH.map((c,i)=>`<div class="chap"><span class="num">${c[0]}</span><div class="ct"><div class="nm">${c[1]}</div><div class="ds">${c[2]}</div></div><div class="acts"><span class="save" onclick="saveCodexNote(${i})"><span class="material-icons" style="font-size:15px">bookmark_add</span>Save</span><span class="go">Read <span class="material-icons" style="font-size:15px">arrow_forward</span></span></div></div>`).join('');
-
-// transcript [sec, text, codexChapterIndex|null]
-const TR=[
+// data (default = demo; overridden by an uploaded draft below)
+let LES=[["Introduction & Pathophysiology","Video · 4:20","done","play_circle"],["Treatment & Scenarios","Video · 9:04","active","play_circle"],["Knowledge Check","Quiz · 5 questions","locked","quiz"]];
+let CH=[["Ch. 12","Obstructive Airway Disease","Pathophysiology, phenotypes & staging"],["Ch. 13","Ventilation Strategies in COPD","NIV, settings & auto-PEEP"],["Ch. 4","Acid–Base & Gas Exchange","Interpreting the COPD blood gas"]];
+let TR=[
  [0,"Let's start with what's actually happening in the COPD airway.",null],
  [24,"Chronic inflammation narrows the small airways and destroys elastic recoil.",0],
  [52,"That loss of recoil is why these patients trap air — the hallmark of obstruction.",0],
@@ -278,28 +270,28 @@ const TR=[
  [400,"Permissive hypercapnia is often the right call here.",null],
  [490,"Let's put it together with a transport scenario.",null]
 ];
+function renderLessons(){document.getElementById('lessons').innerHTML=LES.map(l=>`<div class="les ${l[2]}"><div class="ic"><span class="material-icons">${l[2]==='done'?'check':l[3]}</span></div><div class="lt"><div class="nm">${l[0]}</div><div class="mt">${l[1]}</div></div>${l[2]==='locked'?'<span class="material-icons" style="font-size:16px;color:var(--text-3)">lock</span>':''}</div>`).join('');}
+function renderChapters(){var h=document.getElementById('chapters');if(!CH.length){h.innerHTML='<div style="color:var(--text-3);font-size:13px">No Codex chapters linked to this class.</div>';return;}h.innerHTML=CH.map((c,i)=>`<div class="chap"><span class="num">${c[0]}</span><div class="ct"><div class="nm">${c[1]}</div><div class="ds">${c[2]||''}</div></div><div class="acts"><span class="save" onclick="saveCodexNote(${i})"><span class="material-icons" style="font-size:15px">bookmark_add</span>Save</span><span class="go">Read <span class="material-icons" style="font-size:15px">arrow_forward</span></span></div></div>`).join('');}
 function renderTranscript(filter){
   filter=(filter||'').toLowerCase();
-  const host=document.getElementById('transcript');
-  host.innerHTML=TR.filter(l=>!filter||l[1].toLowerCase().includes(filter)).map(l=>{
-    const idx=TR.indexOf(l);
-    const active=(cur>=l[0] && (idx===TR.length-1 || cur<TR[idx+1][0]))?' active':'';
-    const cx=l[2]!=null?`<span class="cx" onclick="event.stopPropagation();openCodex()"><span class="material-icons" style="font-size:13px">menu_book</span>${CH[l[2]][0]}</span>`:'';
-    return `<div class="tline${active}" onclick="seek(${l[0]})"><span class="ts">${fmt(l[0])}</span><span class="tx">${l[1]}${cx}</span><span class="material-icons tadd" onclick="event.stopPropagation();noteFromLine(${idx})" title="Save to notes">note_add</span></div>`;
+  const host=document.getElementById('transcript'); if(!host)return;
+  if(!TR.length){host.innerHTML='<div style="color:var(--text-3);font-size:13px;padding:8px">No transcript for this class.</div>';return;}
+  const now=getTime(); let act=-1; TR.forEach((l,i)=>{if(l[0]!=null&&l[0]<=now)act=i;});
+  host.innerHTML=TR.map((l,idx)=>{
+    if(filter && !l[1].toLowerCase().includes(filter))return '';
+    const t=l[0];
+    const cx=(l[2]!=null&&CH[l[2]])?`<span class="cx" onclick="event.stopPropagation();openCodex()"><span class="material-icons" style="font-size:13px">menu_book</span>${CH[l[2]][0]}</span>`:'';
+    const seekAttr=t!=null?`onclick="seek(${t})"`:'style="cursor:default"';
+    return `<div class="tline${idx===act?' active':''}" ${seekAttr}><span class="ts">${t!=null?fmt(t):''}</span><span class="tx">${l[1]}${cx}</span><span class="material-icons tadd" onclick="event.stopPropagation();noteFromLine(${idx})" title="Save to notes">note_add</span></div>`;
   }).join('');
   const a=host.querySelector('.tline.active'); if(a&&!filter)a.scrollIntoView({block:'nearest'});
 }
 document.getElementById('tsearch').addEventListener('input',e=>renderTranscript(e.target.value));
 
 function seek(sec){
-  cur=sec;
-  const pct=(sec/DUR*100);
-  document.getElementById('scrubFill').style.width=pct+'%';
-  document.getElementById('scrubHandle').style.left=pct+'%';
-  document.getElementById('timeDisp').textContent=fmt(sec)+' / 9:04';
-  // caption = current line
-  let line=TR[0][1]; for(const l of TR){if(l[0]<=sec)line=l[1];}
-  document.getElementById('cap').textContent=line;
+  if(sec==null)return;
+  if(VID){VID.currentTime=sec;}
+  else{const f=document.getElementById('scrubFill');if(f){cur=sec;const pct=sec/DUR*100;f.style.width=pct+'%';document.getElementById('scrubHandle').style.left=pct+'%';document.getElementById('timeDisp').textContent=fmt(sec)+' / '+fmt(DUR);let line='';for(const l of TR){if(l[0]!=null&&l[0]<=sec)line=l[1];}const cap=document.getElementById('cap');if(cap&&line)cap.textContent=line;}}
   document.getElementById('addlbl').textContent='New note at '+fmt(sec);
   renderTranscript(document.getElementById('tsearch').value);
 }
@@ -317,11 +309,51 @@ function renderNotes(){
   }).join('');
 }
 function delNote(i){notes.splice(i,1);renderNotes();}
-function noteFromLine(idx){notes.unshift({kind:'video',t:TR[idx][0],quote:TR[idx][1],text:''});renderNotes();showRail('notes');document.getElementById('noteInput').focus();}
+function noteFromLine(idx){notes.unshift({kind:'video',t:TR[idx][0]||0,quote:TR[idx][1],text:''});renderNotes();showRail('notes');document.getElementById('noteInput').focus();}
 function saveCodexNote(i){notes.unshift({kind:'codex',ref:CH[i][0],quote:CH[i][1],text:''});renderNotes();showRail('notes');}
-document.getElementById('addNoteBtn').onclick=function(){const ta=document.getElementById('noteInput');const v=ta.value.trim();if(!v)return;notes.unshift({kind:'video',t:cur,text:v});ta.value='';renderNotes();};
+document.getElementById('addNoteBtn').onclick=function(){const ta=document.getElementById('noteInput');const v=ta.value.trim();if(!v)return;notes.unshift({kind:'video',t:getTime(),text:v});ta.value='';renderNotes();};
 
-renderTranscript();renderNotes();
+renderLessons();renderChapters();renderTranscript();renderNotes();
+
+// ---------- uploaded-class (draft) mode ----------
+function idbGet(key){return new Promise(res=>{try{const r=indexedDB.open('ffstudio',1);r.onupgradeneeded=()=>r.result.createObjectStore('files');r.onsuccess=()=>{try{const tx=r.result.transaction('files','readonly');const g=tx.objectStore('files').get(key);g.onsuccess=()=>res(g.result);g.onerror=()=>res(null);}catch(e){res(null);}};r.onerror=()=>res(null);}catch(e){res(null);}});}
+(async function(){
+  const p=new URLSearchParams(location.search); const raw=localStorage.getItem('ff_draft_class');
+  if(!p.get('draft')||!raw)return;
+  let d; try{d=JSON.parse(raw);}catch(e){return;}
+  document.querySelector('h1').textContent=d.title||'Untitled Class';
+  document.querySelector('.lesson-of').textContent=(d.category||'')+' · Preview';
+  document.querySelector('.crumb').innerHTML='<a href="studio-home.html">Self-Paced</a> &nbsp;›&nbsp; '+(d.category||'')+' &nbsp;›&nbsp; '+(d.title||'');
+  const chips=['<span class="chip hr"><span class="material-icons">schedule</span>'+(d.ceHrs||'')+' CE hr · '+(d.hourType||'')+'</span>'].concat((d.accred||[]).map(a=>'<span class="chip"><span class="material-icons">verified</span>'+a+'</span>'));
+  document.querySelector('.meta').innerHTML=chips.join('');
+  document.querySelector('[data-p="overview"]').textContent=d.description||'No description provided.';
+  document.querySelector('[data-p="objectives"]').innerHTML=(d.objectives&&d.objectives.length)?('<h3>Objectives</h3><ol>'+d.objectives.map(o=>'<li>'+o+'</li>').join('')+'</ol>'):'<div style="color:var(--text-3)">No objectives added.</div>';
+  const ini=(d.instructor||'?').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  document.querySelector('[data-p="instructor"]').innerHTML='<div class="instr"><div class="av">'+(ini||'?')+'</div><div><div class="nm">'+(d.instructor||'Instructor')+'</div><div class="ti">FOAMfrat Educator</div></div></div>';
+  const items=(d.accred||[]).map(a=>'<div class="accred-item"><b>'+a+'</b> — approved for '+(d.ceHrs||'')+' CE hour'+(d.approvalNo?' · '+d.approvalNo:'')+'.</div>').join('');
+  document.querySelector('[data-p="accred"]').innerHTML='<div class="applies"><div class="k">Where this hour applies</div><div class="big">'+(d.ceHrs||'')+' hour · '+(d.hourType||'')+'</div><div class="cnts">Counts toward CE wherever '+(d.hourType||'this content')+' applies.</div></div>'+items+'<div class="disc">Prototype preview — accreditation wording is placeholder.</div>';
+  document.querySelector('[data-p="refs"]').innerHTML=(d.references&&d.references.length)?('<ol class="ref">'+d.references.map(r=>'<li>'+r+'</li>').join('')+'</ol>'):'<div style="color:var(--text-3)">No references added.</div>';
+  CH=(d.chapters||[]).map(c=>[c[0]||'Ch.',c[1]||'',c[2]||'']); renderChapters();
+  TR=(d.transcript||[]).map(t=>[t[0],t[1],null]);
+  notes.length=0; renderNotes();
+  LES=[[d.title||'Class','Video · your upload','active','play_circle']]; renderLessons();
+  var pp=document.querySelector('[data-rp="contents"] .railhead .p'); if(pp)pp.textContent='Not started';
+  var pf=document.querySelector('[data-rp="contents"] .pbar>div'); if(pf)pf.style.width='0%';
+  const player=document.querySelector('.player');
+  const vb=await idbGet('draftVideo');
+  if(vb){
+    player.style.background='#000'; player.style.backgroundImage='none';
+    player.innerHTML='<video id="vid" controls playsinline style="width:100%;height:100%;object-fit:contain;background:#000"></video>';
+    VID=document.getElementById('vid'); VID.src=URL.createObjectURL(vb);
+    const tb=await idbGet('draftThumb'); if(tb)VID.poster=URL.createObjectURL(tb);
+    VID.addEventListener('loadedmetadata',()=>{DUR=VID.duration||DUR;});
+    VID.addEventListener('timeupdate',()=>{document.getElementById('addlbl').textContent='New note at '+fmt(VID.currentTime);renderTranscript(document.getElementById('tsearch').value);});
+  } else {
+    const cap=document.getElementById('cap'); if(cap)cap.textContent=d.title||'';
+    const badge=player.querySelector('.badge'); if(badge)badge.textContent='PREVIEW · NO VIDEO UPLOADED';
+  }
+  renderTranscript();
+})();
 </script>
 </body>
 </html>
